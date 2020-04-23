@@ -31,7 +31,7 @@ def update_distance(time_stamp_1, motors_last_velocity, motors_position):
 	return new_location
 
 def pen_up(pwm):
-	motorlib.setangle(pwm,45)
+	motorlib.setangle(pwm,35)
 
 def pen_down(pwm):
 	motorlib.setangle(pwm,30)
