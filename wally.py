@@ -136,7 +136,6 @@ def loadfile():
 		pix_val = list(img.getdata())
 		print(pix_val)
 		pixels = [[x,a] for (x,_,_,a) in pix_val]
-		#pixels = [[x,255] for x in pix_val]
 	print(pixels)
 	print(len(pixels))
 	return (width, height, pixels)
