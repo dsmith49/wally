@@ -154,6 +154,12 @@ def drawimage( gondola, data ):
 
 
 def main():
+	if ( len(sys.args) not in [1,2] ):
+		print('USAGE') 
+		print('python3 wally.py <image filename> <max number of lines per pixel>  #draws image with given resolution')
+		print('OR')
+		print('python3 wally.py test <max number of lines per pixel> # draws test grid with pixels ranging from 2 to max resolution')
+		quit()
 	control.control_repl()
 	data = loadfile()
 	pwm = motorlib.config( speed )
