@@ -154,7 +154,7 @@ def drawimage( gondola, data ):
 
 
 def main():
-	if ( len(sys.argv) not in [1,2] ):
+	if ( len(sys.argv) not in [2,3] ):
 		print('USAGE') 
 		print('python3 wally.py <image filename> <max number of lines per pixel>  #draws image with given resolution')
 		print('OR')
