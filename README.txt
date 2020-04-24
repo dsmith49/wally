@@ -46,3 +46,9 @@ FILES:
 					wall. run from command line for usage:
 
 						python3 wally.py
+
+HELPFUL LINKS:
+	https://pi-plates.com/motorplate-users-guide/
+	https://rpi.science.uoit.ca/lab/servo/
+	https://www.sparkfun.com/datasheets/Robotics/SM-42BYG011-25.pdf
+	http://cdn.sparkfun.com/datasheets/Robotics/S05NF%20STD.pdf

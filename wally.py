@@ -58,20 +58,6 @@ class Gondola(object):
 		motorlib.move( self.speed, [-vertical_move ,-vertical_move] )
 		if (lines > 0 and lines % 2 != 0):
 			motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]] )
-#		for y in range(0,lines):
-#			if (y % 2 == 0):
-#				motorlib.move( self.speed, [self.boxsize[0],-self.boxsize[0]] )
-#			else:
-#				motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]] )
-#			if (y < (lines-1)):
-#				motorlib.move( self.speed, [int(self.boxsize[1]/(lines-1)),int(self.boxsize[1]/(lines-1))] )
-#				vertical_move += int(self.boxsize[1]/(lines-1))
-#		self.togglepen()
-#		if (lines % 2 == 0):
-#			motorlib.move( self.speed, [-vertical_move ,-vertical_move] )
-#		else:
-#			motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]] )
-#			motorlib.move( self.speed, [-vertical_move ,-vertical_move ] )
 
 def loadfile():
 	filename = sys.argv[1]

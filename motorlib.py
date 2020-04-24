@@ -68,9 +68,8 @@ def update_motors(motors_last_velocity, motors_velocity):
 		MOTOR.stepperRATE(0,'B', abs(motors_velocity[1]))
 
 def setangle(pwm, angle):
-	duty = angle / 18 + 2.5
-	GPIO.output(4, True)
-	pwm.ChangeDutyCycle(duty)
+	#GPIO.output(4, True)
+	pwm.ChangeDutyCycle( angle / 18 + 2.5 )
 	time.sleep(0.5)
-	GPIO.output(4, False)
-	pwm.ChangeDutyCycle(0)
+	#GPIO.output(4, False)
+	#pwm.ChangeDutyCycle(0)
