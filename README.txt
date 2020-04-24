@@ -32,14 +32,14 @@ GIT REPOSITORY:
 	https://github.com/dsmith49/wally.git
 
 FILES:
-	control.py  	gives user control over motors and pen via REPL. can also  be
+	control.py		gives user control over motors and pen via REPL. can also  be
 					run from command line via:
 						
 							python3 control.py
 				
 					to move wally and control pen with keyboard commands.
 
-	motorlib.py  	intializes, controls, and closes motor controls via piplates
+	motorlib.py		intializes, controls, and closes motor controls via piplates
 				 	module, and servo controls via GPIO.
 
 	wally.py		accepts a grayscale PNG file as input and renders image on

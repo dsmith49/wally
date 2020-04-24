@@ -21,7 +21,7 @@ def getch():
 def display_motors(motors_velocity, motors_position ):
 	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
-	print('	           a d        PENDOWN:[ PENUP:]')
+	print('            a d        PENDOWN:[     PENUP:]')
 	print('            zxc        EXIT: `')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
