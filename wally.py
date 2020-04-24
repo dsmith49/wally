@@ -43,8 +43,12 @@ class Gondola(object):
 		print('drawing lines:', lines)
 		vertical_move = 0
 		for y in range(0,lines):
-			motorlib.move( self.speed, [int(self.boxsize[1]/(lines+1)),int(self.boxsize[1]/(lines+1))] )
-			vertical_move += int(self.boxsize[1]/(lines+1))
+			if (y == 0):
+				motorlib.move( self.speed, [int(self.boxsize[1]/(lines)/2),int(self.boxsize[1]/(lines)/2)] )
+				vertical_move += int(self.boxsize[1]/(lines)/2)
+			else:
+				motorlib.move( self.speed, [int(self.boxsize[1]/(lines)),int(self.boxsize[1]/(lines))] )
+				vertical_move += int(self.boxsize[1]/(lines))
 			self.togglepen()
 			if (y % 2 == 0):
 				motorlib.move( self.speed, [self.boxsize[0],-self.boxsize[0]] )
