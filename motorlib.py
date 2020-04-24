@@ -8,7 +8,7 @@ def config( speed ):
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(4, GPIO.OUT)
 	pwm=GPIO.PWM(4, 50)
-	pwm.start(2.5)
+	pwm.start(4.444)
 	return pwm
 
 def stop():
@@ -67,14 +67,6 @@ def update_motors(motors_last_velocity, motors_velocity):
 	else:
 		MOTOR.stepperRATE(0,'B', abs(motors_velocity[1]))
 
-
-def set90(pwn):
-	pwm.ChangeDutyCycle(7.5)
-	time.sleep(0.5)
-def set80(pwm):
-	pwm.ChangeDutyCycle(7.5)
-	time.sleep(0.5)	
-	
 def setangle(pwm, angle):
 	duty = angle / 18 + 2.5
 	GPIO.output(4, True)
