@@ -51,6 +51,11 @@ FILES:
 
                         python3 wally.py images/mario.png
 
+                    currently, wally is pretty finicky, and will only read PNGs
+                    with each pixel formatted as a 4-tuple (x,_,_,a) of numbers
+                    between 0 and 255. it will render lines per pixel based on
+                    x, and will ignore all pixels where a == 0.
+
 HELPFUL LINKS:
     https://pi-plates.com/motorplate-users-guide/
     https://rpi.science.uoit.ca/lab/servo/
