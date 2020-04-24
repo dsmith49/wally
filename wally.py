@@ -109,6 +109,7 @@ def main():
 		print('python3 wally.py <image filename> <max number of lines per pixel>  #draws image with given resolution')
 		print('OR')
 		print('python3 wally.py test <max number of lines per pixel> # draws test grid with pixels ranging from 2 to max resolution')
+		print('EXAMPLE: python3 wally.py images/mario.png 8')
 		quit()
 	control.control_repl()
 	data = loadfile()

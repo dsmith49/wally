@@ -20,6 +20,10 @@ def getch():
 
 def display_motors(motors_velocity, motors_position ):
 	call('clear')
+	print('DIRECTIONS: qwe        STOP: s')
+	print('	           a d        PENDOWN:[ PENUP:]')
+	print('            zxc        EXIT: `')
+	print('--------------------------------')
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
 	print('location: ',"{:.2f}".format(motors_position[0]),'  ',"{:.2f}".format(motors_position[1]))
@@ -31,10 +35,10 @@ def update_distance(time_stamp_1, motors_last_velocity, motors_position):
 	return new_location
 
 def pen_up(pwm):
-	motorlib.setangle(pwm,35)
+	motorlib.setangle(pwm,25)
 
 def pen_down(pwm):
-	motorlib.setangle(pwm,30)
+	motorlib.setangle(pwm,10)
 
 def control_repl():
 	exit = False
