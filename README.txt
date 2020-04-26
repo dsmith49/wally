@@ -39,8 +39,11 @@ FILES:
 
                     to move wally and control pen with keyboard commands.
 
-    motorlib.py	    intializes, controls, and closes motor controls via piplates
-                    module, and servo controls via GPIO.
+    motorlib.py	    initializes, controls, and closes motor controls via piplates
+                    module, and servo controls via GPIO. requires piplates to
+                    be installed, which can be done via:
+
+                        sudo pip3 install pi-plates
 
     wally.py        accepts a grayscale PNG file as input and renders image on
                     wall. run from command line for usage:
@@ -52,9 +55,9 @@ FILES:
                         python3 wally.py images/mario.png
 
                     currently, wally is pretty finicky, and will only read PNGs
-                    with each pixel formatted as a 4-tuple (x,_,_,a) of numbers
+                    with each pixel formatted as a 4-tuple (r,_,_,a) of numbers
                     between 0 and 255. it will render lines per pixel based on
-                    x, and will ignore all pixels where a == 0.
+                    r, and will ignore all pixels where a == 0.
 
 HELPFUL LINKS:
     https://pi-plates.com/motorplate-users-guide/
