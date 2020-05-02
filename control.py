@@ -4,9 +4,19 @@ from subprocess import call
 import motorlib
 
 # constants to be set before use 
-x_total = 10
-y_total = 5
+x_total = 192
+y_total = 157.5
+x_usable = [70,122]
+y_usable = [30,100]
 button_delay = 0.05
+#distance_per_step = (2 * 0.05 * 3.14159) / 400 = 0.0007853975 # theoretical
+# 13280 steps = 0.55m
+# 13287 steps = 0.55m
+# 13166 steps = 0.55m
+# 13382 steps = 0.55m
+# 13330 steps = 0.55m
+# avg = 13289 = 0.55m = 55cm = 550mm
+#distance_per_step = 0.55 / 13289 = 0.00004138761 # in practice
 
 def getch():
 	fd = sys.stdin.fileno()
@@ -21,8 +31,8 @@ def getch():
 def display_motors(motors_velocity, motors_position ):
 	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
-	print('            a d        PENDOWN:[     PENUP:]')
-	print('            zxc        EXIT: `')
+	print('            a d        PENDOWN:[      PENUP:]')
+	print('            zxc        EXIT: `        COMMAND:=')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
@@ -78,11 +88,16 @@ def control_repl():
 		if (char == "`"): exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
-			motors_position = [0,0]
+			motors_position = [x_total/2,0]
 		if (char == '['): pen_down(pwm)
 		if (char == ']'): pen_up(pwm)
+		if (char == '='):
+			motors_velocity = [0,0]
+			motorlib.update_motors( motors_last_velocity, motors_velocity)
+			command = input('>>')
+			motorlib.move( 200, [ int(x) for x in command.split(' ') ] )
 		motorlib.update_motors( motors_last_velocity, motors_velocity)
-		motors_position = update_distance(timestamp_1, motors_last_velocity,motors_position)
+		motors_position = update_distance(timestamp_1, motors_last_velocity, motors_position)
 		timestamp_1 = time.perf_counter()
 		time.sleep(button_delay)
 	motorlib.stop()
