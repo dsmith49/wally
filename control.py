@@ -68,7 +68,7 @@ def control_repl():
 		if (char == "`"): exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
-			motors_position = [motor1_length / distance_per_step, motor2_length / distance_per_step ]
+			motors_position = [motor1_length / config.distance_per_step, motor2_length / config.distance_per_step ]
 		if (char == '['): pen_down(pwm)
 		if (char == ']'): pen_up(pwm)
 		if (char == '='):
@@ -83,7 +83,7 @@ def control_repl():
 			motors_position = motorlib.move_naive( speed, command, motors_position )
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
 		timestamp_1 = time.perf_counter()
-		time.sleep(button_delay)
+		time.sleep(config.button_delay)
 	motorlib.stop()
 	return motors_position
 

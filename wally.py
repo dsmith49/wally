@@ -6,6 +6,8 @@ import math
 import control
 import config
 
+numlines = config.numlines
+
 class Gondola(object):
 	boxsize  = (120,150)
 	position = [0,0]
@@ -65,7 +67,7 @@ def loadfile():
 	height = 0
 	pixels = 0
 	if (filename == 'test'):
-		if ( len( sys.argv ) > 1): numlines = int( sys.argv[2] )
+		if ( len( sys.argv ) > 1): config.numlines = int( sys.argv[2] )
 		width  = math.ceil( numlines**0.5 )
 		height = math.ceil( numlines**0.5 )
 		pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
@@ -103,8 +105,8 @@ def main():
 		quit()
 	motors_position = control.control_repl()
 	data    = loadfile()
-	pwm     = motorlib.config( speed )
-	gondola = Gondola( pwm, speed, motors_position)
+	pwm     = motorlib.config( config.speed )
+	gondola = Gondola( pwm, config.speed, motors_position)
 	drawimage( gondola, data )
 	motorlib.close( pwm )
 
