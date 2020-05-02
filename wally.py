@@ -4,21 +4,21 @@ from PIL import Image
 import motorlib
 import math
 import control
-
-speed = 200
-numlines = 8
+import config
 
 class Gondola(object):
 	boxsize  = (120,150)
 	position = [0,0]
+	motors_position = [0,0]
 	speed    = 0
 	pendown  = False
 	crosshatch = False
 	pwm      = None
 
-	def __init__(self, pwm, speed):
+	def __init__(self, pwm, speed, motors_position):
 		self.pwm = pwm
 		self.speed = speed
+		self.motors_position = motors_position
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
 		delta_x = (loc[0] - self.position[0]) * self. boxsize[0]
@@ -26,9 +26,9 @@ class Gondola(object):
 		movecommand_x = [delta_x, -delta_x]
 		movecommand_y = [delta_y, delta_y]
 		if (self.position[0] != loc[0]):
-			motorlib.move( self.speed, movecommand_x )
+			self.motors_position = motorlib.move( self.speed, movecommand_x, self.motors_position )
 		if (self.position[1] != loc[1]):
-			motorlib.move( self.speed, movecommand_y )
+			self.motors_position = motorlib.move( self.speed, movecommand_y, self.motors_position )
 		self.position = loc
 		
 	def togglepen(self):
@@ -44,20 +44,20 @@ class Gondola(object):
 		vertical_move = 0
 		for y in range(0,lines):
 			if (y == 0):
-				motorlib.move( self.speed, [int(self.boxsize[1]/(lines)/2),int(self.boxsize[1]/(lines)/2)] )
+				self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)/2),int(self.boxsize[1]/(lines)/2)], self.motors_position )
 				vertical_move += int(self.boxsize[1]/(lines)/2)
 			else:
-				motorlib.move( self.speed, [int(self.boxsize[1]/(lines)),int(self.boxsize[1]/(lines))] )
+				self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)),int(self.boxsize[1]/(lines))], self.motors_position )
 				vertical_move += int(self.boxsize[1]/(lines))
 			self.togglepen()
 			if (y % 2 == 0):
-				motorlib.move( self.speed, [self.boxsize[0],-self.boxsize[0]] )
+				self.motors_position = motorlib.move( self.speed, [self.boxsize[0],-self.boxsize[0]], self.motors_position)
 			else:
-				motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]] )
+				self.motors_position = motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]], self.motors_position)
 			self.togglepen()
-		motorlib.move( self.speed, [-vertical_move ,-vertical_move] )
+		self.motors_position = motorlib.move( self.speed, [-vertical_move ,-vertical_move], self.motors_position )
 		if (lines > 0 and lines % 2 != 0):
-			motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]] )
+			self.motors_position = motorlib.move( self.speed, [-self.boxsize[0],self.boxsize[0]], self.motors_position )
 
 def loadfile():
 	filename = sys.argv[1]
@@ -101,10 +101,10 @@ def main():
 		print('python3 wally.py test <max number of lines per pixel> # draws test grid with pixels ranging from 2 to max resolution')
 		print('EXAMPLE: python3 wally.py images/mario.png 8')
 		quit()
-	control.control_repl()
-	data = loadfile()
-	pwm = motorlib.config( speed )
-	gondola = Gondola( pwm, speed )
+	motors_position = control.control_repl()
+	data    = loadfile()
+	pwm     = motorlib.config( speed )
+	gondola = Gondola( pwm, speed, motors_position)
 	drawimage( gondola, data )
 	motorlib.close( pwm )
 
