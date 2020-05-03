@@ -104,6 +104,7 @@ def move_smart( speed, command, motors_position ):
 		time.sleep( 0.1 )
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
+	x = input('waiting')
 	return [motors_position[0] + command[0], motors_position[1] + command[1]]
 
 def move( speed, command, motors_position ):
