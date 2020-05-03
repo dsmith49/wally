@@ -97,27 +97,25 @@ def move_smart( speed, command, motors_position ):
 	while (current_time < total_time):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time) )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time) )
-		print('velocities', motor1_velocity/total_time, motor2_velocity/total_time, current_time)
+		#print('velocities', motor1_velocity/total_time, motor2_velocity/total_time, current_time)
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
 			if (motor1_velocity < 0): motor1_direction = 'cw'
 			if (motor2_velocity < 0): motor2_direction = 'ccw'
-			#MOTOR.stepperCONFIG(0,'A', motor1_direction,'H', abs(motor1_velocity), 0 )
-			#MOTOR.stepperCONFIG(0,'B', motor2_direction,'H', abs(motor2_velocity), 0 )
-			#MOTOR.stepperJOG(0,'A')
-			#MOTOR.stepperJOG(0,'B')
+			MOTOR.stepperCONFIG(0,'A', motor1_direction,'H', abs(motor1_velocity), 0 )
+			MOTOR.stepperCONFIG(0,'B', motor2_direction,'H', abs(motor2_velocity), 0 )
+			MOTOR.stepperJOG(0,'A')
+			MOTOR.stepperJOG(0,'B')
 			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
 			timestamp_1 = time.perf_counter()
-		#else:
-			#MOTOR.stepperRATE(0,'A', motor1_velocity)
-			#MOTOR.stepperRATE(0,'B', motor2_velocity)
+		else:
+			MOTOR.stepperRATE(0,'A', motor1_velocity)
+			MOTOR.stepperRATE(0,'B', motor2_velocity)
 		time.sleep( 0.1 )
 		timestamp_2  = time.perf_counter()
-		print('time diff is', timestamp_1, timestamp_2, (timestamp_2 - timestamp_1))
 		current_time += (timestamp_2 - timestamp_1)
 		timestamp_1  = timestamp_2
-		print('current_time', current_time)
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	x = input('waiting')
