@@ -78,9 +78,9 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 
 def move_smart( speed, command, motors_position ):
 	
-	current_position = hypoteni_to_euclid( motors_position)
-	x_diff     		 = command[0] * config.meters_per_step
-	y_diff      	 = command[1] * config.meters_per_step
+	current_position = hypoteni_to_euclid( motors_position )
+	x_diff     		 = command[0] #* config.meters_per_step
+	y_diff      	 = command[1] #* config.meters_per_step
 	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 	total_time  	 = distance / (speed * config.meters_per_step)
@@ -91,6 +91,8 @@ def move_smart( speed, command, motors_position ):
 
 	current_position_mirror = [ config.x_total - current_position[0], current_position[1] ]
 	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
+	timestamp_1 = 0
+	timestamp_2 = 0
 
 	while (current_time < total_time):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time) )
@@ -109,8 +111,10 @@ def move_smart( speed, command, motors_position ):
 		#else:
 			#MOTOR.stepperRATE(0,'A', motor1_velocity)
 			#MOTOR.stepperRATE(0,'B', motor2_velocity)
-		current_time += 0.1
-		#time.sleep( 0.1 )
+		time.sleep( 0.1 )
+		timestamp_2  = time.perf_counter()
+		current_time += (timestamp_2 - timestamp_1)
+		timestamp_1  = timestamp_2
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	x = input('waiting')
