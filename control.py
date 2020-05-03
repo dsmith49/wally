@@ -77,9 +77,9 @@ def control_repl():
 			response = input('NAIVE MOVE >> SPEED X Y>>')
 			if (len(response.split(' ')) == 3):
 				speed = int( response.split(' ')[0] )
-				command = [ int(x) for x in response.split(' ')[1:] ]
+				command = [ float(x) for x in response.split(' ')[1:] ]
 			else:
-				command = [ int(x) for x in response.split(' ') ]
+				command = [ float(x) for x in response.split(' ') ]
 			motors_position = motorlib.move_naive( speed, command, motors_position )
 		if (char == '-'):
 			motors_velocity = [0,0]
@@ -87,9 +87,9 @@ def control_repl():
 			response = input('SMART MOVE >> SPEED X_meters Y_meters>>')
 			if (len(response.split(' ')) == 3):
 				speed = int( response.split(' ')[0] )
-				command = [ int(x) for x in response.split(' ')[1:] ]
+				command = [ float(x) for x in response.split(' ')[1:] ]
 			else:
-				command = [ int(x) for x in response.split(' ') ]
+				command = [ float(x) for x in response.split(' ') ]
 			motors_position = motorlib.move_smart( speed, command, motors_position )
 
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
