@@ -67,6 +67,8 @@ def move_smart( speed, command, motors_position ):
 	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
 	a = (s * (s - motors_position[0]*config.meters_per_step) * ( motors_position[1]*config.meters_per_step ) * config.x_total)**0.5
 	y_from_top  = a / (0.5 * config.x_total)
+	print('y from top', t_from_top)
+	print('length of m1', motors_position[0]*config.meters_per_step)
 	x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
 
 	x_diff     		 = command[0] * config.meters_per_step
