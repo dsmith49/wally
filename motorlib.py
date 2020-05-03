@@ -108,11 +108,11 @@ def move_smart( speed, command, motors_position ):
 			#MOTOR.stepperJOG(0,'A')
 			#MOTOR.stepperJOG(0,'B')
 			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
+			timestamp_1 = time.perf_counter()
 		#else:
 			#MOTOR.stepperRATE(0,'A', motor1_velocity)
 			#MOTOR.stepperRATE(0,'B', motor2_velocity)
 		time.sleep( 0.1 )
-		if (current_time == 0): timestamp_1 = time.perf_counter()
 		timestamp_2  = time.perf_counter()
 		print('time diff is', timestamp_1, timestamp_2, (timestamp_2 - timestamp_1))
 		current_time += (timestamp_2 - timestamp_1)
