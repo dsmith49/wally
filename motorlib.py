@@ -55,6 +55,19 @@ def move_naive( speed, command, motors_position ):
 			flag_a=0
 	return [motors_position[0] + command[0], motors_position[1] + command[1]]
 
+def hypoteni_to_euclid( motors_position ):
+	#herons formula
+	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
+	a = (s * (s - motors_position[0]*config.meters_per_step) * ( s- motors_position[1]*config.meters_per_step ) * (s-config.x_total) )**0.5
+	y_from_top  = a / (0.5 * config.x_total)
+	x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
+	return [x_from_left, y_from_top]
+	
+def euclid_to_hypoteni( coordinate ):
+	m1 = (coordinate[0]**2 + coordinate[1]**2)**0.5 / config.meters_per_step
+	m2 = ((config.xtotal - coordinate[0])**2 + coordinate[1]**2)**0.5 / config.meters_per_step
+	return [m1,m2]
+
 def motor_velocity_at_time( current_pos, end_pos, time ):
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
@@ -63,17 +76,9 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 
 def move_smart( speed, command, motors_position ):
 	
-	#herons formula
-	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
-	a = (s * (s - motors_position[0]*config.meters_per_step) * ( s- motors_position[1]*config.meters_per_step ) * (s-config.x_total) )**0.5
-	y_from_top  = a / (0.5 * config.x_total)
-	print('y from top', y_from_top)
-	print('length of m1', motors_position[0]*config.meters_per_step)
-	x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
-
+	current_position = hypoteni_to_euclid( motors_position)
 	x_diff     		 = command[0] * config.meters_per_step
 	y_diff      	 = command[1] * config.meters_per_step
-	current_position = [x_from_left, y_from_top]
 	end_position     = [x_from_left + x_diff, y_from_top + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 	total_time  	 = distance / speed
