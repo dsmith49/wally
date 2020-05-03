@@ -104,7 +104,7 @@ def move_smart( speed, command, motors_position ):
 			#MOTOR.stepperJOG(0,'A')
 			#MOTOR.stepperJOG(0,'B')
 			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
-		else:
+		#else:
 			#MOTOR.stepperRATE(0,'A', motor1_velocity)
 			#MOTOR.stepperRATE(0,'B', motor2_velocity)
 		current_time += 0.1
