@@ -59,6 +59,8 @@ FILES:
                     between 0 and 255. it will render lines per pixel based on
                     r, and will ignore all pixels where a == 0.
 
+    config.py      constants file to set value for drawing space.
+
 HELPFUL LINKS:
     https://pi-plates.com/motorplate-users-guide/
     https://rpi.science.uoit.ca/lab/servo/

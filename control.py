@@ -68,19 +68,30 @@ def control_repl():
 		if (char == "`"): exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
-			motors_position = [motor1_length / config.distance_per_step, motor2_length / config.distance_per_step ]
+			motors_position = [motor1_length / config.meters_per_step, motor2_length / config.meters_per_step ]
 		if (char == '['): pen_down(pwm)
 		if (char == ']'): pen_up(pwm)
 		if (char == '='):
 			motors_velocity = [0,0]
 			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
-			response = input('>>')
+			response = input('NAIVE MOVE >> SPEED X Y>>')
 			if (len(response.split(' ')) == 3):
 				speed = int( response.split(' ')[0] )
 				command = [ int(x) for x in response.split(' ')[1:] ]
 			else:
 				command = [ int(x) for x in response.split(' ') ]
 			motors_position = motorlib.move_naive( speed, command, motors_position )
+		if (char == '-'):
+			motors_velocity = [0,0]
+			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
+			response = input('SMART MOVE >> SPEED X Y>>')
+			if (len(response.split(' ')) == 3):
+				speed = int( response.split(' ')[0] )
+				command = [ int(x) for x in response.split(' ')[1:] ]
+			else:
+				command = [ int(x) for x in response.split(' ') ]
+			motors_position = motorlib.move_naive( speed, command, motors_position )
+
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
 		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)

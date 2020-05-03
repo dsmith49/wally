@@ -59,18 +59,26 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
 	velocity = x_diff**2 * time + x_diff * current_pos[0] + y_diff**2 * time + y_diff * current_pos[1]
-	return velocity
+	return (velocity / config.meters_per_step) #returns velocity in steps per second
 
-def move_smart( speed, current_position, end_position, x_total ):
+def move_smart( speed, command, motors_position ):
+	
+	#herons formula
+	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
+	a = (s * (s - motors_position[0]*config.meters_per_step) * ( motors_position[1]*config.meters_per_step ) * config.x_total)**0.5
+	y_from_top  = a / (0.5 * config.x_total)
+	x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
 
-	x_diff      = end_position[0] - current_position[0]
-	y_diff      = end_position[1] - current_position[1]
-	distance    = ( x_diff**2 + y_diff**2 )**0.5
-	total_time  = distance / speed
-	current_time = 0
+	x_diff     		 = command[0] * config.meters_per_step
+	y_diff      	 = command[1] * config.meters_per_step
+	current_position = [x_from_left, y_from_top]
+	end_position     = [x_from_left + x_diff, y_from_top + y_diff]
+	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
+	total_time  	 = distance / speed
+	current_time 	 = 0
 
-	current_position_mirror = [ x_total - current_position[0], current_position[1] ]
-	end_position_mirror     = [ x_total - end_position[0], end_position[1] ]
+	current_position_mirror = [ config.x_total - current_position[0], current_position[1] ]
+	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
 
 	while (current_time < total_time):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, current_time )
@@ -91,9 +99,11 @@ def move_smart( speed, current_position, end_position, x_total ):
 		time.sleep( 0.1 )
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
+	return [motors_position[0] + command[0], motors_position[1] + command[1]]
 
 def move( speed, command, motors_position ):
 	return move_naive( speed, command, motors_position )
+#	return move_smart( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
 	if (motors_last_velocity[0]==0):
