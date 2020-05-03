@@ -29,7 +29,11 @@ def close(pwm):
 	off()
 	GPIO.cleanup()
 
-def move_naive( speed, command, motors_position ):
+def euclid_to_hypoteni_naive( coordinate ):
+	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
+
+def move_naive( speed, command_euclid, motors_position ):
+	command = euclid_to_hypoteni_naive( command_euclid )
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
 	if (command[0] == 0 and command[1] == 0): return motors_position
@@ -85,9 +89,9 @@ def move_smart( speed, command, motors_position ):
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 	total_time  	 = distance / (speed * config.meters_per_step)
 	current_time 	 = 0
-	print('current position', current_position)
-	print('end position', end_position)
-	print('total time', total_time )
+	#print('current position', current_position)
+	#print('end position', end_position)
+	#print('total time', total_time )
 
 	current_position_mirror = [ config.x_total - current_position[0], current_position[1] ]
 	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
@@ -97,7 +101,6 @@ def move_smart( speed, command, motors_position ):
 	while (current_time < total_time):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time),total_time )
-		print('velocities', motor1_velocity, motor2_velocity, current_time)
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
@@ -107,7 +110,6 @@ def move_smart( speed, command, motors_position ):
 			MOTOR.stepperCONFIG(0,'B', motor2_direction,'H', abs(motor2_velocity), 0 )
 			MOTOR.stepperJOG(0,'A')
 			MOTOR.stepperJOG(0,'B')
-			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
 			timestamp_1 = time.perf_counter()
 		else:
 			MOTOR.stepperRATE(0,'A', motor1_velocity)
@@ -118,12 +120,13 @@ def move_smart( speed, command, motors_position ):
 		timestamp_1  = timestamp_2
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
-	x = input('waiting')
 	return euclid_to_hypoteni( end_position )
 
 def move( speed, command, motors_position ):
-	return move_naive( speed, command, motors_position )
-#	return move_smart( speed, command, motors_position )
+	if config.smartmove:
+		return move_smart( speed, command, motors_position )
+	else:
+		return move_naive( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
 	if (motors_last_velocity[0]==0):

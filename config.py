@@ -1,8 +1,8 @@
 
 speed = 200
 numlines = 8
-
-# constants to be set before use 
+smartmove = False
+boxsize   = [0.01,0.01]
 x_total = 1.915
 motor1_length = 1.6
 motor2_length = 1.6
