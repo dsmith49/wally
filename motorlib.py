@@ -73,6 +73,7 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 	y_diff   = end_pos[1] - current_pos[1]
 	dhdt_numerator   = x_diff**2 * time + x_diff * current_pos[0] + y_diff**2 * time + y_diff * current_pos[1]
 	dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff*time + current_pos[1])**2 )**0.5
+	print('n/d/v', dhdt_numerator, dhdt_denomenator, (dhdt_numerator/dhdt_denomenator) )
 	return int( (dhdt_numerator/dhdt_denomenator) / config.meters_per_step) #returns velocity in steps per second
 
 def move_smart( speed, command, motors_position ):
