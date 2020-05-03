@@ -93,8 +93,8 @@ def move_smart( speed, command, motors_position ):
 	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
 
 	while (current_time < total_time):
-		motor1_velocity = motor_velocity_at_time( current_position, end_position, current_time )
-		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, current_time )
+		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time) )
+		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time) )
 		print('velocities', motor1_velocity, motor2_velocity, current_time)
 		if (current_time == 0):
 			motor1_direction = 'ccw'
