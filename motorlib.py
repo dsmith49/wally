@@ -104,7 +104,6 @@ def move_smart( speed, command, motors_position ):
 			MOTOR.stepperJOG(0,'A')
 			MOTOR.stepperJOG(0,'B')
 			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
-			x = input('waiting')
 		else:
 			MOTOR.stepperRATE(0,'A', motor1_velocity)
 			MOTOR.stepperRATE(0,'B', motor2_velocity)
@@ -112,7 +111,6 @@ def move_smart( speed, command, motors_position ):
 		time.sleep( 0.1 )
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
-	x = input('waiting')
 	return euclid_to_hypoteni( end_position )
 
 def move( speed, command, motors_position ):
