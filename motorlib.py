@@ -68,13 +68,13 @@ def euclid_to_hypoteni( coordinate ):
 	m2 = ((config.x_total - coordinate[0])**2 + coordinate[1]**2)**0.5 / config.meters_per_step
 	return [m1,m2]
 
-def motor_velocity_at_time( current_pos, end_pos, time ):
+def motor_velocity_at_time( current_pos, end_pos, time, total_time ):
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
 	dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
 	dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff*time + current_pos[1])**2 )**0.5
-	print('n/d/v', dhdt_numerator, dhdt_denomenator, (dhdt_numerator/dhdt_denomenator) )
-	return int( (dhdt_numerator/dhdt_denomenator) / config.meters_per_step) #returns velocity in steps per second
+	#print('n/d/v', dhdt_numerator, dhdt_denomenator, (dhdt_numerator/dhdt_denomenator) )
+	return int( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
 
 def move_smart( speed, command, motors_position ):
 	
@@ -95,9 +95,9 @@ def move_smart( speed, command, motors_position ):
 	timestamp_2 = 0
 
 	while (current_time < total_time):
-		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time) )
-		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time) )
-		print('velocities', motor1_velocity/total_time, motor2_velocity/total_time, current_time)
+		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
+		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time),total_time )
+		print('velocities', motor1_velocity, motor2_velocity, current_time)
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
