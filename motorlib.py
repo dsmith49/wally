@@ -72,7 +72,7 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
 	velocity = x_diff**2 * time + x_diff * current_pos[0] + y_diff**2 * time + y_diff * current_pos[1]
-	return (velocity / config.meters_per_step) #returns velocity in steps per second
+	return int(velocity / config.meters_per_step) #returns velocity in steps per second
 
 def move_smart( speed, command, motors_position ):
 	
@@ -110,7 +110,7 @@ def move_smart( speed, command, motors_position ):
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	x = input('waiting')
-	return [motors_position[0] + command[0], motors_position[1] + command[1]]
+	return euclid_to_hypoteni( end_position )
 
 def move( speed, command, motors_position ):
 	return move_naive( speed, command, motors_position )
