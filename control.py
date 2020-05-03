@@ -37,7 +37,7 @@ def control_repl():
 	motors_last_velocity = [0,0]
 	timestamp_1 = 0.0
 	increment = 500
-	pwm = motorlib.config( 0 )
+	pwm = motorlib.configmotors( 0 )
 	while not exit:
 		display_motors( motors_velocity, motors_position)
 		char = getch()

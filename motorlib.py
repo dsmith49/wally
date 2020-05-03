@@ -3,7 +3,7 @@ import RPi.GPIO as GPIO
 import time
 import config
 
-def config( speed ):
+def configmotors( speed ):
 	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops

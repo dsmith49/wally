@@ -105,7 +105,7 @@ def main():
 		quit()
 	motors_position = control.control_repl()
 	data    = loadfile()
-	pwm     = motorlib.config( config.speed )
+	pwm     = motorlib.configmotors( config.speed )
 	gondola = Gondola( pwm, config.speed, motors_position)
 	drawimage( gondola, data )
 	motorlib.close( pwm )
