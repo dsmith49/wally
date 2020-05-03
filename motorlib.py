@@ -110,7 +110,7 @@ def move_smart( speed, command, motors_position ):
 			#MOTOR.stepperRATE(0,'A', motor1_velocity)
 			#MOTOR.stepperRATE(0,'B', motor2_velocity)
 		current_time += 0.1
-		time.sleep( 0.1 )
+		#time.sleep( 0.1 )
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	x = input('waiting')
