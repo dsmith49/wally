@@ -34,6 +34,7 @@ def euclid_to_hypoteni_naive( coordinate ):
 
 def move_naive( speed, command_euclid, motors_position ):
 	command = euclid_to_hypoteni_naive( command_euclid )
+	print(command_euclid, command )
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
 	if (command[0] == 0 and command[1] == 0): return motors_position
