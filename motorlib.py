@@ -115,6 +115,7 @@ def move_smart( speed, command, motors_position ):
 		timestamp_2  = time.perf_counter()
 		current_time += (timestamp_2 - timestamp_1)
 		timestamp_1  = timestamp_2
+		print('current_time', current_time)
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	x = input('waiting')
