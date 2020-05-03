@@ -69,6 +69,7 @@ def euclid_to_hypoteni( coordinate ):
 	return [m1,m2]
 
 def motor_velocity_at_time( current_pos, end_pos, time ):
+	print('calling', current_pos, end_pos, time )
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
 	velocity = x_diff**2 * time + x_diff * current_pos[0] + y_diff**2 * time + y_diff * current_pos[1]
@@ -93,7 +94,7 @@ def move_smart( speed, command, motors_position ):
 	while (current_time < total_time):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, current_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, current_time )
-		print('velocities', motor1_velocity, motor2_velocity)
+		print('velocities', motor1_velocity, motor2_velocity, current_time)
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
