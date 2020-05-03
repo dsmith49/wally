@@ -69,7 +69,6 @@ def euclid_to_hypoteni( coordinate ):
 	return [m1,m2]
 
 def motor_velocity_at_time( current_pos, end_pos, time ):
-	print('calling', current_pos, end_pos, time )
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
 	velocity = x_diff**2 * time + x_diff * current_pos[0] + y_diff**2 * time + y_diff * current_pos[1]
@@ -104,6 +103,7 @@ def move_smart( speed, command, motors_position ):
 			MOTOR.stepperCONFIG(0,'B', motor2_direction,'H', motor2_velocity, 0 )
 			MOTOR.stepperJOG(0,'A')
 			MOTOR.stepperJOG(0,'B')
+			print('jogged motors w velocitues', motor1_velocity, motor2_velocity)
 		else:
 			MOTOR.stepperRATE(0,'A', motor1_velocity)
 			MOTOR.stepperRATE(0,'B', motor2_velocity)
