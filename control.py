@@ -33,7 +33,7 @@ def pen_down(pwm):
 def control_repl():
 	exit = False
 	motors_velocity = [0,0]
-	motors_position = [0,0]
+	motors_position = [config.motor1_length / config.meters_per_step, config.motor2_length / config.meters_per_step ]
 	motors_last_velocity = [0,0]
 	timestamp_1 = 0.0
 	increment = 500
