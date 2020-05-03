@@ -81,7 +81,7 @@ def move_smart( speed, command, motors_position ):
 	y_diff      	 = command[1] * config.meters_per_step
 	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
-	total_time  	 = distance / speed
+	total_time  	 = distance / (speed * config.meters_per_step)
 	current_time 	 = 0
 	print('current position', current_position)
 	print('end position', end_position)
