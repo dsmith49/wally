@@ -74,7 +74,7 @@ def control_repl():
 		if (char == '='):
 			motors_velocity = [0,0]
 			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
-			response = input('NAIVE MOVE >> SPEED M1_STEPS M2_STEPS>>')
+			response = input('NAIVE MOVE >> SPEED X Y>>')
 			if (len(response.split(' ')) == 3):
 				speed = int( response.split(' ')[0] )
 				command = [ int(x) for x in response.split(' ')[1:] ]
