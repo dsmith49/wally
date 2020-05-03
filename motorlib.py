@@ -85,6 +85,7 @@ def move_smart( speed, command, motors_position ):
 	current_time 	 = 0
 	print('current position', current_position)
 	print('end position', end_position)
+	print('total time', total_time )
 
 	current_position_mirror = [ config.x_total - current_position[0], current_position[1] ]
 	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
