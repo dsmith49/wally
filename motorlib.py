@@ -32,7 +32,7 @@ def close(pwm):
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
 def meters_to_steps( command ):
-	return [ command[0] / config.meters_per_step, command[1] / config.meters_per_step ]
+	return [ int(command[0] / config.meters_per_step), int(command[1] / config.meters_per_step) ]
 
 def move_naive( speed, command_euclid, motors_position ):
 	command = euclid_to_hypoteni_naive( meters_to_steps( command_euclid ) )
