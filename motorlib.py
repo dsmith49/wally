@@ -79,8 +79,8 @@ def motor_velocity_at_time( current_pos, end_pos, time ):
 def move_smart( speed, command, motors_position ):
 	
 	current_position = hypoteni_to_euclid( motors_position )
-	x_diff     		 = command[0] #* config.meters_per_step
-	y_diff      	 = command[1] #* config.meters_per_step
+	x_diff     		 = command[0] * config.meters_per_step
+	y_diff      	 = command[1] * config.meters_per_step
 	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 	total_time  	 = distance / (speed * config.meters_per_step)
