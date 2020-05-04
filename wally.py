@@ -43,7 +43,7 @@ class Gondola(object):
 		print('drawing lines:', lines)
 		vertical_move = 0
 		for y in range(0,lines):
-			print('vertical move', y)
+			print('vertical move', y, config.boxsize, lines)
 			if (y == 0):
 				self.motors_position = motorlib.move( self.speed, [0,(config.boxsize[1]/lines)/2], self.motors_position )
 				vertical_move += (config.boxsize[1]/lines)/2
