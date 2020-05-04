@@ -45,10 +45,10 @@ class Gondola(object):
 		for y in range(0,lines):
 			print('vertical move', y)
 			if (y == 0):
-				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/((lines)/2)], self.motors_position )
-				vertical_move += config.boxsize[1]/((lines)/2)
+				self.motors_position = motorlib.move( self.speed, [0,(config.boxsize[1]/lines)/2], self.motors_position )
+				vertical_move += (config.boxsize[1]/lines)/2
 			else:
-				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/(lines)], self.motors_position )
+				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/lines], self.motors_position )
 				vertical_move += config.boxsize[1]/(lines)
 			self.togglepen()
 			print('horizontal line', y)
