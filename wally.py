@@ -47,19 +47,19 @@ class Gondola(object):
 		for y in range(0,lines):
 			if (y == 0):
 				#self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)/2),int(self.boxsize[1]/(lines)/2)], self.motors_position )
-				self.motors_position = motorlib.move( self.speed, [0,int(config.boxsize[1]/(lines)/2)], self.motors_position )
-				vertical_move += int(config.boxsize[1]/(lines)/2)
+				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/((lines)/2)], self.motors_position )
+				vertical_move += config.boxsize[1]/((lines)/2)
 			else:
 				#self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)),int(self.boxsize[1]/(lines))], self.motors_position )
-				self.motors_position = motorlib.move( self.speed, [0,int(config.boxsize[1]/(lines))], self.motors_position )
-				vertical_move += int(config.boxsize[1]/(lines))
+				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/(lines)], self.motors_position )
+				vertical_move += config.boxsize[1]/(lines)
 			self.togglepen()
 			if (y % 2 == 0):
 				self.motors_position = motorlib.move( self.speed, [config.boxsize[0],0], self.motors_position)
 			else:
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position)
 			self.togglepen()
-		self.motors_position = motorlib.move( self.speed, [0, -vertical_move , self.motors_position )
+		self.motors_position = motorlib.move( self.speed, [0, -vertical_move] , self.motors_position )
 		if (lines > 0 and lines % 2 != 0):
 			self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position )
 
@@ -69,7 +69,7 @@ def loadfile():
 	height = 0
 	pixels = 0
 	if (filename == 'test'):
-		if ( len( sys.argv ) > 1): config.numlines = int( sys.argv[2] )
+		if ( len( sys.argv ) > 2): config.numlines = int( sys.argv[2] )
 		width  = math.ceil( numlines**0.5 )
 		height = math.ceil( numlines**0.5 )
 		pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
