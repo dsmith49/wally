@@ -23,10 +23,8 @@ class Gondola(object):
 		self.motors_position = motors_position
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
-		delta_x = (loc[0] - self.position[0]) * config.boxsize[0] #self. boxsize[0]
-		delta_y = (loc[1] - self.position[1]) * config.boxsize[1] #self.boxsize[1]
-		#movecommand_x = [delta_x, -delta_x]
-		#movecommand_y = [delta_y, delta_y]
+		delta_x = (loc[0] - self.position[0]) * config.boxsize[0] 
+		delta_y = (loc[1] - self.position[1]) * config.boxsize[1]
 		if (self.position[0] != loc[0]):
 			self.motors_position = motorlib.move( self.speed, [delta_x,0], self.motors_position )
 		if (self.position[1] != loc[1]):
@@ -45,22 +43,24 @@ class Gondola(object):
 		print('drawing lines:', lines)
 		vertical_move = 0
 		for y in range(0,lines):
+			print('vertical move', y)
 			if (y == 0):
-				#self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)/2),int(self.boxsize[1]/(lines)/2)], self.motors_position )
 				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/((lines)/2)], self.motors_position )
 				vertical_move += config.boxsize[1]/((lines)/2)
 			else:
-				#self.motors_position = motorlib.move( self.speed, [int(self.boxsize[1]/(lines)),int(self.boxsize[1]/(lines))], self.motors_position )
 				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/(lines)], self.motors_position )
 				vertical_move += config.boxsize[1]/(lines)
 			self.togglepen()
+			print('horizontal line', y)
 			if (y % 2 == 0):
 				self.motors_position = motorlib.move( self.speed, [config.boxsize[0],0], self.motors_position)
 			else:
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position)
 			self.togglepen()
+		print('returning to top')
 		self.motors_position = motorlib.move( self.speed, [0, -vertical_move] , self.motors_position )
 		if (lines > 0 and lines % 2 != 0):
+			print('returning to left')
 			self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position )
 
 def loadfile():
