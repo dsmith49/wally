@@ -16,7 +16,7 @@ class Gondola(object):
 	pendown  = False
 	crosshatch = False
 	pwm      = None
-	y=0
+	
 	def __init__(self, pwm, speed, motors_position):
 		self.pwm = pwm
 		self.speed = speed
