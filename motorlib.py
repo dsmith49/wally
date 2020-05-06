@@ -215,7 +215,7 @@ def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_pos
 		MOTOR.stepperRATE(0,'B', abs(motors_velocity[1]))
 	timestamp_2 = time.perf_counter()
 	elapsed_time = timestamp_2 - timestamp_1
-	return [motors_position[0] + elapsed_time * motors_last_velocity[0],motors_position[1] + elapsed_time * motors_last_velocity[1]]
+	return [int(motors_position[0] + elapsed_time * motors_last_velocity[0]),int(motors_position[1] + elapsed_time * motors_last_velocity[1])]
 
 def setangle(pwm, motorid, angle):
 	#GPIO.output(4, True)
