@@ -185,7 +185,7 @@ def move_smart_step( speed, command, motors_position ):
 			flag_b=0
 		if (stat & (2 ** 5)) :
 			flag_a=0
-	return motors_position_end
+	return [motors_position[0] + steps[0], motors_position[1] + steps[1] ]
 
 def move( speed, command, motors_position ):
 	if config.smartmove:
