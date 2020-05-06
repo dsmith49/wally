@@ -173,7 +173,7 @@ def move_smart_step( speed, command, motors_position ):
 	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs( steps[0] ))
 	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs( steps[1] ))
 
-	print('in smart step with moves,' steps)
+	print('in smart step with moves', steps)
 	flag_a=1                                      #Initialize flag to true
 	flag_b=1
 	if (command[0] == 0): flag_a = 0
