@@ -25,10 +25,15 @@ def display_motors(motors_velocity, motors_position ):
 	print('location: ',"{:.2f}".format(motors_position[0]),'  ',"{:.2f}".format(motors_position[1]))
 
 def pen_up(pwm):
-	motorlib.setangle(pwm,20)
+	motorlib.setangle(pwm,0,config.pen_up_angle)
 
 def pen_down(pwm):
-	motorlib.setangle(pwm,15)
+	motorlib.setangle(pwm,0,config.pen_down_angle)
+
+def pen_rotate(pwm, position)
+	if (position==0) motorlib.setangle(pwm,1,config.pen_1_angle)
+	if (position==1) motorlib.setangle(pwm,1,config.pen_2_angle)
+	if (position==2) motorlib.setangle(pwm,1,config.pen_3_angle)
 
 def control_repl():
 	exit = False
@@ -42,6 +47,9 @@ def control_repl():
 		display_motors( motors_velocity, motors_position)
 		char = getch()
 		motors_last_velocity = motors_velocity.copy()
+		if (char == "1"): pen_rotate(pwm,0)
+		if (char == "2"): pen_rotate(pwm,1)
+		if (char == "3"): pen_rotate(pwm,2)
 		if (char == "w"):
 			motors_velocity[0] -= increment
 			motors_velocity[1] -= increment
