@@ -19,7 +19,7 @@ def display_motors(motors_velocity, motors_position ):
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]')
 	print('            zxc        EXIT: `        COMMAND:=')
-	print 'PEN1: 1     PEN2: 2    PEN3: 3')
+	print('PEN1: 1     PEN2: 2    PEN3: 3')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
