@@ -32,9 +32,9 @@ def pen_down(pwm):
 	motorlib.setangle(pwm,0,config.pen_down_angle)
 
 def pen_rotate(pwm, position):
-	if (position==0) motorlib.setangle(pwm,1,config.pen_1_angle)
-	if (position==1) motorlib.setangle(pwm,1,config.pen_2_angle)
-	if (position==2) motorlib.setangle(pwm,1,config.pen_3_angle)
+	if (position==0): motorlib.setangle(pwm,1,config.pen_1_angle)
+	if (position==1): motorlib.setangle(pwm,1,config.pen_2_angle)
+	if (position==2): motorlib.setangle(pwm,1,config.pen_3_angle)
 
 def control_repl():
 	exit = False
