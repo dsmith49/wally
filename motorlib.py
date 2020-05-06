@@ -66,6 +66,9 @@ def move_naive( speed, command_euclid, motors_position ):
 			flag_a=0
 	return [motors_position[0] + command[0], motors_position[1] + command[1]]
 
+def move_smart( speed, command_euclid, motors_position):
+	return move_naive( speed, command_euclid, motors_position)
+
 def hypoteni_to_euclid( motors_position ):
 	#herons formula
 	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
