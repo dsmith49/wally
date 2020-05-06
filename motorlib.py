@@ -2,6 +2,7 @@ import piplates.MOTORplate as MOTOR
 import RPi.GPIO as GPIO
 import time
 import config
+import math
 
 def configmotors( speed ):
 	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
