@@ -127,6 +127,7 @@ def move_smart( speed, command, motors_position ):
 	return euclid_to_hypoteni( end_position )
 
 def move_smart2(speed, command, motors_position):
+	print('move smart2', motors_position)
 	start_position   = hypoteni_to_euclid( motors_position )
 	x_diff     		 = command[0]
 	y_diff      	 = command[1]
