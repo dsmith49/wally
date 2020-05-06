@@ -160,6 +160,8 @@ def move_smart_step( speed, command, motors_position ):
 	motor1_velocity = motor_velocity_at_time( current_position, end_position, total_time/2, total_time )
 	motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, total_time/2, total_time )
 
+
+	print('in smart step with moves', steps)
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
 	if (command[0] == 0 and command[1] == 0): return motors_position
@@ -172,7 +174,6 @@ def move_smart_step( speed, command, motors_position ):
 	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs( steps[0] ))
 	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs( steps[1] ))
 
-	print('in smart step with moves', steps)
 	flag_a=1                                      #Initialize flag to true
 	flag_b=1
 	if (command[0] == 0): flag_a = 0
