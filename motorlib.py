@@ -151,8 +151,7 @@ def move_smart_step( speed, command, motors_position ):
 	y_diff      	 = command[1]
 	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
 	motors_position_end = euclid_to_hypoteni( end_position )
-	steps            = [sum(n) for n in zip(*[motors_position, motors_position_end])]
-
+	steps            = [motors_position_end[0] - motors_position[0], motors_position_end[1] - motors_position[1]]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 	total_time  	 = distance / (speed * config.meters_per_step)
 
