@@ -126,6 +126,21 @@ def move_smart( speed, command, motors_position ):
 	return euclid_to_hypoteni( end_position )
 
 def move_smart2(speed, command, motors_position):
+	start_position   = hypoteni_to_euclid( motors_position )
+	x_diff     		 = command[0]
+	y_diff      	 = command[1]
+	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
+	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
+
+	steps = math.ceil( distance / config.smart_step )
+	current_command = [0,0]
+	
+	for step in range(0,steps):
+		if (step < steps-1):
+			current_command = [x_diff / steps, y_diff / steps]
+		else:
+			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-2)]
+		motors_position = move_smart_step( speed, current_command, motors_position )
 
 
 def move_smart_step( speed, command, motors_position ):
