@@ -43,7 +43,6 @@ class Gondola(object):
 		print('drawing lines:', lines)
 		vertical_move = 0
 		for y in range(0,lines):
-			print('vertical move', y, config.boxsize, lines)
 			if (y == 0):
 				self.motors_position = motorlib.move( self.speed, [0,(config.boxsize[1]/lines)/2], self.motors_position )
 				vertical_move += (config.boxsize[1]/lines)/2
@@ -51,16 +50,13 @@ class Gondola(object):
 				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/lines], self.motors_position )
 				vertical_move += config.boxsize[1]/(lines)
 			self.togglepen()
-			print('horizontal line', y)
 			if (y % 2 == 0):
 				self.motors_position = motorlib.move( self.speed, [config.boxsize[0],0], self.motors_position)
 			else:
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position)
 			self.togglepen()
-		print('returning to top')
 		self.motors_position = motorlib.move( self.speed, [0, -vertical_move] , self.motors_position )
 		if (lines > 0 and lines % 2 != 0):
-			print('returning to left')
 			self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position )
 
 def loadfile():
