@@ -129,7 +129,7 @@ def move_smart2(speed, command, motors_position):
 	start_position   = hypoteni_to_euclid( motors_position )
 	x_diff     		 = command[0]
 	y_diff      	 = command[1]
-	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
+	end_position     = [ start_position[0] + x_diff, start_position[1] + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 
 	steps = math.ceil( distance / config.smart_step )
