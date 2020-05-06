@@ -19,7 +19,7 @@ def display_motors(motors_velocity, motors_position ):
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]')
 	print('            zxc        EXIT: `        COMMAND:=')
-	print 'PEN1: 1     PEN2: 2    PEN3: 3')
+	print('PEN1: 1     PEN2: 2    PEN3: 3')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
@@ -32,9 +32,10 @@ def pen_down(pwm):
 	motorlib.setangle(pwm,0,config.pen_down_angle)
 
 def pen_rotate(pwm, position)
-	if (position==0) motorlib.setangle(pwm,1,config.pen_1_angle)
-	if (position==1) motorlib.setangle(pwm,1,config.pen_2_angle)
-	if (position==2) motorlib.setangle(pwm,1,config.pen_3_angle)
+	pen_up( pwm )
+	if (position==0): motorlib.setangle(pwm,1,config.pen_1_angle)
+	if (position==1): motorlib.setangle(pwm,1,config.pen_2_angle)
+	if (position==2): motorlib.setangle(pwm,1,config.pen_3_angle)
 
 def control_repl():
 	exit = False
