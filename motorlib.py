@@ -108,7 +108,7 @@ def move_smart( speed, command, motors_position ):
 	while (abs(int(steps[0])) < abs(total_steps[0])) or (abs(int(steps[1])) < abs(total_steps[1])):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time), total_time )
-		print(abs(steps[0]), '<', abs(total_steps[0]), abs(steps[1]),'<',abs(total_steps[1])
+		print(abs(steps[0]), '<', abs(total_steps[0]), abs(steps[1]),'<',abs(total_steps[1]) )  
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
