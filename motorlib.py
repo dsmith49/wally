@@ -124,8 +124,8 @@ def move_smart( speed, command, motors_position ):
 		time.sleep( 0.05 )
 		timestamp_2  = time.perf_counter()
 		current_time += (timestamp_2 - timestamp_1)
-		steps[0] =+ (timestamp_2 - timestamp_1) * motor1_velocity
-		steps[1] =+ (timestamp_2 - timestamp_1) * motor2_velocity
+		steps[0] += (timestamp_2 - timestamp_1) * motor1_velocity
+		steps[1] += (timestamp_2 - timestamp_1) * motor2_velocity
 		timestamp_1  = timestamp_2
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
