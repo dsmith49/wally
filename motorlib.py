@@ -179,7 +179,7 @@ def move_smart_step( speed, command, motors_position ):
 	if (steps[0] == 0): flag_a = 0
 	if (steps[1] == 0): flag_b = 0
 	while(flag_a or flag_b):                      #start loop
-		time.sleep(0.05)                           #check every 100msec
+		#time.sleep(0.05)                           #check every 100msec
 		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
 		if (stat & (2 ** 4) ): 
 			flag_b=0
