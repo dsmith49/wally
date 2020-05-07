@@ -16,7 +16,7 @@ def getch():
 
 def display_motors(motors_velocity, motors_position ):
 	euclid_position = motorlib.hypoteni_to_euclid( motors_position)
-	call('clear')
+	#call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]')
 	print('            zxc        EXIT: `        COMMAND:=')
