@@ -104,7 +104,7 @@ def move_smart( speed, command, motors_position ):
 	steps = [0,0]
 
 	#while (current_time < total_time):
-	while (abs(steps[0]) < abs(x_diff / config.steps_per_meter)) or (abs(steps[1]) < abs(y_diff / config.steps_per_meter)):
+	while (abs(steps[0]) < abs(x_diff / config.meters_per_step)) or (abs(steps[1]) < abs(y_diff / config.meters_per_step)):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time), total_time )
 		if (current_time == 0):
