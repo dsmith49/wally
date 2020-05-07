@@ -164,7 +164,7 @@ def move_smart_step( speed, command, motors_position ):
 	print('in smart step with steps', steps,'and velocities', motor1_velocity, motor2_velocity)
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
-	if (steos[0] == 0 and steps[1] == 0): return motors_position
+	if (steps[0] == 0 and steps[1] == 0): return motors_position
 	motor1_direction = 'ccw'
 	motor2_direction = 'cw'
 	if (motor1_velocity < 0): motor1_direction = 'cw'
