@@ -164,22 +164,22 @@ def move_smart_step( speed, command, motors_position ):
 	print('in smart step with steps', steps,'and velocities', motor1_velocity, motor2_velocity)
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
-	if (command[0] == 0 and command[1] == 0): return motors_position
+	if (steos[0] == 0 and steps[1] == 0): return motors_position
 	motor1_direction = 'ccw'
 	motor2_direction = 'cw'
-	if (steps[0] < 0): motor1_direction = 'cw'
-	if (steps[1] < 0): motor2_direction = 'ccw'
+	if (motor1_velocity < 0): motor1_direction = 'cw'
+	if (motor2_velocity < 0): motor2_direction = 'ccw'
 	MOTOR.stepperCONFIG(0,'A', motor1_direction,'H',abs(motor1_velocity),0)
 	MOTOR.stepperCONFIG(0,'B', motor2_direction,'H',abs(motor2_velocity),0)
-	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs( steps[0] ))
-	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs( steps[1] ))
+	if (steps[0] != 0): MOTOR.stepperMOVE(0,'A', abs( steps[0] ))
+	if (steps[1] != 0): MOTOR.stepperMOVE(0,'B', abs( steps[1] ))
 
 	flag_a=1                                      #Initialize flag to true
 	flag_b=1
-	if (command[0] == 0): flag_a = 0
-	if (command[1] == 0): flag_b = 0
+	if (steps[0] == 0): flag_a = 0
+	if (steps[1] == 0): flag_b = 0
 	while(flag_a or flag_b):                      #start loop
-		#time.sleep(0.1)                           #check every 100msec
+		time.sleep(0.05)                           #check every 100msec
 		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
 		if (stat & (2 ** 4) ): 
 			flag_b=0
