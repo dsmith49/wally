@@ -142,6 +142,7 @@ def move_smart2(speed, command, motors_position):
 		else:
 			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-2)]
 		motors_position = move_smart_step( speed, current_command, motors_position )
+	x = input('press enter')
 	return motors_position
 
 def move_smart_step( speed, command, motors_position ):
