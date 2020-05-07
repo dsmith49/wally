@@ -102,7 +102,7 @@ def move_smart( speed, command, motors_position ):
 	timestamp_1 = 0
 	timestamp_2 = 0
 	steps = [0,0]
-	total_steps = euclid_to_hypoteni( command )
+	total_steps = [euclid_to_hypoteni( current_position )[0] - euclid_to_hypoteni( end_position )[0],euclid_to_hypoteni( current_position )[1] - euclid_to_hypoteni( end_position )[1]]
 
 	#while (current_time < total_time):
 	while (abs(int(steps[0])) < abs(total_steps[0])) or (abs(int(steps[1])) < abs(total_steps[1])):
