@@ -102,7 +102,7 @@ def control_repl():
 				command = [ float(x) for x in response.split(' ')[1:] ]
 			else:
 				command = [ float(x) for x in response.split(' ') ]
-			motors_position = motorlib.move_smart2( speed, command, motors_position )
+			motors_position = motorlib.move_smart( speed, command, motors_position )
 
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
 		timestamp_1 = time.perf_counter()
