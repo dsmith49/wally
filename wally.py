@@ -40,7 +40,7 @@ class Gondola(object):
 
 	def box(self, value ):
 		lines = int( (255-value)/(256/numlines) )
-		print('drawing lines:', lines)
+		print('drawing box w lines:', lines, 'at motors', [x*config.meters_per_step for x in self.motors_position], 'at euclid', motorlib.hypoteni_to_euclid( self.motors_position ):)
 		vertical_move = 0
 		for y in range(0,lines):
 			if (y == 0):
