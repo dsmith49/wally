@@ -118,7 +118,7 @@ def move_smart( speed, command, motors_position ):
 		else:
 			MOTOR.stepperRATE(0,'A', motor1_velocity)
 			MOTOR.stepperRATE(0,'B', motor2_velocity)
-		time.sleep( 0.05 )
+		#time.sleep( 0.05 )
 		timestamp_2  = time.perf_counter()
 		current_time += (timestamp_2 - timestamp_1)
 		timestamp_1  = timestamp_2
@@ -143,7 +143,6 @@ def move_smart2(speed, command, motors_position):
 			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-2)]
 		motors_position = move_smart_step( speed, current_command, motors_position )
 	return motors_position
-
 
 def move_smart_step( speed, command, motors_position ):
 

@@ -9,12 +9,11 @@ import config
 numlines = config.numlines
 
 class Gondola(object):
-	boxsize  = (120,150)
+	#boxsize  = (120,150)
 	position = [0,0]
 	motors_position = [0,0]
 	speed    = 0
 	pendown  = False
-	crosshatch = False
 	pwm      = None
 	
 	def __init__(self, pwm, speed, motors_position):
