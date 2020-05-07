@@ -57,6 +57,26 @@ class Gondola(object):
 		self.motors_position = motorlib.move( self.speed, [0, -vertical_move] , self.motors_position )
 		if (lines > 0 and lines % 2 != 0):
 			self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position )
+		if (config.crosshatch):
+			horizontal_move = 0
+			for y in range(0,lines):
+				if (y == 0):
+					self.motors_position = motorlib.move( self.speed, [(config.boxsize[0]/lines)/2,0], self.motors_position )
+					horizontal_move += (config.boxsize[0]/lines)/2
+				else:
+					self.motors_position = motorlib.move( self.speed, [config.boxsize[0]/lines,0], self.motors_position )
+					horizontal_move += config.boxsize[0]/(lines)
+				self.togglepen()
+				if (y % 2 == 0):
+					self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]], self.motors_position)
+				else:
+					self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position)
+				self.togglepen()
+			self.motors_position = motorlib.move( self.speed, [-horizontal_move, 0] , self.motors_position )
+			if (lines > 0 and lines % 2 != 0):
+				self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position )
+
+			
 
 def loadfile():
 	filename = sys.argv[1]
