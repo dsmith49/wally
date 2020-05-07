@@ -15,6 +15,7 @@ def getch():
 	return ch
 
 def display_motors(motors_velocity, motors_position ):
+	euclid_pos = hypoteni_to_euclid( motors_position)
 	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]')
@@ -24,6 +25,7 @@ def display_motors(motors_velocity, motors_position ):
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
 	print('location: ',"{:.2f}".format(motors_position[0]),'  ',"{:.2f}".format(motors_position[1]))
+	print('Euclid_X:',"{:.2f}".format(euclid_pos[0]),'Euclid_Y:',"{:.2f}".euclid_position[1]))
 
 def pen_up(pwm):
 	motorlib.setangle(pwm,0,config.pen_up_angle)
