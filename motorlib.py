@@ -167,8 +167,8 @@ def move_smart_step( speed, command, motors_position ):
 	if (command[0] == 0 and command[1] == 0): return motors_position
 	motor1_direction = 'ccw'
 	motor2_direction = 'cw'
-	if (command[0] < 0): motor1_direction = 'cw'
-	if (command[1] < 0): motor2_direction = 'ccw'
+	if (steps[0] < 0): motor1_direction = 'cw'
+	if (steps[1] < 0): motor2_direction = 'ccw'
 	MOTOR.stepperCONFIG(0,'A', motor1_direction,'H',abs(motor1_velocity),0)
 	MOTOR.stepperCONFIG(0,'B', motor2_direction,'H',abs(motor2_velocity),0)
 	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs( steps[0] ))
