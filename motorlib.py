@@ -13,10 +13,10 @@ def configmotors( speed ):
 	pwm = [None,None]
 	GPIO.setup(4, GPIO.OUT)
 	pwm[0]=GPIO.PWM(4, 50)
-	pwm[0].start( config.pen_up_angle )
+	pwm[0].start( 0 )
 	GPIO.setup(5, GPIO.OUT)
 	pwm[1]=GPIO.PWM(5, 50)
-	pwm[1].start( config.pen_1_angle )
+	pwm[1].start( 0 )
 	return pwm
 
 def stop():
