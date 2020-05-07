@@ -132,6 +132,7 @@ def move_smart2(speed, command, motors_position):
 	y_diff      	 = command[1]
 	end_position     = [ start_position[0] + x_diff, start_position[1] + y_diff]
 	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
+	motors_position_begin = motors_position.copy()
 
 	steps = math.ceil( distance / config.smart_step )
 	current_command = [0,0]
@@ -140,9 +141,9 @@ def move_smart2(speed, command, motors_position):
 		if (step < steps-1):
 			current_command = [x_diff / steps, y_diff / steps]
 		else:
-			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-2)]
+			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-1)]
 		motors_position = move_smart_step( speed, current_command, motors_position )
-	x = input('press enter')
+	x = input('press enter',motors_position_begin, motors_position)
 	return motors_position
 
 def move_smart_step( speed, command, motors_position ):
