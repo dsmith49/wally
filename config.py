@@ -13,7 +13,7 @@ button_delay = 0.05
 #meters_per_step = (2 * 0.025 * 3.14159) / 400 # = 0.00039269875 # meters per step # theoretical
 meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
 smart_step = 0.01
-pen_down_angle = 15
+pen_down_angle = 17
 pen_up_angle   = 20
 pen_1_angle    = 10
 pen_2_angle    = 20
