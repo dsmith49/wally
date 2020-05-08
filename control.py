@@ -107,7 +107,8 @@ def control_repl():
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
 		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)
-	motorlib.close( pwm )
+	motorlib.stop()
+	motorlib.off()
 	return motors_position
 
 if __name__ == '__main__':
