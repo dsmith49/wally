@@ -18,8 +18,8 @@ def display_motors(motors_velocity, motors_position ):
 	euclid_position = motorlib.hypoteni_to_euclid( motors_position)
 	#call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
-	print('            a d        PENDOWN:[      PENUP:]')
-	print('            zxc        EXIT: `        COMMAND:=')
+	print('            a d        PENDOWN:[      PENUP:]   COMMAND:=')
+	print('            zxc        EXIT: `        EXIT_AND_RELEASE_MOTORS:~')
 	print('PEN1: 1     PEN2: 2    PEN3: 3')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
@@ -41,6 +41,7 @@ def pen_rotate(pwm, position):
 
 def control_repl():
 	exit = False
+	motors = True
 	motors_velocity = [0,0]
 	motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
 	motors_last_velocity = [0,0]
@@ -77,7 +78,11 @@ def control_repl():
 		if (char == "d"):
 			motors_velocity[0] += increment
 			motors_velocity[1] -= increment
-		if (char == "`"): exit = True
+		if (char == "`"):
+			exit = True
+		if (char == "~"): 
+			motors = False
+			exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
 			motors_position = [config.motor1_length / config.meters_per_step, config.motor2_length / config.meters_per_step ]
@@ -108,7 +113,7 @@ def control_repl():
 		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)
 	motorlib.stop()
-	motorlib.off()
+	if (not motors): motorlib.off()
 	return motors_position
 
 if __name__ == '__main__':
