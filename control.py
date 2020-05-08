@@ -17,8 +17,8 @@ def getch():
 def display_motors(motors_velocity, motors_position ):
 	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
-	print('            a d        PENDOWN:[      PENUP:]')
-	print('            zxc        EXIT: `        COMMAND:=')
+	print('            a d        PENDOWN:[      PENUP:]     COMMAND:=')
+	print('            zxc        EXIT: `        EXIT_AND_RELEASE_MOTORS:~')
 	print('PEN1: 1     PEN2: 2    PEN3: 3')
 	print('--------------------------------')
 	print('       motor1      |      motor2')
@@ -39,6 +39,7 @@ def pen_rotate(pwm, position):
 
 def control_repl():
 	exit = False
+	motors = True
 	motors_velocity = [0,0]
 	motors_position = [config.motor1_length / config.meters_per_step, config.motor2_length / config.meters_per_step ]
 	motors_last_velocity = [0,0]
@@ -76,6 +77,9 @@ def control_repl():
 			motors_velocity[0] += increment
 			motors_velocity[1] -= increment
 		if (char == "`"): exit = True
+		if (char == "~"):
+			exit = True
+			motors = False
 		if (char == "p"):
 			motors_velocity = [0,0]
 			motors_position = [config.motor1_length / config.meters_per_step, config.motor2_length / config.meters_per_step ]
@@ -91,21 +95,11 @@ def control_repl():
 			else:
 				command = [ float(x) for x in response.split(' ') ]
 			motors_position = motorlib.move_naive( speed, command, motors_position )
-		if (char == '-'):
-			motors_velocity = [0,0]
-			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
-			response = input('SMART MOVE >> SPEED X_meters Y_meters>>')
-			if (len(response.split(' ')) == 3):
-				speed = int( response.split(' ')[0] )
-				command = [ float(x) for x in response.split(' ')[1:] ]
-			else:
-				command = [ float(x) for x in response.split(' ') ]
-			motors_position = motorlib.move_smart( speed, command, motors_position )
-
 		motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
 		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)
 	motorlib.stop()
+	if (not motors): motorlib.off()
 	return motors_position
 
 if __name__ == '__main__':
