@@ -1,9 +1,9 @@
 
-speed = 200
+speed = 500
 numlines = 8                   # maximum number of horizontal lines per pixel
 smartmove = True
 crosshatch = False             # not used yet
-boxsize   = [0.015,0.015]        # pixel size width by height, in meters
+boxsize   = [0.01,0.01]        # pixel size width by height, in meters
 x_total = 1.915                # distance between two motor wire mounts, in meters
 motor1_length = 1.56		   # length of motor1 wire, in meters
 motor2_length = 1.56           # length of motor2 wire, in meters (currently has to be the same as wire1)
