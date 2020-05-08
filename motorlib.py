@@ -85,7 +85,7 @@ def motor_velocity_at_time( current_pos, end_pos, time, total_time ):
 	y_diff   = end_pos[1] - current_pos[1]
 	dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
 	dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff * time + current_pos[1])**2 )**0.5
-	return int( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
+	return round( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
 
 def move_smart( speed, command, motors_position ):
 	
@@ -222,7 +222,7 @@ def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_pos
 		MOTOR.stepperRATE(0,'B', abs(motors_velocity[1]))
 	timestamp_2 = time.perf_counter()
 	elapsed_time = timestamp_2 - timestamp_1
-	return [int(motors_position[0] + elapsed_time * motors_last_velocity[0]),int(motors_position[1] + elapsed_time * motors_last_velocity[1])]
+	return [round(motors_position[0] + elapsed_time * motors_last_velocity[0]),round(motors_position[1] + elapsed_time * motors_last_velocity[1])]
 
 def setangle(pwm, motorid, angle):
 	#GPIO.output(4, True)
@@ -230,7 +230,7 @@ def setangle(pwm, motorid, angle):
 	if (timestamp - pwm[2] < 0.5):
 		time.sleep( timestamp - pwm[2] )
 	pwm[motorid].ChangeDutyCycle( angle / 18 + 2.5 )
-	time.sleep(0.1)
 	pwm[2] = time.perf_counter()
+	time.sleep(0.1)
 	#GPIO.output(4, False)
 	#pwm.ChangeDutyCycle(0)
