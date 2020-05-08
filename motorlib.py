@@ -11,7 +11,7 @@ def configmotors( speed ):
 	MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops
 	MOTOR.stepperCONFIG(0,'A', 'cw','H',speed,0)
 	MOTOR.stepperCONFIG(0,'B', 'cw','H',speed,0)
-	pwm = [None,None]
+	pwm = [None,None,time.perf_counter()]
 	GPIO.setup(4, GPIO.OUT)
 	pwm[0]=GPIO.PWM(4, 50)
 	pwm[0].start( 0 )
@@ -131,7 +131,6 @@ def move_smart( speed, command, motors_position ):
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
 	return [motors_position[0] + int(steps[0]), motors_position[1] + int(steps[1])]
-	#return euclid_to_hypoteni( end_position )
 
 def move_smart2(speed, command, motors_position):
 	start_position   = hypoteni_to_euclid( motors_position )
@@ -148,7 +147,7 @@ def move_smart2(speed, command, motors_position):
 		if (step < steps-1):
 			current_command = [x_diff / steps, y_diff / steps]
 		else:
-			current_command = [x_diff - (x_diff/steps)*(steps-2), y_diff - (y_diff/steps)*(steps-1)]
+			current_command = [x_diff - (x_diff/steps)*(steps-1), y_diff - (y_diff/steps)*(steps-1)]
 		motors_position = move_smart_step( speed, current_command, motors_position )
 	print('begin',motors_position_begin,'end', motors_position)
 	x = input('press enter')
@@ -188,7 +187,7 @@ def move_smart_step( speed, command, motors_position ):
 	if (steps[0] == 0): flag_a = 0
 	if (steps[1] == 0): flag_b = 0
 	while(flag_a or flag_b):                      #start loop
-		time.sleep(0.05)                           #check every 100msec
+		#time.sleep(0.05)                           #check every 100msec
 		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
 		if (stat & (2 ** 4) ): 
 			flag_b=0
@@ -198,7 +197,7 @@ def move_smart_step( speed, command, motors_position ):
 
 def move( speed, command, motors_position ):
 	if config.smartmove:
-		return move_smart( speed, command, motors_position )
+		return move_smart2( speed, command, motors_position )
 	else:
 		return move_naive( speed, command, motors_position )
 
@@ -227,7 +226,10 @@ def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_pos
 
 def setangle(pwm, motorid, angle):
 	#GPIO.output(4, True)
+	timestamp = time.perf_counter()
+	if (timestamp - pwm[2] < 0.5):
+		time.sleep( timestamp - pwm[2] )
 	pwm[motorid].ChangeDutyCycle( angle / 18 + 2.5 )
-	time.sleep(0.5)
+	pwm[2] = time.perf_counter()
 	#GPIO.output(4, False)
 	#pwm.ChangeDutyCycle(0)
