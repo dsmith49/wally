@@ -38,7 +38,7 @@ def close(pwm):
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
 def meters_to_steps( command ):
-	return [ int(command[0] / config.meters_per_step), int(command[1] / config.meters_per_step) ]
+	return [ round(command[0] / config.meters_per_step), round(command[1] / config.meters_per_step) ]
 
 def move_naive( speed, command_euclid, motors_position ):
 	command = euclid_to_hypoteni_naive( meters_to_steps( command_euclid ) )
@@ -78,7 +78,7 @@ def hypoteni_to_euclid( motors_position ):
 def euclid_to_hypoteni( coordinate ):
 	m1 = (coordinate[0]**2 + coordinate[1]**2)**0.5 / config.meters_per_step
 	m2 = ((config.x_total - coordinate[0])**2 + coordinate[1]**2)**0.5 / config.meters_per_step
-	return [int(m1),int(m2)]
+	return [round(m1),round(m2)]
 
 def motor_velocity_at_time( current_pos, end_pos, time, total_time ):
 	x_diff   = end_pos[0] - current_pos[0]
@@ -105,7 +105,7 @@ def move_smart( speed, command, motors_position ):
 	total_steps = [euclid_to_hypoteni( end_position )[0] - euclid_to_hypoteni( current_position )[0],euclid_to_hypoteni( end_position )[1] - euclid_to_hypoteni( current_position )[1]]
 
 	#while (current_time < total_time):
-	while (abs(int(steps[0])) < abs(total_steps[0])) or (abs(int(steps[1])) < abs(total_steps[1])):
+	while (abs(round(steps[0])) < abs(total_steps[0])) or (abs(round(steps[1])) < abs(total_steps[1])):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time), total_time )
 		#print(abs(steps[0]), '<', abs(total_steps[0]), abs(steps[1]),'<',abs(total_steps[1]) )  
@@ -130,7 +130,7 @@ def move_smart( speed, command, motors_position ):
 		timestamp_1  = timestamp_2
 	MOTOR.stepperSTOP(0,'A')
 	MOTOR.stepperSTOP(0,'B')
-	return [motors_position[0] + int(steps[0]), motors_position[1] + int(steps[1])]
+	return [motors_position[0] + round(steps[0]), motors_position[1] + round(steps[1])]
 
 def move_smart2(speed, command, motors_position):
 	start_position   = hypoteni_to_euclid( motors_position )
