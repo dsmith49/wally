@@ -230,6 +230,7 @@ def setangle(pwm, motorid, angle):
 	if (timestamp - pwm[2] < 0.5):
 		time.sleep( timestamp - pwm[2] )
 	pwm[motorid].ChangeDutyCycle( angle / 18 + 2.5 )
+	time.sleep(0.1)
 	pwm[2] = time.perf_counter()
 	#GPIO.output(4, False)
 	#pwm.ChangeDutyCycle(0)
