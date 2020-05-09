@@ -67,6 +67,32 @@ def move_naive( speed, command_euclid, motors_position ):
 			flag_a=0
 	return [motors_position[0] + command[0], motors_position[1] + command[1]]
 
+def move_naive2( speed, command, motors_position ):
+	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
+	MOTOR.enablestepSTOPint(0,'B') 
+	if (command[0] == 0 and command[1] == 0): return motors_position
+	motor1_direction = 'ccw'
+	motor2_direction = 'cw'
+	if (command[0] < 0): motor1_direction = 'cw'
+	if (command[1] < 0): motor2_direction = 'ccw'
+	MOTOR.stepperCONFIG(0,'A', motor1_direction,'H',speed,0)
+	MOTOR.stepperCONFIG(0,'B', motor2_direction,'H',speed,0)
+	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs(command[0]))
+	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs(command[1]))
+
+	flag_a=1                                      #Initialize flag to true
+	flag_b=1
+	if (command[0] == 0): flag_a = 0
+	if (command[1] == 0): flag_b = 0
+	while(flag_a or flag_b):                      #start loop
+		time.sleep(0.05)                           #check every 100msec
+		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
+		if (stat & (2 ** 4) ): 
+			flag_b=0
+		if (stat & (2 ** 5)) :
+			flag_a=0
+	return [motors_position[0] + command[0], motors_position[1] + command[1]]
+
 def hypoteni_to_euclid( motors_position ):
 	#herons formula
 	#s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2

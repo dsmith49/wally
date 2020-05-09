@@ -9,7 +9,6 @@ import config
 numlines = config.numlines
 
 class Gondola(object):
-	#boxsize  = (120,150)
 	origin   = [0,0]
 	position = [0,0]
 	motors_position = [0,0]
@@ -24,12 +23,21 @@ class Gondola(object):
 		self.origin = motors_position.copy()
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
-		delta_x = (self.origin[0] + (loc[0] - self.position[0]) * config.boxsize[0]) - self.motor_position[0]
-		delta_y = (self.origin[1] + (loc[1] - self.position[1]) * config.boxsize[1]) - self.motor_position[1]
-		if (self.position[0] != loc[0]):
-			self.motors_position = motorlib.move( self.speed, [delta_x,0], self.motors_position )
-		if (self.position[1] != loc[1]):
-			self.motors_position = motorlib.move( self.speed, [0,delta_y], self.motors_position )
+		if (config.smartmove):
+			delta_x = (self.origin[0] + (loc[0] - self.position[0]) * config.boxsize[0]) - self.motors_position[0]
+			delta_y = (self.origin[1] + (loc[1] - self.position[1]) * config.boxsize[1]) - self.motors_position[1]
+			if (self.position[0] != loc[0]):
+				self.motors_position = motorlib.move( self.speed, [delta_x,0], self.motors_position )
+			if (self.position[1] != loc[1]):
+				self.motors_position = motorlib.move( self.speed, [0,delta_y], self.motors_position )
+		else:
+			delta_x = (self.origin[0] + (loc[0] - self.position[0]) * config.boxsize[0]) - self.motors_position[0]
+			delta_y = (self.origin[1] + (loc[1] - self.position[1]) * config.boxsize[1]) - self.motors_position[1]
+			if (self.position[0] != loc[0]):
+				self.motors_position = motorlib.move( self.speed, [delta_x,0], self.motors_position )
+			if (self.position[1] != loc[1]):
+				self.motors_position = motorlib.move( self.speed, [0,delta_y], self.motors_position )
+
 		self.position = loc
 		
 	def togglepen(self):

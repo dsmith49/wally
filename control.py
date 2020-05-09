@@ -15,7 +15,7 @@ def getch():
 	return ch
 
 def display_motors(motors_velocity, motors_position ):
-	euclid_position = motorlib.hypoteni_to_euclid( motors_position)
+	euclid_position = motorlib.hypoteni_to_euclid( motors_position )
 	#call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]   COMMAND:=')
@@ -24,8 +24,9 @@ def display_motors(motors_velocity, motors_position ):
 	print('--------------------------------')
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
-	print('location: ',"{:.2f}".format(motors_position[0]),'  ',"{:.2f}".format(motors_position[1]))
-	print('Euclid_X:',"{:.2f}".format(euclid_position[0]),'Euclid_Y:',"{:.2f}".format(euclid_position[1]))
+	print('steps: ',motors_position[0],'  ',motors_position[1])
+	print('length: ',"{:.2f}".format(motors_position[0] / config.meters_per_step),'  ',"{:.2f}".format(motors_position[1] / config.meters_per_step))
+	print('Euclid:',"{:.2f}".format(euclid_position[0]),' ',"{:.2f}".format(euclid_position[1]))
 
 def pen_up(pwm):
 	motorlib.setangle(pwm,0,config.pen_up_angle)
@@ -85,19 +86,19 @@ def control_repl():
 			exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
-			motors_position = [config.motor1_length / config.meters_per_step, config.motor2_length / config.meters_per_step ]
+			motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_ste) ]
 		if (char == '['): pen_down(pwm)
 		if (char == ']'): pen_up(pwm)
 		if (char == '='):
 			motors_velocity = [0,0]
 			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
-			response = input('NAIVE MOVE >> SPEED X Y>>')
+			response = input('NAIVE MOVE >> SPEED M1_steps M2_steps>>')
 			if (len(response.split(' ')) == 3):
 				speed = int( response.split(' ')[0] )
-				command = [ float(x) for x in response.split(' ')[1:] ]
+				command = [ int(x) for x in response.split(' ')[1:] ]
 			else:
-				command = [ float(x) for x in response.split(' ') ]
-			motors_position = motorlib.move_naive( speed, command, motors_position )
+				command = [ int(x) for x in response.split(' ') ]
+			motors_position = motorlib.move_naive2( speed, command, motors_position )
 		if (char == '-'):
 			motors_velocity = [0,0]
 			motors_position = motorlib.update_motors( motors_last_velocity, motors_velocity, timestamp_1, motors_position)
