@@ -73,7 +73,7 @@ class Gondola(object):
 					self.motors_position = motorlib.move( self.speed, [int( (config.boxsize_naive[0]/vertical_lines)/2), -int( (config.boxsize_naive[0]/vertical_lines)/2)], self.motors_position )
 					horizontal_move += int( (config.boxsize_naive[0]/vertical_lines)/2 )
 				else:
-					self.motors_position = motorlib.move( self.speed, [int(config.boxsize_naive[0]/vertical_lines),int(config.boxsize_naive[0]/vertical_lines)], self.motors_position )
+					self.motors_position = motorlib.move( self.speed, [int(config.boxsize_naive[0]/vertical_lines),-int(config.boxsize_naive[0]/vertical_lines)], self.motors_position )
 					horizontal_move += int( config.boxsize_naive[0]/(vertical_lines) )
 				self.togglepen()
 				if (y % 2 == 0):
