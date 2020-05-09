@@ -24,13 +24,14 @@ class Gondola(object):
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
 		if (config.smartmove):
-			#fix this
+			delta_x = (loc[0] - self.position[0]) * config.boxsize[0]
+			delta_y = (loc[1] - self.position[1]) * config.boxsize[1]
+			self.motors_position = motorlib.move( self.speed, [delta_x, delta_y], self.motors_position )
 			self.motors_position = motorlib.move( self.speed, [0, 0], self.motors_position )
 		else:
 			delta_x = (loc[0] - self.position[0]) * config.boxsize_naive[0]
 			delta_y = (loc[1] - self.position[1]) * config.boxsize_naive[1]
 			self.motors_position = motorlib.move( self.speed, [delta_x + delta_y,-delta_x + delta_y], self.motors_position )
-
 		self.position = loc
 		
 	def togglepen(self):
@@ -39,7 +40,6 @@ class Gondola(object):
 		else:
 			control.pen_down(self.pwm)
 		self.pendown = not self.pendown
-
 
 	def box_naive(self, value ):
 		lines     = int( (255-value)/(256/numlines) )
@@ -86,7 +86,7 @@ class Gondola(object):
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[1],-config.boxsize_naive[1]], self.motors_position )
 
 	def box(self, value ):
-		lines     = int( (255-value)/(256/numlines) )
+		lines     		 = int( (255-value)/(256/numlines) )
 		vertical_lines   = 0
 		horizontal_lines = lines
 		if (config.crosshatch):
