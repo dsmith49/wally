@@ -27,9 +27,9 @@ class Gondola(object):
 			#fix this
 			self.motors_position = motorlib.move( self.speed, [0, 0], self.motors_position )
 		else:
-			delta_m1 = (self.origin[0] + (loc[0] - self.position[0]) * config.boxsize_naive[0]) - self.motors_position[0]
-			delta_m2 = (self.origin[1] + (loc[1] - self.position[1]) * config.boxsize_naive[1]) - self.motors_position[1]
-			self.motors_position = motorlib.move( self.speed, [delta_m1, delta_m2], self.motors_position )
+			delta_x = (loc[0] - self.position[0]) * config.boxsize_naive[0]
+			delta_y = (loc[1] - self.position[1]) * config.boxsize_naive[1]
+			self.motors_position = motorlib.move( self.speed, [-delta_x - delta_y,delta_x -delta_y], self.motors_position )
 
 		self.position = loc
 		
