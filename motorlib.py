@@ -75,7 +75,7 @@ def hypoteni_to_euclid( motors_position ):
 	#x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
 	
 	#height of trapezoid where a is long base, c is short base
-	a = config.x-total
+	a = config.x_total
 	b = motors_position[0] * config.meters_per_step
 	c = 0.22
 	d = motors_position[1] * config.meters_per_step
