@@ -112,7 +112,7 @@ def hypoteni_to_euclid( motors_position ):
 	
 def euclid_to_hypoteni( coordinate ):
 	m1 = ( (coordinate[0] - config.x_gondola)**2 + (coordinate[1] - config.y_gondola)**2)**0.5 / config.meters_per_step
-	m2 = ((config.x_total - (coordinate[0] - config.x_gondola))**2 + (coordinate[1] - config.y_gondola)**2)**0.5 / config.meters_per_step
+	m2 = ( ((config.x_total - coordinate[0]) - config.x_gondola)**2 + (coordinate[1] - config.y_gondola)**2)**0.5 / config.meters_per_step
 	return [round(m1),round(m2)]
 
 def motor_velocity_at_time( current_pos, end_pos, time, total_time):
