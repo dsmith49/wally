@@ -69,15 +69,20 @@ def move_naive( speed, command_euclid, motors_position ):
 
 def hypoteni_to_euclid( motors_position ):
 	#herons formula
-	s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
-	a = (s * (s - motors_position[0]*config.meters_per_step) * ( s- motors_position[1]*config.meters_per_step ) * (s-config.x_total) )**0.5
-	y_from_top  = a / (0.5 * config.x_total)
-	x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
+	#s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
+	#a = (s * (s - motors_position[0]*config.meters_per_step) * ( s- motors_position[1]*config.meters_per_step ) * (s-config.x_total) )**0.5
+	#y_from_top  = a / (0.5 * config.x_total)
+	#x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
+	
+	#height of trapezoid where a is long base, c is short base
+	y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) ÷ (4 * (a-c)**2))**0.5 + config.y_gondola
+	x_from_left = (motors_position[0]*config.meters_per_step)**2 - (y_from_top - config.y_gondola)**2 )**0.5
+
 	return [x_from_left, y_from_top]
 	
 def euclid_to_hypoteni( coordinate ):
-	m1 = (coordinate[0]**2 + coordinate[1]**2)**0.5 / config.meters_per_step
-	m2 = ((config.x_total - coordinate[0])**2 + coordinate[1]**2)**0.5 / config.meters_per_step
+	m1 = ( (coordinate[0] - config.x_gondola)**2 + (coordinate[1] - config.y_gondola)**2)**0.5 / config.meters_per_step
+	m2 = ((config.x_total - (coordinate[0] - config.x_gondola))**2 + (coordinate[1] - config.y_gondola)**2)**0.5 / config.meters_per_step
 	return [round(m1),round(m2)]
 
 def motor_velocity_at_time( current_pos, end_pos, time, total_time):
