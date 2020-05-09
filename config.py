@@ -1,7 +1,7 @@
 
 speed = 300
 numlines = 8                   # maximum number of horizontal lines per pixel
-smartmove = True
+smartmove = False
 crosshatch = True              # not used yet
 boxsize   = [0.004,0.004]      # pixel size width by height, in meters, used by smartmove
 boxsize_naive = [100,100]      # pixel size width by height, in steps, used by naivemove
