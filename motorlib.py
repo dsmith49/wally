@@ -38,7 +38,7 @@ def close(pwm):
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
 def meters_to_steps( command ):
-	return [ round(command[0] / config.meters_per_step), round(command[1] / config.meters_per_step) ]
+	return [ math.ceil(command[0] / config.meters_per_step), math.ceil(command[1] / config.meters_per_step) ]
 
 def move_naive( speed, command_euclid, motors_position ):
 	command = euclid_to_hypoteni_naive( meters_to_steps( command_euclid ) )
@@ -80,11 +80,13 @@ def euclid_to_hypoteni( coordinate ):
 	m2 = ((config.x_total - coordinate[0])**2 + coordinate[1]**2)**0.5 / config.meters_per_step
 	return [round(m1),round(m2)]
 
-def motor_velocity_at_time( current_pos, end_pos, time, total_time ):
+def motor_velocity_at_time( current_pos, end_pos, time, total_time):
 	x_diff   = end_pos[0] - current_pos[0]
 	y_diff   = end_pos[1] - current_pos[1]
-	dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
-	dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff * time + current_pos[1])**2 )**0.5
+	#dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
+	#dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff * time + current_pos[1])**2 )**0.5
+	dhdt_numerator   = x_diff * (time * x_diff +current_pos[0] - config.x_gondola) + y_diff * (time * y_diff + current_pos[1] - config.y_gondola)
+	dhdt_denomenator = ( (x_diff * time + current_pos[0] - config.x_gondola)**2 + (y_diff * time + current_pos[1] - config.y_gondola)**2 )**0.5
 	return round( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
 
 def move_smart( speed, command, motors_position ):

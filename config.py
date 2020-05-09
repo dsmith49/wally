@@ -10,6 +10,8 @@ motor2_length = 1.56           # length of motor2 wire, in meters (currently has
 x_usable = [0.70,1.22]         # not used yet
 y_usable = [0.30,1.00]         # not used yet
 button_delay = 0.05
+x_gondola = 0.11
+y_gondola = 0.04
 #meters_per_step = (2 * 0.025 * 3.14159) / 400 # = 0.00039269875 # meters per step # theoretical
 meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
 smart_step = 0.01
