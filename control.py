@@ -25,7 +25,7 @@ def display_motors(motors_velocity, motors_position ):
 	print('       motor1      |      motor2')
 	print('velocity: ',motors_velocity[0],'        ',motors_velocity[1])
 	print('steps: ',motors_position[0],'  ',motors_position[1])
-	print('length: ',"{:.2f}".format(motors_position[0] / config.meters_per_step),'  ',"{:.2f}".format(motors_position[1] / config.meters_per_step))
+	print('length: ',"{:.2f}".format(motors_position[0] * config.meters_per_step),'  ',"{:.2f}".format(motors_position[1] * config.meters_per_step))
 	print('Euclid:',"{:.2f}".format(euclid_position[0]),' ',"{:.2f}".format(euclid_position[1]))
 
 def pen_up(pwm):
