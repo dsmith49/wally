@@ -86,7 +86,7 @@ def control_repl():
 			exit = True
 		if (char == "p"):
 			motors_velocity = [0,0]
-			motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_ste) ]
+			motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
 		if (char == '['): pen_down(pwm)
 		if (char == ']'): pen_up(pwm)
 		if (char == '='):
