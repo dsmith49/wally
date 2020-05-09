@@ -1,5 +1,5 @@
 
-speed = 300
+speed = 400
 numlines = 8                   # maximum number of horizontal lines per pixel
 smartmove = True
 crosshatch = True             # not used yet
