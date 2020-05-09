@@ -38,7 +38,7 @@ def close(pwm):
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
 def meters_to_steps( command ):
-	return [ math.ceil(command[0] / config.meters_per_step), math.ceil(command[1] / config.meters_per_step) ]
+	return [ round(command[0] / config.meters_per_step), round(command[1] / config.meters_per_step) ]
 
 def move_naive( speed, command_euclid, motors_position ):
 	command = euclid_to_hypoteni_naive( meters_to_steps( command_euclid ) )
@@ -75,7 +75,7 @@ def hypoteni_to_euclid( motors_position ):
 	#x_from_left = ((motors_position[0]*config.meters_per_step)**2 - y_from_top**2)**0.5
 	
 	#height of trapezoid where a is long base, c is short base
-	y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) ÷ (4 * (a-c)**2))**0.5 + config.y_gondola
+	y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + config.y_gondola
 	x_from_left = (motors_position[0]*config.meters_per_step)**2 - (y_from_top - config.y_gondola)**2 )**0.5
 
 	return [x_from_left, y_from_top]
