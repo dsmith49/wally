@@ -236,7 +236,7 @@ def move( speed, command, motors_position ):
 	if config.smartmove:
 		return move_smart2( speed, command, motors_position )
 	else:
-		return move_naive( speed, command, motors_position )
+		return move_naive2( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
 	if (motors_last_velocity[0]==0):
