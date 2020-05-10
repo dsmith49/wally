@@ -17,7 +17,7 @@ y_gondola = 0.04
 meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
 smart_step = 0.01
 pen_down_angle = 17
-pen_up_angle   = 20
+pen_up_angle   = 23
 pen_1_angle    = 10
 pen_2_angle    = 20
 pen_3_angle    = 30
