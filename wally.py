@@ -9,26 +9,29 @@ import config
 numlines = config.numlines
 
 class Gondola(object):
-	boxsize  = (120,150)
+	origin   = [0,0]
 	position = [0,0]
 	motors_position = [0,0]
 	speed    = 0
 	pendown  = False
-	crosshatch = False
 	pwm      = None
 	
 	def __init__(self, pwm, speed, motors_position):
 		self.pwm = pwm
 		self.speed = speed
 		self.motors_position = motors_position
+		self.origin = motors_position.copy()
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
-		delta_x = (loc[0] - self.position[0]) * config.boxsize[0] 
-		delta_y = (loc[1] - self.position[1]) * config.boxsize[1]
-		if (self.position[0] != loc[0]):
-			self.motors_position = motorlib.move( self.speed, [delta_x,0], self.motors_position )
-		if (self.position[1] != loc[1]):
-			self.motors_position = motorlib.move( self.speed, [0,delta_y], self.motors_position )
+		if (config.smartmove):
+			delta_x = (loc[0] - self.position[0]) * config.boxsize[0]
+			delta_y = (loc[1] - self.position[1]) * config.boxsize[1]
+			self.motors_position = motorlib.move( self.speed, [delta_x, delta_y], self.motors_position )
+			self.motors_position = motorlib.move( self.speed, [0, 0], self.motors_position )
+		else:
+			delta_x = (loc[0] - self.position[0]) * config.boxsize_naive[0]
+			delta_y = (loc[1] - self.position[1]) * config.boxsize_naive[1]
+			self.motors_position = motorlib.move( self.speed, [delta_x + delta_y,-delta_x + delta_y], self.motors_position )
 		self.position = loc
 		
 	def togglepen(self):
@@ -38,30 +41,95 @@ class Gondola(object):
 			control.pen_down(self.pwm)
 		self.pendown = not self.pendown
 
-	def box(self, value ):
-		lines = int( (255-value)/(256/numlines) )
-		print('drawing lines:', lines)
+	def box_naive(self, value ):
+		lines     = int( (255-value)/(256/numlines) )
+		vertical_lines   = 0
+		horizontal_lines = lines
+		if (config.crosshatch):
+			horizontal_lines = math.ceil( lines / 2)
+			vertical_lines   = lines - horizontal_lines
+		print('drawing naive box w lines:', lines, 'at motors', [x*config.meters_per_step for x in self.motors_position], 'at euclid', motorlib.hypoteni_to_euclid( self.motors_position ))
 		vertical_move = 0
-		for y in range(0,lines):
-			print('vertical move', y, config.boxsize, lines)
+		for y in range(0,horizontal_lines):
 			if (y == 0):
-				self.motors_position = motorlib.move( self.speed, [0,(config.boxsize[1]/lines)/2], self.motors_position )
-				vertical_move += (config.boxsize[1]/lines)/2
+				self.motors_position = motorlib.move( self.speed, [int((config.boxsize_naive[1]/horizontal_lines)/2),int((config.boxsize_naive[1]/horizontal_lines)/2)], self.motors_position )
+				vertical_move += int((config.boxsize_naive[1]/horizontal_lines)/2)
 			else:
-				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/lines], self.motors_position )
-				vertical_move += config.boxsize[1]/(lines)
+				self.motors_position = motorlib.move( self.speed, [int((config.boxsize_naive[1]/horizontal_lines)),int((config.boxsize_naive[1]/horizontal_lines))], self.motors_position )
+				vertical_move += int((config.boxsize_naive[1]/horizontal_lines))
 			self.togglepen()
-			print('horizontal line', y)
+			if (y % 2 == 0):
+				self.motors_position = motorlib.move( self.speed, [config.boxsize_naive[0],-config.boxsize_naive[0]], self.motors_position)
+			else:
+				self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[0],config.boxsize_naive[0]], self.motors_position)
+			self.togglepen()
+		self.motors_position = motorlib.move( self.speed, [-vertical_move, -vertical_move] , self.motors_position )
+		if (horizontal_lines > 0 and horizontal_lines % 2 != 0):
+			self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[0],config.boxsize_naive[0]], self.motors_position )
+		if (config.crosshatch):
+			horizontal_move = 0
+			for y in range(0,vertical_lines):
+				if (y == 0):
+					self.motors_position = motorlib.move( self.speed, [int( (config.boxsize_naive[0]/vertical_lines)/2), -int( (config.boxsize_naive[0]/vertical_lines)/2)], self.motors_position )
+					horizontal_move += int( (config.boxsize_naive[0]/vertical_lines)/2 )
+				else:
+					self.motors_position = motorlib.move( self.speed, [int(config.boxsize_naive[0]/vertical_lines),-int(config.boxsize_naive[0]/vertical_lines)], self.motors_position )
+					horizontal_move += int( config.boxsize_naive[0]/(vertical_lines) )
+				self.togglepen()
+				if (y % 2 == 0):
+					self.motors_position = motorlib.move( self.speed, [config.boxsize_naive[1],config.boxsize_naive[1]], self.motors_position)
+				else:
+					self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[1],-config.boxsize_naive[1]], self.motors_position)
+				self.togglepen()
+			self.motors_position = motorlib.move( self.speed, [-horizontal_move, horizontal_move] , self.motors_position )
+			if (vertical_lines > 0 and vertical_lines % 2 != 0):
+				self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[1],-config.boxsize_naive[1]], self.motors_position )
+
+	def box(self, value ):
+		lines     		 = int( (255-value)/(256/numlines) )
+		vertical_lines   = 0
+		horizontal_lines = lines
+		if (config.crosshatch):
+			horizontal_lines = math.ceil( lines / 2)
+			vertical_lines   = lines - horizontal_lines
+		print('drawing box w lines:', lines, 'at motors', [x*config.meters_per_step for x in self.motors_position], 'at euclid', motorlib.hypoteni_to_euclid( self.motors_position ))
+		vertical_move = 0
+		for y in range(0,horizontal_lines):
+			if (y == 0):
+				self.motors_position = motorlib.move( self.speed, [0,(config.boxsize[1]/horizontal_lines)/2], self.motors_position )
+				vertical_move += (config.boxsize[1]/horizontal_lines)/2
+			else:
+				self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]/horizontal_lines], self.motors_position )
+				vertical_move += config.boxsize[1]/(horizontal_lines)
+			self.togglepen()
 			if (y % 2 == 0):
 				self.motors_position = motorlib.move( self.speed, [config.boxsize[0],0], self.motors_position)
 			else:
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position)
 			self.togglepen()
-		print('returning to top')
 		self.motors_position = motorlib.move( self.speed, [0, -vertical_move] , self.motors_position )
-		if (lines > 0 and lines % 2 != 0):
-			print('returning to left')
+		if (horizontal_lines > 0 and horizontal_lines % 2 != 0):
 			self.motors_position = motorlib.move( self.speed, [-config.boxsize[0],0], self.motors_position )
+		if (config.crosshatch):
+			horizontal_move = 0
+			for y in range(0,vertical_lines):
+				if (y == 0):
+					self.motors_position = motorlib.move( self.speed, [(config.boxsize[0]/vertical_lines)/2,0], self.motors_position )
+					horizontal_move += (config.boxsize[0]/vertical_lines)/2
+				else:
+					self.motors_position = motorlib.move( self.speed, [config.boxsize[0]/vertical_lines,0], self.motors_position )
+					horizontal_move += config.boxsize[0]/(vertical_lines)
+				self.togglepen()
+				if (y % 2 == 0):
+					self.motors_position = motorlib.move( self.speed, [0,config.boxsize[1]], self.motors_position)
+				else:
+					self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position)
+				self.togglepen()
+			self.motors_position = motorlib.move( self.speed, [-horizontal_move, 0] , self.motors_position )
+			if (vertical_lines > 0 and vertical_lines % 2 != 0):
+				self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position )
+
+			
 
 def loadfile():
 	filename = sys.argv[1]
@@ -94,7 +162,10 @@ def drawimage( gondola, data ):
 			if (pixels[width*y + x][1] != 0):
 				print('drawing box', str(x),',', str(y))
 				gondola.tocoord( [x,y] )
-				gondola.box( pixels[width*y + x][0] )
+				if (config.smartmove):
+					gondola.box( pixels[width*y + x][0] )
+				else:
+					gondola.box_naive( pixels[width*y + x][0] )
 
 
 def main():
