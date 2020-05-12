@@ -5,9 +5,19 @@ import motorlib
 import math
 import control
 import config
+from svgpathtools import svg2paths
 
 numlines = config.numlines
 
+class DrawObject(object):
+	def __init__(self, imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
+		self.imagetype  = imagetype
+		self.width      = width
+		self.height     = height
+		self.pixels     = pixels
+		self.paths      = paths
+		self.attributes = attributes
+	
 class Gondola(object):
 	origin   = [0,0]
 	position = [0,0]
@@ -17,10 +27,10 @@ class Gondola(object):
 	pwm      = None
 	
 	def __init__(self, pwm, speed, motors_position):
-		self.pwm = pwm
-		self.speed = speed
+		self.pwm             = pwm
+		self.speed           = speed
 		self.motors_position = motors_position
-		self.origin = motors_position.copy()
+		self.origin          = motors_position.copy()
 
 	def tocoord(self, loc ): #puts gondola pen at upper left of loc box
 		if (config.smartmove):
@@ -129,45 +139,60 @@ class Gondola(object):
 			if (vertical_lines > 0 and vertical_lines % 2 != 0):
 				self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position )
 
-			
+def drawSVG( gondola, data ):
+	
+	gondola.position = [0.0,0.0]
+	for path in data.paths:
+		x = path[0][0].real*config.meters_per_step - gondola.position[0]
+		y = path[0][0].imag*config.meters_per_step - gondola.position[1]
+		gondola.position[0] += path[0][0].real*config.meters_per_step
+		gondola.position[1] += path[0][0].imag*config.meters_per_step 
+		self.motors_position = motorlib.move( self.speed, [x,y], self.motors_position )
+		gondola.togglepen()
+		x = path[0][1].real*config.meters_per_step - gondola.position[0]
+		y = path[0][1].imag*config.meters_per_step - gondola.position[1]
+		self.motors_position = motorlib.move( self.speed, [x,y], self.motors_position )
+		gondola.togglepen()
 
 def loadfile():
-	filename = sys.argv[1]
-	width = 0
-	height = 0
-	pixels = 0
+	filename   = sys.argv[1]
+	drawobject = None
 	if (filename == 'test'):
 		if ( len( sys.argv ) > 2): config.numlines = int( sys.argv[2] )
 		width  = math.ceil( numlines**0.5 )
 		height = math.ceil( numlines**0.5 )
 		pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
-	else:
+		drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
+	elif (filename.split('.')[1] == 'png')
 		print('loading file: ',filename )
-		img = Image.open( filename )
-		width = img.size[0]
-		height = img.size[1]
+		img     = Image.open( filename )
+		width   = img.size[0]
+		height  = img.size[1]
 		pix_val = list(img.getdata())
-		print(pix_val)
 		pixels = [[x,a] for (x,_,_,a) in pix_val]
-	print(pixels)
-	print(len(pixels))
-	return (width, height, pixels)
+		drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
+	elif (filename.split('.')[1] == 'svg')
+		print('loading file: ',filename )
+		paths, attributes = svg2paths(filename)
+		drawobject = DrawObject( imagetype='SVG', paths=paths, attributes=attributes
+	return drawObject
 	
 def drawimage( gondola, data ):
-	width, height, pixels = data
-	print('height:',height,'width:',width,'len:',len(data))
-	print(pixels)
-	for y in range(0,height):
-		for x in range(0,width):
-			if (pixels[width*y + x][1] != 0):
-				print('drawing box', str(x),',', str(y))
-				gondola.tocoord( [x,y] )
-				if (config.smartmove):
-					gondola.box( pixels[width*y + x][0] )
-				else:
-					gondola.box_naive( pixels[width*y + x][0] )
-
-
+	if (data.imagetype=='PNG'):
+		print('height:',data.height,'width:',data.width,'len:',len(data.pixels))
+		for y in range(0,data.height):
+			for x in range(0,data.width):
+				if (pixels[data.width*y + x][1] != 0):
+					print('drawing box', str(x),',', str(y))
+					gondola.tocoord( [x,y] )
+					if (config.smartmove):
+						gondola.box( data.pixels[data.width*y + x][0] )
+					else:
+						gondola.box_naive( data.pixels[data.width*y + x][0] )
+	elif (data.imagetype=='SVG'):
+		print(data.points)
+		drawSVG( gondola, data.points )
+		
 def main():
 	if ( len(sys.argv) not in [2,3] ):
 		print('USAGE') 
@@ -177,9 +202,9 @@ def main():
 		print('EXAMPLE: python3 wally.py images/mario.png 8')
 		quit()
 	motors_position = control.control_repl()
-	data    = loadfile()
-	pwm     = motorlib.configmotors( config.speed )
-	gondola = Gondola( pwm, config.speed, motors_position)
+	data            = loadfile()
+	pwm             = motorlib.configmotors( config.speed )
+	gondola         = Gondola( pwm, config.speed, motors_position)
 	drawimage( gondola, data )
 	motorlib.close( pwm )
 

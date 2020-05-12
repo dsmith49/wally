@@ -15,9 +15,12 @@ x_gondola = 0.10
 y_gondola = 0.04
 #meters_per_step = (2 * 0.025 * 3.14159) / 400 # = 0.00039269875 # meters per step # theoretical
 meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
-smart_step = 0.01
+smart_step = 0.01              # meters per step
 pen_down_angle = 18
 pen_up_angle   = 22
 pen_1_angle    = 10
 pen_2_angle    = 20
 pen_3_angle    = 30
+
+svg_pixel_size = 1 #steps per pixel
+
