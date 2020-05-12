@@ -163,7 +163,7 @@ def loadfile():
 		height = math.ceil( numlines**0.5 )
 		pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
 		drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
-	elif (filename.split('.')[1] == 'png')
+	elif (filename.split('.')[1] == 'png'):
 		print('loading file: ',filename )
 		img     = Image.open( filename )
 		width   = img.size[0]
@@ -171,7 +171,7 @@ def loadfile():
 		pix_val = list(img.getdata())
 		pixels = [[x,a] for (x,_,_,a) in pix_val]
 		drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
-	elif (filename.split('.')[1] == 'svg')
+	elif (filename.split('.')[1] == 'svg'):
 		print('loading file: ',filename )
 		paths, attributes = svg2paths(filename)
 		drawobject = DrawObject( imagetype='SVG', paths=paths, attributes=attributes
