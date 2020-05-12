@@ -175,7 +175,7 @@ def loadfile():
 		print('loading file: ',filename )
 		paths, attributes = svg2paths(filename)
 		drawobject = DrawObject( imagetype='SVG', paths=paths, attributes=attributes
-	return drawObject
+	return drawobject
 	
 def drawimage( gondola, data ):
 	if (data.imagetype=='PNG'):
