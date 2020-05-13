@@ -140,23 +140,24 @@ class Gondola(object):
 				self.motors_position = motorlib.move( self.speed, [0,-config.boxsize[1]], self.motors_position )
 
 def drawSVG( gondola, data ):
-	
 	gondola.position = [0.0,0.0]
-	for path in data.paths:
-		print(path)
+	for num,path in enumerate(data.paths):
+		print(path, num,'of',len(data.paths))
 		x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - gondola.position[0]
 		y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size  - gondola.position[1]
-		print('move', [x,y],'from',gondola.position)
+		print('move', [x,y],'from',gondola.position, 'and drop pen')
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
-		gondola.position[0] += x#path[0][0].real*config.meters_per_step
-		gondola.position[1] += y#path[0][0].imag*config.meters_per_step 
+		gondola.position[0] += x
+		gondola.position[1] += y
 		gondola.togglepen()
-		x = path[0][1].real*config.meters_per_step*config.svg_pixel_size  - gondola.position[0]
-		y = path[0][1].imag*config.meters_per_step*config.svg_pixel_size  - gondola.position[1]
-		print('drop pen and move', [x,y],'from',gondola.position)
-		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
-		gondola.position[0] += x#path[0][1].real*config.meters_per_step
-		gondola.position[1] += y#path[0][1].imag*config.meters_per_step
+		print(path, num,'of',len(data.paths))
+		for num2,line in enumerate(path):
+			x = line[1].real*config.meters_per_step*config.svg_pixel_size  - gondola.position[0]
+			y = line[1].imag*config.meters_per_step*config.svg_pixel_size  - gondola.position[1]
+			print('move', [x,y],'from',gondola.position)
+			gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
+			gondola.position[0] += x
+			gondola.position[1] += y
 		gondola.togglepen()
 		print('done path gondola is at', gondola.position)
 		#z = input('press enter to continue')
