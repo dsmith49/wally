@@ -146,14 +146,14 @@ def drawSVG( gondola, data ):
 		print(path)
 		x = path[0][0].real*config.meters_per_step - gondola.position[0]
 		y = path[0][0].imag*config.meters_per_step - gondola.position[1]
-		print('move', x,y)
+		print('move', x,y,'from',gondola.position)
 		gondola.position[0] += path[0][0].real*config.meters_per_step
 		gondola.position[1] += path[0][0].imag*config.meters_per_step 
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.togglepen()
 		x = path[0][1].real*config.meters_per_step - gondola.position[0]
 		y = path[0][1].imag*config.meters_per_step - gondola.position[1]
-		print('drop pen and move', x,y)
+		print('drop pen and move', x,y,'from',gondola.position)
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.togglepen()
 
