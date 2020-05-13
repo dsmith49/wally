@@ -6,8 +6,6 @@ import math
 
 def configmotors( speed ):
 	print(MOTOR.getID(0))
-	MOTOR.RESET(0)
-	MOTOR.toggleLED(0)
 	GPIO.setmode(GPIO.BCM)
 	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
@@ -245,7 +243,6 @@ def move( speed, command, motors_position ):
 		return move_naive2( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
-	MOTOR.toggleLED(0)
 	if (motors_last_velocity[0]==0):
 		motor1_direction = 'ccw'
 		if (motors_velocity[0] < 0): motor1_direction = 'cw'
