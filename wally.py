@@ -191,7 +191,7 @@ def drawimage( gondola, data ):
 						gondola.box_naive( data.pixels[data.width*y + x][0] )
 	elif (data.imagetype=='SVG'):
 		print(data.paths)
-		drawSVG( gondola, data.paths )
+		drawSVG( gondola, data )
 		
 def main():
 	if ( len(sys.argv) not in [2,3] ):
