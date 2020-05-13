@@ -16,7 +16,7 @@ y_gondola = 0.04
 #meters_per_step = (2 * 0.025 * 3.14159) / 400 # = 0.00039269875 # meters per step # theoretical
 meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
 smart_step = 0.01              # meters per step
-pen_down_angle = 15
+pen_down_angle = 12
 pen_up_angle   = 18
 pen_1_angle    = 10
 pen_2_angle    = 20
