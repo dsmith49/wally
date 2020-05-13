@@ -22,5 +22,5 @@ pen_1_angle    = 10
 pen_2_angle    = 20
 pen_3_angle    = 30
 
-svg_pixel_size = 6 #steps per pixel
+svg_pixel_size = 12 #steps per pixel
 
