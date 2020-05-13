@@ -144,22 +144,22 @@ def drawSVG( gondola, data ):
 	gondola.position = [0.0,0.0]
 	for path in data.paths:
 		print(path)
-		x = path[0][0].real*config.meters_per_step - gondola.position[0]
-		y = path[0][0].imag*config.meters_per_step - gondola.position[1]
+		x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - gondola.position[0]
+		y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size  - gondola.position[1]
 		print('move', [x,y],'from',gondola.position)
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.position[0] += x#path[0][0].real*config.meters_per_step
 		gondola.position[1] += y#path[0][0].imag*config.meters_per_step 
 		gondola.togglepen()
-		x = path[0][1].real*config.meters_per_step - gondola.position[0]
-		y = path[0][1].imag*config.meters_per_step - gondola.position[1]
+		x = path[0][1].real*config.meters_per_step*config.svg_pixel_size  - gondola.position[0]
+		y = path[0][1].imag*config.meters_per_step*config.svg_pixel_size  - gondola.position[1]
 		print('drop pen and move', [x,y],'from',gondola.position)
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.position[0] += x#path[0][1].real*config.meters_per_step
 		gondola.position[1] += y#path[0][1].imag*config.meters_per_step
 		gondola.togglepen()
 		print('done path gondola is at', gondola.position)
-		z = input('press enter to continue')
+		#z = input('press enter to continue')
 
 def loadfile():
 	filename   = sys.argv[1]
