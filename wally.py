@@ -147,11 +147,11 @@ def drawSVG( gondola, data ):
 		y = path[0][0].imag*config.meters_per_step - gondola.position[1]
 		gondola.position[0] += path[0][0].real*config.meters_per_step
 		gondola.position[1] += path[0][0].imag*config.meters_per_step 
-		self.motors_position = motorlib.move( self.speed, [x,y], self.motors_position )
+		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.togglepen()
 		x = path[0][1].real*config.meters_per_step - gondola.position[0]
 		y = path[0][1].imag*config.meters_per_step - gondola.position[1]
-		self.motors_position = motorlib.move( self.speed, [x,y], self.motors_position )
+		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.togglepen()
 
 def loadfile():
