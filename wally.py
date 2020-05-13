@@ -156,6 +156,7 @@ def drawSVG( gondola, data ):
 		print('drop pen and move', x,y,'from',gondola.position)
 		gondola.motors_position = motorlib.move( gondola.speed, [x,y], gondola.motors_position )
 		gondola.togglepen()
+		z = input('press enter to continue')
 
 def loadfile():
 	filename   = sys.argv[1]
