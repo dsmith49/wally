@@ -27,9 +27,9 @@ class Wally(object):
 		return statusdict #json.dumps( statusdict )
 
 	def power(self, on=True):
-		print('begin',self.motors_on,on)
+		print('begin',self.motors_on,on,self.ever_on)
 		if (on and not self.motors_on):
-			self.pwm = motorlib.configmotors( 0, not self.ever_on )
+			self.pwm = motorlib.configmotors( 0, first = not self.ever_on )
 			self.motors_on = True
 			self.ever_on   = True
 		if (not on and self.motors_on):
