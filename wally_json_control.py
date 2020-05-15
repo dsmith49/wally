@@ -26,12 +26,14 @@ class Wally(object):
 		return statusdict #json.dumps( statusdict )
 
 	def power(self, on=True):
-		print(self.motors_on,on)
+		print('begin',self.motors_on,on)
 		if (on and not self.motors_on):
 			self.pwm = motorlib.configmotors( 0 )
 			self.motors_on = True
 		if (not on and self.motors_on):
 			motorlib.close( self.pwm )
+			self.motors_on = False
+		print('end',self.motors_on,on)
 
 	def pause(self):
 		motorlib.stop()
