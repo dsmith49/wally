@@ -10,9 +10,8 @@ def configmotors( speed, first=False ):
 		MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
 		GPIO.setup(4, GPIO.OUT)
 		GPIO.setup(5, GPIO.OUT)
-
-	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
-	MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops
+		MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
+		MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops
 	MOTOR.stepperCONFIG(0,'A', 'cw','H',speed,0)
 	MOTOR.stepperCONFIG(0,'B', 'cw','H',speed,0)
 	pwm = [None,None,time.perf_counter()]
