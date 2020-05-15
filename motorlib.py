@@ -5,17 +5,19 @@ import config
 import math
 
 def configmotors( speed, first=False ):
-	if (first): GPIO.setmode(GPIO.BCM)
-	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
+	if (first):
+		GPIO.setmode(GPIO.BCM)
+		MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
+		GPIO.setup(4, GPIO.OUT)
+		GPIO.setup(5, GPIO.OUT)
+
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops
 	MOTOR.stepperCONFIG(0,'A', 'cw','H',speed,0)
 	MOTOR.stepperCONFIG(0,'B', 'cw','H',speed,0)
 	pwm = [None,None,time.perf_counter()]
-	GPIO.setup(4, GPIO.OUT)
 	pwm[0]=GPIO.PWM(4, 50)
 	pwm[0].start( 0 )
-	GPIO.setup(5, GPIO.OUT)
 	pwm[1]=GPIO.PWM(5, 50)
 	pwm[1].start( 0 )
 	return pwm
