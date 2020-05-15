@@ -2,7 +2,7 @@ import json
 import motorlib
 import config
 
-class Wally(Object):
+class Wally(object):
 	def __init__(self):
 		self.motors_on = False
 		self.motors_velocity = [0,0]
