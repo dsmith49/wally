@@ -26,8 +26,7 @@ class Wally(object):
 		}
 		return statusdict #json.dumps( statusdict )
 
-	def power(self, on=True):
-		print('begin',self.motors_on,on,self.ever_on)
+	def power(self, on=True, final=False):
 		if (on and not self.motors_on):
 			self.pwm = motorlib.configmotors( 0, first = not self.ever_on )
 			self.motors_on = True
@@ -35,7 +34,8 @@ class Wally(object):
 		if (not on and self.motors_on):
 			motorlib.close( self.pwm )
 			self.motors_on = False
-		print('end',self.motors_on,on,self.ever_on)
+		if (final):
+			motorlib.close( self.pwm, final=True)
 
 	def pause(self):
 		motorlib.stop()
@@ -93,6 +93,7 @@ class Wally(object):
 		elif (command == "PENDOWN"): self.pen_move(down=True)
 		elif (command == "PENUP"): self.pen_move(down=False)
 		elif (command == "POWER"): self.power(on=not self.motors_on)
+		elif (command == "END"): self.power(on=False, final=True)
 		elif (command == "CALIBRATE"): self.calibrate()
 		elif (command == "MOVE"):
 			self.motors_velocity = [0,0]

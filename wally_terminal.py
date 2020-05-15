@@ -13,7 +13,7 @@ def getch():
 	return ch
 
 def display( status ):
-	#call('clear')
+	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]   COMMAND_NAIVE:=    COMMAND_SMART:-')
 	print('            zxc        EXIT: `        EXIT_AND_RELEASE_MOTORS:~')
@@ -34,6 +34,7 @@ def control_repl():
 		display( status )
 		char = getch()
 		command_dict = {}
+		print('char is', char)
 		if (char == "1"): command_dict['command'] = 'PEN1'
 		if (char == "2"): command_dict['command'] = 'PEN2'
 		if (char == "3"): command_dict['command'] = 'PEN3'
@@ -49,7 +50,9 @@ def control_repl():
 		if (char == "a"): command_dict['command'] = 'LEFT'
 		if (char == "d"): command_dict['command'] = 'RIGHT'
 		if (char == "`"): command_dict['command'] = 'POWER'
-		if (char == "~"): command_dict['command'] = 'PAUSE'
+		if (char == "~"):
+			command_dict['command'] = 'END'
+			exit = True
 		if (char == "p"): command_dict['command'] = 'CALIBRATE'
 		if (char == '-'):
 			command_dict['command'] = 'MOVE'
