@@ -63,6 +63,7 @@ class Wally(object):
 	def command(self, command_json):
 		self.motors_last_velocity = self.motors_velocity.copy()
 		command = command_json['command']
+		if (not self.motors_on and command != 'POWER'): return None
 		if (command == 'UP'):
 			self.motors_velocity[0] -= self.increment
 			self.motors_velocity[1] -= self.increment

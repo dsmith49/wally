@@ -29,12 +29,13 @@ def off():
 	MOTOR.stepperOFF(0,'A')
 	MOTOR.stepperOFF(0,'B')
 
-def close(pwm):
+def close(pwm, final=False):
 	pwm[0].stop()
 	pwm[1].stop()
 	stop()
 	off()
-	#GPIO.cleanup()
+	if (final): GPIO.cleanup()
+
 
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
