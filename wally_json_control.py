@@ -44,7 +44,7 @@ class Wally(object):
 		if (down is None):
 			self.pendown = not self.pendown
 		else:
-			sel.pendown = down
+			self.pendown = down
 		if (not self.pendown):
 			motorlib.setangle(self.pwm,0,config.pen_up_angle)
 		else:
@@ -95,7 +95,7 @@ class Wally(object):
 		elif (command == "POWER"): self.power(on=not self.motors_on)
 		elif (command == "END"): self.power(on=False, final=True)
 		elif (command == "CALIBRATE"): self.calibrate()
-		elif (command == "MOVE"):
+		elif (command in ["MOVE","DRAW"]):
 			self.motors_velocity = [0,0]
 		if (self.motors_on): self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
 		if (command == "MOVE"):
