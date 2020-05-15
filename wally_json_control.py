@@ -35,7 +35,7 @@ class Wally(object):
 		if (not on and self.motors_on):
 			motorlib.close( self.pwm )
 			self.motors_on = False
-		print('end',self.motors_on,on)
+		print('end',self.motors_on,on,self.ever_on)
 
 	def pause(self):
 		motorlib.stop()
