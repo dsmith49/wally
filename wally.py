@@ -5,12 +5,13 @@ import motorlib
 import math
 import control
 import config
-from svgpathtools import svg2paths
+from svgpathtools import svg2paths, Path, Line
 
 numlines = config.numlines
 
 class DrawObject(object):
-	def __init__(self, imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
+	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
+		self.filename   = filename
 		self.imagetype  = imagetype
 		self.width      = width
 		self.height     = height
@@ -43,7 +44,7 @@ class Gondola(object):
 			delta_y = (loc[1] - self.position[1]) * config.boxsize_naive[1]
 			self.motors_position = motorlib.move( self.speed, [delta_x + delta_y,-delta_x + delta_y], self.motors_position )
 		self.position = loc
-		
+	
 	def togglepen(self):
 		if self.pendown:
 			control.pen_up(self.pwm)
@@ -94,6 +95,48 @@ class Gondola(object):
 			self.motors_position = motorlib.move( self.speed, [-horizontal_move, horizontal_move] , self.motors_position )
 			if (vertical_lines > 0 and vertical_lines % 2 != 0):
 				self.motors_position = motorlib.move( self.speed, [-config.boxsize_naive[1],-config.boxsize_naive[1]], self.motors_position )
+
+	def svgbox( self, pixelid, value ):
+		lines     		 = int( (255-value)/(256/numlines) )
+		vertical_lines   = 0
+		horizontal_lines = lines
+		if (config.crosshatch):
+			horizontal_lines = math.ceil( lines / 2)
+			vertical_lines   = lines - horizontal_lines
+		paths         = []
+		move          = []
+		origin        = [pixelid[0]*config.boxsize[0], pixelid[1]*config.boxsize[1] ]
+		current_loc   = origin.copy()
+		for y in range(0,horizontal_lines):
+			if (y == 0):
+				move = [0,(config.boxsize[1]/horizontal_lines)/2]
+				current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+			else:
+				move = [0,(config.boxsize[1]/horizontal_lines)]
+				current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+			if (y % 2 == 0):
+				move = [config.boxsize[0],0]
+			else:
+				move = [-config.boxsize[0],0]
+			paths.append( Path( Line( complex(current_loc[0], current_loc[1]), complex(current_loc[0] + move[0], current_loc[1] + move[1] ) ) ) )
+			current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+		current_loc = origin.copy()
+		if (config.crosshatch):
+			for y in range(0,vertical_lines):
+				if (y == 0):
+					move = [(config.boxsize[0]/vertical_lines)/2,0]
+					current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+				else:
+					move = [config.boxsize[0]/vertical_lines,0]
+					current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+				if (y % 2 == 0):
+					move = [0,config.boxsize[1]]
+				else:
+					move = [0,-config.boxsize[1]]
+				paths.append( Path( Line( complex(current_loc[0], current_loc[1]), complex(current_loc[0] + move[0], current_loc[1] + move[1] ) ) ) )
+				current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
+			current_loc = origin.copy()			
+		return paths
 
 	def box(self, value ):
 		lines     		 = int( (255-value)/(256/numlines) )
@@ -160,7 +203,6 @@ def drawSVG( gondola, data ):
 			gondola.position[1] += y
 		gondola.togglepen()
 		print('done path gondola is at', gondola.position)
-		#z = input('press enter to continue')
 
 def loadfile():
 	filename   = sys.argv[1]
@@ -178,13 +220,20 @@ def loadfile():
 		height  = img.size[1]
 		pix_val = list(img.getdata())
 		pixels = [[x,a] for (x,_,_,a) in pix_val]
-		drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
+		drawobject = DrawObject( filename=filename.split('.')[0], imagetype='PNG', height=height, width=width,pixels=pixels)
 	elif (filename.split('.')[1] == 'svg'):
 		print('loading file: ',filename )
 		paths, attributes = svg2paths(filename)
 		drawobject = DrawObject( imagetype='SVG', paths=paths, attributes=attributes)
 	return drawobject
-	
+
+def pngtosvg( data ):
+	newpaths = []
+	for y in range(0,data.height):
+		for x in range(0,data.width):
+			if (pixels[data.width*y + x][1] != 0):
+				newpaths.append( gondola.svgbox( [x,y], data.pixels[data.width*y + x][0] ) )
+
 def drawimage( gondola, data ):
 	if (data.imagetype=='PNG'):
 		print('height:',data.height,'width:',data.width,'len:',len(data.pixels))
