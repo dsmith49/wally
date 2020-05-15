@@ -143,7 +143,7 @@ class Wally(object):
 			self.motors_velocity = [0,0]
 		if (self.motors_on):
 			self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
-			timestamp_1 = time.perf_counter()
+			self.timestamp_1 = time.perf_counter()
 		if (command == "MOVE"):
 			self.motors_position = motorlib.move_smart2( command_json['speed'], command_json['relative_coords'], self.motors_position )
 		if (command == "DRAW"): 
