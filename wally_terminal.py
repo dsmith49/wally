@@ -34,7 +34,6 @@ def control_repl():
 		display( status )
 		char = getch()
 		command_dict = {}
-		print('char is', char)
 		if (char == "1"): command_dict['command'] = 'PEN1'
 		if (char == "2"): command_dict['command'] = 'PEN2'
 		if (char == "3"): command_dict['command'] = 'PEN3'
@@ -50,7 +49,7 @@ def control_repl():
 		if (char == "a"): command_dict['command'] = 'LEFT'
 		if (char == "d"): command_dict['command'] = 'RIGHT'
 		if (char == "`"): command_dict['command'] = 'POWER'
-		if (char == " "): command_dict['command'] = 'PAUSE'
+		#if (char == " "): command_dict['command'] = 'PAUSE'
 		if (char == "~"):
 			command_dict['command'] = 'END'
 			exit = True
