@@ -16,7 +16,7 @@ class Wally(object):
 	def status(self):
 		statusdict = {
 			'power'    : self.motors_on,
-			'pendown'  : seldf.pendown,
+			'pendown'  : self.pendown,
 			'velocity' : self.motors_velocity,
 			'position_steps'    : self.motors_position,
 			'position_meters'   : [self.motors_position[0] * config.meters_per_step, self.motors_position[1] * config.meters_per_step],
