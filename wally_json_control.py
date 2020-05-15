@@ -157,7 +157,8 @@ class Wally(object):
 			self.timestamp_1 = time.perf_counter()
 		if (command == "MOVE"):
 			self.motors_position = motorlib.move_smart2( command_json['speed'], command_json['relative_coords'], self.motors_position )
-		if (command == "DRAW"): 
+		if (command == "DRAW"):
+			print('loading', command_json['filename'] )
 			data = self.loadfile( command_json['filename'] )
 			self.drawSVG( data )
 		time.sleep(config.button_delay)
