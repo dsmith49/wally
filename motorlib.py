@@ -34,7 +34,7 @@ def close(pwm):
 	pwm[1].stop()
 	stop()
 	off()
-	GPIO.cleanup()
+	#GPIO.cleanup()
 
 def euclid_to_hypoteni_naive( coordinate ):
 	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
