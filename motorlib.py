@@ -5,7 +5,6 @@ import config
 import math
 
 def configmotors( speed ):
-	print(MOTOR.getID(0))
 	GPIO.setmode(GPIO.BCM)
 	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
