@@ -4,8 +4,8 @@ import time
 import config
 import math
 
-def configmotors( speed ):
-	GPIO.setmode(GPIO.BCM)
+def configmotors( speed, first=False ):
+	if (first): GPIO.setmode(GPIO.BCM)
 	MOTOR.intEnable(0)                      #enable interrupts on Pi-Plate
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B')          #set up to interrupt when motor a stops

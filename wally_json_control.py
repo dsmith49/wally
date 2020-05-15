@@ -6,6 +6,7 @@ import config
 class Wally(object):
 	def __init__(self):
 		self.motors_on = False
+		self.ever_on   = False
 		self.motors_velocity = [0,0]
 		self.motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
 		self.motors_last_velocity = [0,0]
@@ -28,8 +29,9 @@ class Wally(object):
 	def power(self, on=True):
 		print('begin',self.motors_on,on)
 		if (on and not self.motors_on):
-			self.pwm = motorlib.configmotors( 0 )
+			self.pwm = motorlib.configmotors( 0, not self.ever_on )
 			self.motors_on = True
+			self.ever_on   = True
 		if (not on and self.motors_on):
 			motorlib.close( self.pwm )
 			self.motors_on = False
