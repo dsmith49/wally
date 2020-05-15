@@ -24,7 +24,7 @@ def display( status ):
 	print('velocity: ',status['velocity'][0],'        ',status['velocity'][1])
 	print('steps   : ',status['position_steps'][0],'  ',status['position_steps'][1])
 	print('length  : ',"{:.2f}".format(status['position_meters'][0]),'  ',"{:.2f}".format(status['position_meters'][1]))
-	print('Euclid  :',"{:.2f}".format(status['position_euclid'][0]),'  ',"{:.2f}".format(status['position_euclid'][1]))
+	print('Euclid  : ',"{:.2f}".format(status['position_euclid'][0]),'  ',"{:.2f}".format(status['position_euclid'][1]))
 
 def control_repl():
 	exit = False

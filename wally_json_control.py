@@ -2,6 +2,7 @@ import json
 import time
 import motorlib
 import config
+from svgpathtools import svg2paths, Path, Line
 
 class Wally(object):
 	def __init__(self):
