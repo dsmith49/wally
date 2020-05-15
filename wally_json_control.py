@@ -10,7 +10,7 @@ class Wally(object):
 		self.motors_velocity = [0,0]
 		self.motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
 		self.motors_last_velocity = [0,0]
-		self.timestamp_1 = 0.0
+		self.timestamp_1 = time.perf_counter()
 		self.increment = 500
 		self.pwm = None #motorlib.configmotors( 0 )
 		self.pendown = False
@@ -141,13 +141,13 @@ class Wally(object):
 		elif (command == "CALIBRATE"): self.calibrate()
 		elif (command in ["MOVE","DRAW"]):
 			self.motors_velocity = [0,0]
-		if (self.motors_on): self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
+		if (self.motors_on):
+			self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
+			timestamp_1 = time.perf_counter()
 		if (command == "MOVE"):
 			self.motors_position = motorlib.move_smart2( command_json['speed'], command_json['relative_coords'], self.motors_position )
 		if (command == "DRAW"): 
 			data = self.loadfile( command_json['filename'] )
 			self.drawSVG( data )
-
-		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)
 
