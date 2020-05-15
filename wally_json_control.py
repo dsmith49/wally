@@ -4,6 +4,16 @@ import motorlib
 import config
 from svgpathtools import svg2paths, Path, Line
 
+class DrawObject(object):
+	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
+		self.filename   = filename
+		self.imagetype  = imagetype
+		self.width      = width
+		self.height     = height
+		self.pixels     = pixels
+		self.paths      = paths
+		self.attributes = attributes
+
 class Wally(object):
 	def __init__(self):
 		self.motors_on = False
