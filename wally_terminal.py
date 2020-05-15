@@ -50,6 +50,7 @@ def control_repl():
 		if (char == "a"): command_dict['command'] = 'LEFT'
 		if (char == "d"): command_dict['command'] = 'RIGHT'
 		if (char == "`"): command_dict['command'] = 'POWER'
+		if (char == " "): command_dict['command'] = 'PAUSE'
 		if (char == "~"):
 			command_dict['command'] = 'END'
 			exit = True
