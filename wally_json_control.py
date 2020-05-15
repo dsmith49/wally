@@ -60,6 +60,50 @@ class Wally(object):
 		self.motors_velocity = [0,0]
 		self.motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
 
+	def drawSVG( self, data ):
+		position = [0.0,0.0]
+		for num,path in enumerate(data.paths):
+			print(path, num,'of',len(data.paths))
+			x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - position[0]
+			y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size - position[1]
+			print('move', [x,y],'from',position, 'and drop pen')
+			self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
+			position[0] += x
+			position[1] += y
+			self.pen_move()
+			print(path, num,'of',len(data.paths))
+			for num2,line in enumerate(path):
+				x = line[1].real*config.meters_per_step*config.svg_pixel_size - position[0]
+				y = line[1].imag*config.meters_per_step*config.svg_pixel_size - position[1]
+				print('move', [x,y],'from',position)
+				self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
+				position[0] += x
+				position[1] += y
+			self.pen_move()
+			print('done path gondola is at', position)
+
+	def loadfile(self, filename ):
+		drawobject = None
+		if (filename == 'test'):
+			if ( len( sys.argv ) > 2): config.numlines = int( sys.argv[2] )
+			width  = math.ceil( numlines**0.5 )
+			height = math.ceil( numlines**0.5 )
+			pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
+			drawobject = DrawObject( imagetype='PNG', height=height, width=width,pixels=pixels)
+		elif (filename.split('.')[1] == 'png'):
+			print('loading file: ',filename )
+			img     = Image.open( filename )
+			width   = img.size[0]
+			height  = img.size[1]
+			pix_val = list(img.getdata())
+			pixels = [[x,a] for (x,_,_,a) in pix_val]
+			drawobject = DrawObject( filename=filename.split('.')[0], imagetype='PNG', height=height, width=width,pixels=pixels)
+		elif (filename.split('.')[1] == 'svg'):
+			print('loading file: ',filename )
+			paths, attributes = svg2paths(filename)
+			drawobject = DrawObject( imagetype='SVG', paths=paths, attributes=attributes)
+		return drawobject
+
 	def command(self, command_json):
 		self.motors_last_velocity = self.motors_velocity.copy()
 		command = command_json['command']
@@ -100,6 +144,10 @@ class Wally(object):
 		if (self.motors_on): self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
 		if (command == "MOVE"):
 			self.motors_position = motorlib.move_smart2( command_json['speed'], command_json['relative_coords'], self.motors_position )
+		if (command == "DRAW"): 
+			data = self.loadfile( command_json['filename'] )
+			self.drawSVG( data )
+
 		timestamp_1 = time.perf_counter()
 		time.sleep(config.button_delay)
 

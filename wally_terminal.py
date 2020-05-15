@@ -59,6 +59,10 @@ def control_repl():
 			response = input('SMART MOVE >> SPEED X_meters Y_meters>>')
 			command_dict['speed'] = int(response.split(' ')[0])
 			command_dict['relative_coords'] = [ float(response.split(' ')[1]), float(response.split(' ')[2]) ]
+		if (char == 'o'):
+			command_dict['command'] = 'DRAW'
+			response = input('ENTER FILENAME>>')
+			command_dict['filename'] = response
 		wally.command( command_dict )
 
 if __name__ == '__main__':
