@@ -9,5 +9,5 @@ def index():
 @app.route('/command', methods = ['POST'])
 def command():
 	print(request.method, request)
-	print('command route says', command_dict)
+	#print('command route says', command_dict)
 
