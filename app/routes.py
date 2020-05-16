@@ -10,5 +10,5 @@ def index():
 def command():
 	content = request.json
 	print(content['command'])
-	app.config['command'](content)
+	print(app.config.keys())
 	return ('', 204)
