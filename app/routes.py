@@ -1,5 +1,6 @@
 from app import app
 from flask import render_template, request, jsonify
+from os import getcwd, listdir
 
 @app.route('/')
 @app.route('/index')
@@ -34,4 +35,8 @@ def status():
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
-	return jsonify( ['file1.svg','file2.svg'] )
+	path = os.getcwd()+"/images/"
+	list_of_files = []
+	for filename in os.listdir(path):
+		list_of_files.append( filename )
+	return jsonify( list_of_files )
