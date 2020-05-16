@@ -15,9 +15,14 @@ function getupdate() {
 
 function updatestatus( data ) {
 	console.log( data )
-	var opt = document.createElement('option')
-	opt.appendChild( document.createTextNode('New Option Text') );
-	opt.value = 'option value';
-	document.getElementById("svg_list").appendChild( opt )
+	var sel = document.getElementById('svg_list');
+	for (i = sel.length - 1; i >= 0; i--) {
+		sel.remove(i);
+	}
+	for filename in data:
+		var opt = document.createElement('option')
+		opt.appendChild( document.createTextNode('New Option Text') );
+		opt.value = filename;
+		document.getElementById("svg_list").appendChild( opt )
 }
 
