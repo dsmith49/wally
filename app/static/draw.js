@@ -14,7 +14,7 @@ function loadsvg() {
 	var astring = "{{url_for('static', filename='images/" + filename + "')}}"
 	console.log(astring)
 //"{{url_for('static', filename='images/bird.svg')}}"
-	
+	img.src = '"' + astring + '"'
 	document.getElementById("svg_container").appendChild( img )
 	document.getElementById("svg_container").removeChild( document.getElementById("svg_container").childNodes[0] )
 }
