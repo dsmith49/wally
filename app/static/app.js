@@ -36,7 +36,7 @@ document.addEventListener('keydown', function(e) {
 		if (([27]).includes(code)) { command = 'END' }
 		console.log(command)
 		if (command != null) {
-			commmand_dict = new Object();
+			command_dict = new Object();
 			command_dict['command'] = command
 			$.ajax({
     			type: "POST",
