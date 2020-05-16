@@ -33,5 +33,5 @@ def status():
 	return jsonify( status )
 
 @app.route('/svgfiles', methods = ['GET','POST'])
-def status():
+def svgfiles():
 	return jsonify( ['file1.svg','file2.svg'] )
