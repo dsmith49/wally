@@ -11,6 +11,7 @@ draw.onclick = call_draw()
 function call_draw() {
 	var svglist = document.getElementById("svg_list")
 	var filename = svglist.options[ svglist.selectedIndex ].value
+	console.log('calling draw with', filename)
 	$.ajax({
 		type: "POST",
 		url: "/draw_svg",
