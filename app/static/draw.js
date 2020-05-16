@@ -3,6 +3,8 @@
 //canv.id = 'someId';
 //document.body.appendChild(canv);
 
+updatestatus( 'empty' )
+
 function getupdate() {
 	$.ajax({
   		dataType: "json",
