@@ -34,5 +34,6 @@ function updatestatus( data ) {
 		document.getElementById("svg_list").appendChild( opt )
 	})
 	document.getElementById("svg_list").selectedIndex = 0
+	loadsvg()
 }
 
