@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect
+from flask import render_template, request, jsonify
 
 @app.route('/')
 @app.route('/index')
