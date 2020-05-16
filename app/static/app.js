@@ -1,8 +1,3 @@
-
-//var canv = document.createElement('canvas');
-//canv.id = 'someId';
-//document.body.appendChild(canv);
-
 function getupdate() {
 	$.ajax({
   		dataType: "json",
@@ -12,7 +7,6 @@ function getupdate() {
 }
 
 function updatestatus( data ) {
-	console.log( data )
 	document.getElementById("power_val").innerHTML = data['power']
 	document.getElementById("pen_val").innerHTML = data['pendown']
 	document.getElementById("velocity_0").innerHTML = data['velocity'][0]
@@ -46,7 +40,6 @@ document.addEventListener('keydown', function(e) {
 		if (([192]).includes(code)) { command = 'POWER' }
 		if (([80]).includes(code)) { command = 'CALIBRATE' }
 		if (([27]).includes(code)) { command = 'END' }
-		console.log(command)
 		if (command != null) {
 			command_dict = new Object();
 			command_dict['command'] = command

@@ -37,7 +37,6 @@ function getupdate() {
 }
 
 function updatestatus( data ) {
-	console.log( data )
 	var sel = document.getElementById('svg_list');
 	for (i = sel.length - 1; i >= 0; i--) {
 		sel.remove(i);
