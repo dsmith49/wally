@@ -8,6 +8,7 @@ document.getElementById("svg_list").onchange = function(){loadsvg()}
 document.getElementById("draw_button").onclick = call_draw()
 
 function call_draw() {
+	console.log('hello from draw')
 	var svglist = document.getElementById("svg_list")
 	var filename = svglist.options[ svglist.selectedIndex ].value
 	console.log('calling draw with', filename)
