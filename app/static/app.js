@@ -42,7 +42,7 @@ document.addEventListener('keydown', function(e) {
     			type: "POST",
     			url: "/command",
     			// The key needs to match your method's input parameter (case-sensitive).
-    			data: JSON.stringify( commmand_dict ),
+    			data: JSON.stringify( command_dict ),
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
     			success: function(data){alert('success');},
