@@ -13,6 +13,9 @@ function getupdate() {
 
 function updatestatus( data ) {
 	document.getElementById("power_val").innerHTML = data['power']
+	document.getElementById("pen_val").innerHTML = data['pendown']
+	document.getElementById("velocity_0").innerHTML = data['velocity'][0]
+	document.getElementById("velocity_1").innerHTML = data['velocity'][1]
 }
 
 document.addEventListener('keydown', function(e) {
