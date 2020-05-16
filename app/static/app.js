@@ -6,7 +6,7 @@
 $.ajax({
   dataType: "json",
   url: "/status",
-  success: function( data ) {console.log(data)}
+  success: function( data ) { updatestatus( data ) }
 });
 
 function updatestatus( data ) {
