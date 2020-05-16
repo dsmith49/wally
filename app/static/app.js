@@ -4,13 +4,13 @@ stats.id = 'stats_div';
 var loc = document.createElement('p');
 var node = document.createTextNode("motor:");
 loc.appendChild(node);
-stats.appendChild(para);
+stats.appendChild(loc);
 
-var canv = document.createElement('canvas');
-canv.id = 'someId';
+//var canv = document.createElement('canvas');
+//canv.id = 'someId';
 
-document.body.appendChild(div);
-document.body.appendChild(canv);
+document.body.appendChild(stats);
+//document.body.appendChild(canv);
 
 document.addEventListener('keydown', function(e) {
 	if (document.activeElement === document.body ) {	
