@@ -35,8 +35,8 @@ def status():
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
-	path = os.getcwd()+"/images/"
+	path = getcwd()+"/images/"
 	list_of_files = []
-	for filename in os.listdir(path):
+	for filename in listdir(path):
 		list_of_files.append( filename )
 	return jsonify( list_of_files )
