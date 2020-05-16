@@ -14,6 +14,10 @@ def control():
 def settings():
 	return render_template('settings.html', title='Settings')
 
+@app.route('/draw')
+def settings():
+	return render_template('draw.html', title='Settings')
+
 @app.route('/command', methods = ['POST'])
 def command():
 	content = request.json
@@ -27,3 +31,7 @@ def status():
 	status = app.config['wally'].status()
 	print('in status and returning', status)
 	return jsonify( status )
+
+@app.route('/svgfiles', methods = ['GET','POST'])
+def status():
+	return jsonify( ['file1.svg','file2.svg'] )
