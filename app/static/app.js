@@ -44,7 +44,7 @@ document.addEventListener('keydown', function(e) {
     			data: JSON.stringify( command_dict ),
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
-    			success: function(data){ console.log('success');},
+    			success: updatestatus( d ),
     			failure: function(errMsg) {console.log('failed');}
 			});
 		}

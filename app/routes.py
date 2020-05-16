@@ -11,7 +11,9 @@ def command():
 	content = request.json
 	print(content['command'])
 	app.config['wally'].command( content )
-	return ('', 204)
+	status = app.config['wally'].status()
+	return jsonify( status )
+	#return ('', 204)
 
 @app.route('/status', methods = ['GET','POST'])
 def status():
