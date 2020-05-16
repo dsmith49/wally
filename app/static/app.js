@@ -12,6 +12,7 @@ stats.appendChild(loc);
 document.body.appendChild(stats);
 //document.body.appendChild(canv);
 
+console.log('hello world')
 document.addEventListener('keydown', function(e) {
 	if (document.activeElement === document.body ) {	
 		var code = e.which || e.keyCode;
