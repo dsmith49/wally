@@ -1,14 +1,6 @@
-var stats = document.createElement('div');
-stats.id = 'stats_div';
-var loc = document.createElement('p');
-var node = document.createTextNode("motor:");
-loc.appendChild(node);
-stats.appendChild(loc);
 
 //var canv = document.createElement('canvas');
 //canv.id = 'someId';
-
-document.body.appendChild(stats);
 //document.body.appendChild(canv);
 
 $.ajax({
