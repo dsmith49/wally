@@ -11,6 +11,12 @@ stats.appendChild(loc);
 document.body.appendChild(stats);
 //document.body.appendChild(canv);
 
+$.ajax({
+  dataType: "json",
+  url: "/status",
+  success: function( data ) {console.log(data)}
+});
+
 document.addEventListener('keydown', function(e) {
 	if (document.activeElement === document.body ) {	
 		var code = e.which || e.keyCode;
@@ -39,7 +45,6 @@ document.addEventListener('keydown', function(e) {
 			$.ajax({
     			type: "POST",
     			url: "/command",
-    			// The key needs to match your method's input parameter (case-sensitive).
     			data: JSON.stringify( command_dict ),
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
