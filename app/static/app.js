@@ -9,6 +9,10 @@ $.ajax({
   success: function( data ) {console.log(data)}
 });
 
+function updatestatus( data ) {
+	document.getElementById("power_val").innerHTML = data['power']
+}
+
 document.addEventListener('keydown', function(e) {
 	if (document.activeElement === document.body ) {	
 		var code = e.which || e.keyCode;
