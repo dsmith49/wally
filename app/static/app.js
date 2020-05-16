@@ -13,14 +13,14 @@ stats.appendChild(loc);
 document.body.appendChild(stats);
 //document.body.appendChild(canv);
 
-//document.addEventListener('keydown', function(e) {
-//	if (document.activeElement === document.body ) {	
-//		var code = e.which || e.keyCode;
-//		if (([38,40,37,39]).includes(code)) { console.log('key pressed') }
-//		if (([32]).includes(code)) { console.log('key pressed') }
-//		if (([16]).includes(code)) { console.log('key pressed') }
-//		if (([18]).includes(code)) { console.log('key pressed') }
-//		if (([82]).includes(code)) { console.log('key pressed') }
-//		if (([27]).includes(code)) { console.log('key pressed') }
-//	}
-//});
+document.addEventListener('keydown', function(e) {
+	if (document.activeElement === document.body ) {	
+		var code = e.which || e.keyCode;
+		if (([38,40,37,39]).includes(code)) { console.log('key pressed') }
+		if (([32]).includes(code)) { console.log('key pressed') }
+		if (([16]).includes(code)) { console.log('key pressed') }
+		if (([18]).includes(code)) { console.log('key pressed') }
+		if (([82]).includes(code)) { console.log('key pressed') }
+		if (([27]).includes(code)) { console.log('key pressed') }
+	}
+});
