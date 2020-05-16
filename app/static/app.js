@@ -1,5 +1,3 @@
-console.log('hello world');
-
 var stats = document.createElement('div');
 stats.id = 'stats_div';
 var loc = document.createElement('p');
@@ -45,8 +43,8 @@ document.addEventListener('keydown', function(e) {
     			data: JSON.stringify( command_dict ),
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
-    			success: function(data){alert('success');},
-    			failure: function(errMsg) {alert('failed');}
+    			success: function(data){ console.log('success');},
+    			failure: function(errMsg) {console.log('failed');}
 			});
 		}
 	}
