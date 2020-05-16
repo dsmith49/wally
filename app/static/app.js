@@ -3,11 +3,13 @@
 //canv.id = 'someId';
 //document.body.appendChild(canv);
 
-$.ajax({
-  dataType: "json",
-  url: "/status",
-  success: function( data ) { updatestatus( data ) }
-});
+function getupdate() {
+	$.ajax({
+  		dataType: "json",
+  		url: "/status",
+  		success: function( data ) { updatestatus( data ) }
+	});
+}
 
 function updatestatus( data ) {
 	document.getElementById("power_val").innerHTML = data['power']
@@ -44,7 +46,7 @@ document.addEventListener('keydown', function(e) {
     			data: JSON.stringify( command_dict ),
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
-    			success: updatestatus( d ),
+    			success: function(data){ getupdate(); console.log('success');},
     			failure: function(errMsg) {console.log('failed');}
 			});
 		}
