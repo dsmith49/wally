@@ -7,7 +7,7 @@ getupdate()
 document.getElementById("svg_list").onchange = function(){loadsvg()}
 
 function loadsvg() {
-	var img = createElement('img')
+	var img = createElement('IMG')
 	var filename = document.getElementById("svg_list").options[e.selectedIndex].value
 	img.src = "{{url_for('static', filename='" + filename + "')}}"
 	document.getElementById("svg_container").remove(0)
