@@ -45,6 +45,6 @@ def svgfiles():
 @app.route('/draw_svg', methods = ['GET','POST'])
 def draw_svg():
 	filename = request.json
-	print(filename)
+	print('filename is', filename)
 	return ('', 204)
 
