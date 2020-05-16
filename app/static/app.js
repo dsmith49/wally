@@ -17,7 +17,7 @@ function updatestatus( data ) {
 	document.getElementById("pen_val").innerHTML = data['pendown']
 	document.getElementById("velocity_0").innerHTML = data['velocity'][0]
 	document.getElementById("velocity_1").innerHTML = data['velocity'][1]
-	document.getElementById("position_steps_0").innerHTML = data['position_steps'][0]
+	document.getElementById("position_steps_0").innerHTML = number.toFixed(data['position_steps'][0])
 	document.getElementById("position_steps_1").innerHTML = data['position_steps'][1]
 	document.getElementById("position_meters_0").innerHTML = data['position_meters'][0]
 	document.getElementById("position_meters_1").innerHTML = data['position_meters'][1]
