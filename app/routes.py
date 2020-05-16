@@ -46,7 +46,7 @@ def svgfiles():
 def draw_svg():
 	filename = request.json
 	print('filename is', filename)
-	data = app.config['wally'].loadfile( filename )
+	data = app.config['wally'].loadfile( getcwd + '/app/static/images/' + filename )
 	app.config['wally'].drawSVG( data )
 	return ('', 204)
 
