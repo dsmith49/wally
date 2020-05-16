@@ -13,7 +13,7 @@ def command():
 	app.config['wally'].command( content )
 	return ('', 204)
 
-@app.route('/status', methods = ['GET'])
+@app.route('/status', methods = ['GET','POST'])
 def status():
 	status = app.config['wally'].status()
 	print('in status and returning', status)
