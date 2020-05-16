@@ -5,8 +5,7 @@
 
 getupdate()
 document.getElementById("svg_list").onchange = function(){loadsvg()}
-var draw = document.getElementById("draw_button")
-draw.onclick = call_draw()
+document.getElementById("draw_button").onclick = call_draw()
 
 function call_draw() {
 	var svglist = document.getElementById("svg_list")
