@@ -14,7 +14,7 @@ function loadsvg() {
 	img.src = "{{url_for('static', filename=/images/'" + filename + "')}}"
 	console.log(img.src)
 	console.log( document.getElementById("svg_container") )
-	document.getElementById("svg_container").remove(1)
+	document.getElementById("svg_container").removeChild( document.getElementById("svg_container").childNodes[0] )
 	document.getElementById("svg_container").appendChild( img )
 }
 function getupdate() {
