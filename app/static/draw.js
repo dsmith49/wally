@@ -13,7 +13,7 @@ function loadsvg() {
 	var filename = select.options[select.selectedIndex].value
 	var astring = "{{url_for('static', filename='images/" + filename + "')}}"
 	//img.src = '"' + astring + '"'
-	console.log( document.getElementById("svg_image").src )
+	console.log( document.getElementById("svg_image") )
 	document.getElementById("svg_image").src = astring
 
 
