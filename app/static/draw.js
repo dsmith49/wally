@@ -33,5 +33,6 @@ function updatestatus( data ) {
 		opt.value = filename;
 		document.getElementById("svg_list").appendChild( opt )
 	})
+	document.getElementById("svg_list").selectedIndex = 0
 }
 
