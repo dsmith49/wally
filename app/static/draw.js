@@ -8,7 +8,8 @@ document.getElementById("svg_list").onchange = function(){loadsvg()}
 
 function loadsvg() {
 	var img = document.createElement('IMG')
-	var filename = document.getElementById("svg_list").options[e.selectedIndex].value
+	var select = document.getElementById("svg_list")
+	var filename = select.options[select.selectedIndex].value
 	img.src = "{{url_for('static', filename='" + filename + "')}}"
 	document.getElementById("svg_container").remove(0)
 	document.getElementById("svg_container").appendChild( img )
