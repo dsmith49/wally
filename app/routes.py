@@ -15,7 +15,7 @@ def settings():
 	return render_template('settings.html', title='Settings')
 
 @app.route('/draw')
-def settings():
+def draw():
 	return render_template('draw.html', title='Settings')
 
 @app.route('/command', methods = ['POST'])
