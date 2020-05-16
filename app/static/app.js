@@ -17,12 +17,12 @@ function updatestatus( data ) {
 	document.getElementById("pen_val").innerHTML = data['pendown']
 	document.getElementById("velocity_0").innerHTML = data['velocity'][0]
 	document.getElementById("velocity_1").innerHTML = data['velocity'][1]
-	document.getElementById("position_steps_0").innerHTML = data['position_steps'][0].toFixed(2)
+	document.getElementById("position_steps_0").innerHTML = data['position_steps'][0]
 	document.getElementById("position_steps_1").innerHTML = data['position_steps'][1]
-	document.getElementById("position_meters_0").innerHTML = data['position_meters'][0]
-	document.getElementById("position_meters_1").innerHTML = data['position_meters'][1]
-	document.getElementById("position_euclid_0").innerHTML = data['position_euclid'][0]
-	document.getElementById("position_euclid_1").innerHTML = data['position_euclid'][1]
+	document.getElementById("position_meters_0").innerHTML = data['position_meters'][0].toFixed(2)
+	document.getElementById("position_meters_1").innerHTML = data['position_meters'][1].toFixed(2)
+	document.getElementById("position_euclid_0").innerHTML = data['position_euclid'][0].toFixed(2)
+	document.getElementById("position_euclid_1").innerHTML = data['position_euclid'][1].toFixed(2)
 }
 
 document.addEventListener('keydown', function(e) {
