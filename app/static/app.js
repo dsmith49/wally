@@ -35,5 +35,19 @@ document.addEventListener('keydown', function(e) {
 		if (([80]).includes(code)) { command = 'CALIBRATE' }
 		if (([27]).includes(code)) { command = 'END' }
 		console.log(command)
+		if (command != null) {
+			commmand_dict = new Object();
+			command_dict['command'] = command
+			$.ajax({
+    			type: "POST",
+    			url: "/command",
+    			// The key needs to match your method's input parameter (case-sensitive).
+    			data: JSON.stringify( commmand_dict ),
+    			contentType: "application/json; charset=utf-8",
+    			dataType: "json",
+    			success: function(data){alert('success');},
+    			failure: function(errMsg) {alert('failed');}
+			});
+		}
 	}
 });
