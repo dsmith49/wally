@@ -7,6 +7,7 @@ def index():
 	return render_template('index.html', title='Home')
 
 @app.route('/command', methods = ['POST'])
-def command(command_dict):
+def command():
+	print(request.method, request)
 	print('command route says', command_dict)
 
