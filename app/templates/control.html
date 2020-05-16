@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% block content %}
 <head>
 	<meta charset="utf-8">
  	<title>WALLY</title>
@@ -118,3 +119,4 @@ ul ul ul {
 </table>
 <script src="{{url_for('static', filename='app.js')}}"></script>
 </body>
+{% endblock %}
