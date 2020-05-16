@@ -19,10 +19,11 @@ function updatestatus( data ) {
 	for (i = sel.length - 1; i >= 0; i--) {
 		sel.remove(i);
 	}
-	for filename in data:
+	data.map( filename =>
 		var opt = document.createElement('option')
 		opt.appendChild( document.createTextNode('New Option Text') );
 		opt.value = filename;
 		document.getElementById("svg_list").appendChild( opt )
+	)
 }
 
