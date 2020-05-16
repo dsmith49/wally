@@ -43,6 +43,7 @@ def svgfiles():
 	return jsonify( list_of_files )
 
 @app.route('/draw_svg', methods = ['GET','POST'])
+def draw_svg():
 	filename = request.json
 	print(filename)
 	return ('', 204)
