@@ -7,14 +7,14 @@ getupdate()
 document.getElementById("svg_list").onchange = function(){loadsvg()}
 
 function loadsvg() {
-	var img = document.createElement('IMG')
+	//var img = document.createElement('IMG')
 	var select = document.getElementById("svg_list")
 	console.log(select)
 	var filename = select.options[select.selectedIndex].value
 	var astring = "{{url_for('static', filename='images/" + filename + "')}}"
-	img.src = '"' + astring + '"'
+	//img.src = '"' + astring + '"'
 	console.log( document.getElementById("svg_image").src )
-	document.getElementById("svg_image").src = img.src
+	document.getElementById("svg_image").src = astring
 
 
 
