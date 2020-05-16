@@ -11,7 +11,7 @@ def control():
 	return render_template('control.html', title='Control')
 
 @app.route('/settings')
-def control():
+def settings():
 	return render_template('settings.html', title='Settings')
 
 @app.route('/command', methods = ['POST'])
