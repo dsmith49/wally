@@ -12,6 +12,7 @@ function getupdate() {
 }
 
 function updatestatus( data ) {
+	console.log( data )
 	document.getElementById("power_val").innerHTML = data['power']
 	document.getElementById("pen_val").innerHTML = data['pendown']
 	document.getElementById("velocity_0").innerHTML = data['velocity'][0]
