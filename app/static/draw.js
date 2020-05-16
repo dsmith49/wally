@@ -5,6 +5,22 @@
 
 getupdate()
 document.getElementById("svg_list").onchange = function(){loadsvg()}
+var draw = document.getElementById("draw_button")
+draw.onclick = call_draw()
+
+function call_draw() {
+	var svglist = document.getElementById("svg_list")
+	var filename = svglist.options[ svglist.selectedIndex ].value
+	$.ajax({
+		type: "POST",
+		url: "/draw_svg",
+		data: JSON.stringify( filename ),
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(data){ console.log('success');},
+		failure: function(errMsg) {console.log('failed');}
+	});	
+}
 
 function loadsvg() {
 	var select = document.getElementById("svg_list")

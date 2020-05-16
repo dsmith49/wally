@@ -15,10 +15,6 @@ def control():
 def settings():
 	return render_template('settings.html', title='Settings')
 
-@app.route('/draw')
-def draw():
-	return render_template('draw.html', title='Settings')
-
 @app.route('/command', methods = ['POST'])
 def command():
 	content = request.json
@@ -33,6 +29,10 @@ def status():
 	print('in status and returning', status)
 	return jsonify( status )
 
+@app.route('/draw')
+def draw():
+	return render_template('draw.html', title='Settings')
+
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
 	path = getcwd()+"/images/"
@@ -41,3 +41,9 @@ def svgfiles():
 		if (filename.split('.')[1] == 'svg'):
 			list_of_files.append( filename )
 	return jsonify( list_of_files )
+
+@app.route('/draw_svg', methods = ['GET','POST'])
+	filename = request.json
+	print(filename)
+	return ('', 204)
+
