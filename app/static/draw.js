@@ -8,6 +8,7 @@ document.getElementById("svg_list").onchange = function(){loadsvg()}
 
 function loadsvg() {
 	//var img = document.createElement('IMG')
+	console.log(document.getElementById("svg_image"))
 	var select = document.getElementById("svg_list")
 	console.log(select)
 	var filename = select.options[select.selectedIndex].value
