@@ -9,10 +9,11 @@ document.getElementById("svg_list").onchange = function(){loadsvg()}
 function loadsvg() {
 	var img = document.createElement('IMG')
 	var select = document.getElementById("svg_list")
+	console.log(select)
 	var filename = select.options[select.selectedIndex].value
 	img.src = "{{url_for('static', filename='" + filename + "')}}"
-	document.getElementById("svg_container").remove(0)
-	document.getElementById("svg_container").appendChild( img )
+	select.remove(0)
+	select.appendChild( img )
 }
 function getupdate() {
 	$.ajax({
