@@ -11,8 +11,8 @@ function loadsvg() {
 	var select = document.getElementById("svg_list")
 	console.log(select)
 	var filename = select.options[select.selectedIndex].value
-	img.src = "{{url_for('static', filename='" + filename + "')}}"
-	document.getElementById("svg_container").remove(0)
+	img.src = "{{url_for('static', filename=/images/'" + filename + "')}}"
+	//document.getElementById("svg_container").remove(0)
 	document.getElementById("svg_container").appendChild( img )
 }
 function getupdate() {
