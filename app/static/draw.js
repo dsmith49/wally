@@ -21,7 +21,7 @@ function updatestatus( data ) {
 	}
 	data.map( filename => {
 		var opt = document.createElement('option')
-		opt.appendChild( document.createTextNode('New Option Text') );
+		opt.appendChild( document.createTextNode(filename) );
 		opt.value = filename;
 		document.getElementById("svg_list").appendChild( opt )
 	})

@@ -38,5 +38,6 @@ def svgfiles():
 	path = getcwd()+"/images/"
 	list_of_files = []
 	for filename in listdir(path):
-		list_of_files.append( filename )
+		if (filename.split('.')[1] == 'svg'):
+			list_of_files.append( filename )
 	return jsonify( list_of_files )
