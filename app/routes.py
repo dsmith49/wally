@@ -9,7 +9,5 @@ def index():
 @app.route('/command', methods = ['POST'])
 def command():
 	content = request.json
-	print(content)
-	print(request.method, request)
-	#print('command route says', command_dict)
-
+	print(content['command'])
+	return ('', 204)
