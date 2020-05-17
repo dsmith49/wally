@@ -3,7 +3,7 @@
 //canv.id = 'someId';
 //document.body.appendChild(canv);
 
-getupdate()
+getupdate(false)
 document.getElementById("svg_list").onchange = function(){loadsvg()}
 document.getElementById("draw_button").onclick = function(){call_draw()}
 document.getElementById("stop_button").onclick = function(){call_stop()}
@@ -42,13 +42,13 @@ function loadsvg() {
 	document.getElementById("svg_image").src = bstring
 }
 
-function getupdate( bar=false ) {
+function getupdate( bar ) {
 	console.log('getting update')
 	$.ajax({
   		dataType: "json",
   		url: "/svgfiles",
   		success: function( data ) {
-			if (bar==false) {updatestatus( data );};
+			if (!bar) {updatestatus( data );};
 			updateprogress( data );
 		},
 		failure: function(errMsg) {console.log('failed');}
