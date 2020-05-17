@@ -74,6 +74,6 @@ function updatestatus( data ) {
 function updateprogress( data ) {
 	console.log( 'update progress', data['progress'] )
 	var sel = document.getElementById('progress_bar');
-	sel.innerHTML = data['progress'][0].toString() + 'of' + data['progress'][1].toString()
+	sel.innerHTML = data['progress'][0].toString() + ' of ' + data['progress'][1].toString()
 }
 
