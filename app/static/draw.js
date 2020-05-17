@@ -43,6 +43,7 @@ function loadsvg() {
 }
 
 function getupdate() {
+	console.log('getting update')
 	$.ajax({
   		dataType: "json",
   		url: "/svgfiles",
