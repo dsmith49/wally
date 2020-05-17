@@ -48,7 +48,7 @@ function getupdate( bar=false ) {
   		dataType: "json",
   		url: "/svgfiles",
   		success: function( data ) {
-			if (bar=false) {updatestatus( data );};
+			if (bar==false) {updatestatus( data );};
 			updateprogress( data );
 		},
 		failure: function(errMsg) {console.log('failed');}
