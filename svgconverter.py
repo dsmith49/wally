@@ -55,7 +55,7 @@ def svgbox( pixelid, crosshatch, value, numlines ):
 		vertical_lines   = lines - horizontal_lines
 	paths         = []
 	move          = []
-	origin        = [pixelid[0]*(config.boxsize[0]/config.meters_per_step), pixelid[1]*(config.boxsize[1]/config.meters_per_step) ]
+	origin        = [pixelid[0]*((config.boxsize[0]/config.meters_per_step)/config.svg_pixel_size ), pixelid[1]*((config.boxsize[1]/config.meters_per_step)/config.svg_pixel_size ) ]
 	current_loc   = origin.copy()
 	for y in range(0,horizontal_lines):
 		if (y == 0):
