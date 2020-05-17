@@ -13,11 +13,10 @@ def getch():
 	return ch
 
 def display( status ):
-	#call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
-	print('            a d        PENDOWN:[      PENUP:]   COMMAND_NAIVE:=    COMMAND_SMART:-')
-	print('            zxc        EXIT: `        EXIT_AND_RELEASE_MOTORS:~')
-	print('PEN1: 1     PEN2: 2    PEN3: 3')
+	print('            a d        PENDOWN:[      PENUP:]   COMMAND:-')
+	print('            zxc        POWER: `       EXIT_AND_RELEASE_MOTORS:~')
+	print('PEN1: 1     PEN2: 2    PEN3: 3        CALIBRATE: p   DRAW: o')
 	print('--------------------------------')
 	print('POWER:', status['power'])
 	print('           motor1 |      motor2')
