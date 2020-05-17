@@ -55,7 +55,7 @@ function updatestatus( data ) {
 	for (i = sel.length - 1; i >= 0; i--) {
 		sel.remove(i);
 	}
-	data.map( filename => {
+	data['filenames'].map( filename => {
 		var opt = document.createElement('option')
 		opt.appendChild( document.createTextNode(filename) );
 		opt.value = filename;
@@ -63,5 +63,10 @@ function updatestatus( data ) {
 	})
 	document.getElementById("svg_list").selectedIndex = 0
 	loadsvg()
+}
+
+function updateprogress( data ) {
+	var sel = document.getElementById('progress_bar');
+	sel.innerHTML = data['progress'][0].toString() + 'of' + data['progress'][1].toString()
 }
 

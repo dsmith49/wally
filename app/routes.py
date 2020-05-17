@@ -37,11 +37,13 @@ def draw():
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
 	path = getcwd()+"/app/static/images/"
-	list_of_files = []
+	data = {}
+	data['filenames'] = []
+	data['progress'] = app.config['wally'].drawstatus
 	for filename in listdir(path):
 		if (filename.split('.')[1] == 'svg'):
 			list_of_files.append( filename )
-	return jsonify( list_of_files )
+	return jsonify( data )
 
 @app.route('/draw_svg', methods = ['GET','POST'])
 def draw_svg():
