@@ -7,26 +7,35 @@
     </head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <body>
+
 <table>
 <tbody>
   <tr style="vertical-align:top">
-    <td rowspan="3"><select id="svg_list" name="svg_list" size="10"> - </select></td>
+    <td><select id="svg_list" name="svg_list" size="10"> - </select></td>
+    <td>
+<table>
+<tbody>
+  <tr>
     <td><button id="draw_button" type="button">Draw</button></td>
-    <td rowspan="3">
+  </tr>
+  <tr>
+    <td><button id="stop_button" type="button">Stop</button></td>
+  </tr>
+  <tr>
+    <td><div id="progress_bar"></div><</td>
+  </tr>
+</tbody>
+</table>
+	</td>
+    <td>
 		<div id="svg_container">
   			<img id ="svg_image" src=null>
 		</div>
 	</td>
   </tr>
-  <tr>
-    <td><div id="progress_bar"></div></td>
-  </tr>
-  <tr>
-    <td><button id="stop_button" type="button">Stop</button></td>
-  </tr>
 </tbody>
 </table>
-		<script src="{{url_for('static', filename='draw.js')}}"></script>
+<script src="{{url_for('static', filename='draw.js')}}"></script>
     </body>
 </html>
 {% endblock %}
