@@ -36,39 +36,6 @@ def close(pwm, final=False):
 	off()
 	if (final): GPIO.cleanup()
 
-
-def euclid_to_hypoteni_naive( coordinate ):
-	return [coordinate[0] + coordinate[1], -coordinate[0] + coordinate[1]]
-def meters_to_steps( command ):
-	return [ round(command[0] / config.meters_per_step), round(command[1] / config.meters_per_step) ]
-
-def move_naive( speed, command_euclid, motors_position ):
-	command = euclid_to_hypoteni_naive( meters_to_steps( command_euclid ) )
-	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
-	MOTOR.enablestepSTOPint(0,'B') 
-	if (command[0] == 0 and command[1] == 0): return motors_position
-	motor1_direction = 'ccw'
-	motor2_direction = 'cw'
-	if (command[0] < 0): motor1_direction = 'cw'
-	if (command[1] < 0): motor2_direction = 'ccw'
-	MOTOR.stepperCONFIG(0,'A', motor1_direction,'H',speed,0)
-	MOTOR.stepperCONFIG(0,'B', motor2_direction,'H',speed,0)
-	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs(command[0]))
-	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs(command[1]))
-
-	flag_a=1                                      #Initialize flag to true
-	flag_b=1
-	if (command[0] == 0): flag_a = 0
-	if (command[1] == 0): flag_b = 0
-	while(flag_a or flag_b):                      #start loop
-		time.sleep(0.05)                           #check every 100msec
-		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
-		if (stat & (2 ** 4) ): 
-			flag_b=0
-		if (stat & (2 ** 5)) :
-			flag_a=0
-	return [motors_position[0] + command[0], motors_position[1] + command[1]]
-
 def move_naive2( speed, command, motors_position ):
 	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
 	MOTOR.enablestepSTOPint(0,'B') 
@@ -94,9 +61,6 @@ def move_naive2( speed, command, motors_position ):
 		if (stat & (2 ** 5)) :
 			flag_a=0
 	return [motors_position[0] + command[0], motors_position[1] + command[1]]
-
-def move_smart( speed, command_euclid, motors_position):
-	return move_naive( speed, command_euclid, motors_position)
 
 def hypoteni_to_euclid( motors_position ):
 	#herons formula
@@ -125,6 +89,7 @@ def motor_velocity_at_time( current_pos, end_pos, time, total_time):
 	y_diff   = end_pos[1] - current_pos[1]
 	#dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
 	#dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff * time + current_pos[1])**2 )**0.5
+	if (not config.smartmove): current_pos = [config.x_total/2,config.x_total/2] 
 	dhdt_numerator   = x_diff * (time * x_diff +current_pos[0] - config.x_gondola) + y_diff * (time * y_diff + current_pos[1] - config.y_gondola)
 	dhdt_denomenator = ( (x_diff * time + current_pos[0] - config.x_gondola)**2 + (y_diff * time + current_pos[1] - config.y_gondola)**2 )**0.5
 	return round( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
@@ -146,11 +111,9 @@ def move_smart( speed, command, motors_position ):
 	steps = [0,0]
 	total_steps = [euclid_to_hypoteni( end_position )[0] - euclid_to_hypoteni( current_position )[0],euclid_to_hypoteni( end_position )[1] - euclid_to_hypoteni( current_position )[1]]
 
-	#while (current_time < total_time):
 	while (abs(round(steps[0])) < abs(total_steps[0])) or (abs(round(steps[1])) < abs(total_steps[1])):
 		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
 		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time), total_time )
-		#print(abs(steps[0]), '<', abs(total_steps[0]), abs(steps[1]),'<',abs(total_steps[1]) )  
 		if (current_time == 0):
 			motor1_direction = 'ccw'
 			motor2_direction = 'cw'
@@ -191,8 +154,6 @@ def move_smart2(speed, command, motors_position):
 		else:
 			current_command = [x_diff - (x_diff/steps)*(steps-1), y_diff - (y_diff/steps)*(steps-1)]
 		motors_position = move_smart_step( speed, current_command, motors_position )
-	#print('begin',motors_position_begin,'end', motors_position)
-	#x = input('press enter')
 	return motors_position
 
 def move_smart_step( speed, command, motors_position ):
@@ -241,7 +202,7 @@ def move( speed, command, motors_position ):
 	if config.smartmove:
 		return move_smart2( speed, command, motors_position )
 	else:
-		return move_naive2( speed, command, motors_position )
+		return move_smart2( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
 	if (motors_last_velocity[0]==0):
