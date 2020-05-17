@@ -35,7 +35,7 @@ def draw():
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
-	path = getcwd()+"/images/"
+	path = getcwd()+"/app/static/images/"
 	list_of_files = []
 	for filename in listdir(path):
 		if (filename.split('.')[1] == 'svg'):
