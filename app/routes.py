@@ -1,6 +1,7 @@
 from app import app
 from flask import render_template, request, jsonify
 from os import getcwd, listdir
+import threading
 
 @app.route('/')
 @app.route('/index')
@@ -47,7 +48,9 @@ def draw_svg():
 	filename = request.json
 	print('filename is', filename)
 	data = app.config['wally'].loadfile( getcwd() + '/app/static/images/' + filename )
-	app.config['wally'].drawSVG( data )
+	x = threading.Thread( target=app.config['wally'].drawSVG, args=(data,), daemon=True)
+	x.start()
+	#x.join()
 	return ('', 204)
 
 @app.route('/stop_draw_svg', methods = ['GET','POST'])
