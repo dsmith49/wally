@@ -50,7 +50,8 @@ function getupdate() {
   		success: function( data ) {
 			updatestatus( data )
 			updateprogress( data )
-		}
+		},
+		failure: function(errMsg) {console.log('failed');}
 	});
 }
 
