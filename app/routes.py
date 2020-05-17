@@ -50,3 +50,8 @@ def draw_svg():
 	app.config['wally'].drawSVG( data )
 	return ('', 204)
 
+@app.route('/stop_draw_svg', methods = ['GET','POST'])
+def stop_draw_svg():
+	app.config['wally'].pause()
+	return ('', 204)
+

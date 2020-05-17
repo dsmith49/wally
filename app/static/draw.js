@@ -6,6 +6,7 @@
 getupdate()
 document.getElementById("svg_list").onchange = function(){loadsvg()}
 document.getElementById("draw_button").onclick = function(){call_draw()}
+document.getElementById("stop_button").onclick = function(){call_stop()}
 
 function call_draw() {
 	var svglist = document.getElementById("svg_list")
@@ -16,6 +17,16 @@ function call_draw() {
 		data: JSON.stringify( filename ),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
+		success: function(data){ console.log('success');},
+		failure: function(errMsg) {console.log('failed');}
+	});	
+}
+
+function call_stop() {
+	$.ajax({
+		type: "POST",
+		url: "/stop_draw_svg",
+		contentType: "application/json; charset=utf-8",
 		success: function(data){ console.log('success');},
 		failure: function(errMsg) {console.log('failed');}
 	});	

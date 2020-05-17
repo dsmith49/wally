@@ -77,21 +77,17 @@ class Wally(object):
 			print(path, num,'of',len(data.paths))
 			x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - position[0]
 			y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size - position[1]
-			print('move', [x,y],'from',position, 'and drop pen')
 			self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
 			position[0] += x
 			position[1] += y
 			self.pen_move()
-			print(path, num,'of',len(data.paths))
 			for num2,line in enumerate(path):
 				x = line[1].real*config.meters_per_step*config.svg_pixel_size - position[0]
 				y = line[1].imag*config.meters_per_step*config.svg_pixel_size - position[1]
-				print('move', [x,y],'from',position)
 				self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
 				position[0] += x
 				position[1] += y
 			self.pen_move()
-			print('done path gondola is at', position)
 
 	def loadfile(self, filename ):
 		drawobject = None
