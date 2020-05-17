@@ -6,7 +6,7 @@ import threading
 @app.route('/')
 @app.route('/index')
 def index():
-	with open("README.md","r") as file:
+	with open("../README.md","r") as file:
 		content = file.readlines()
 		print(content)
 	return render_template('index.html', title='Home')
