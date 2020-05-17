@@ -48,14 +48,15 @@ function getupdate() {
   		dataType: "json",
   		url: "/svgfiles",
   		success: function( data ) {
-			updatestatus( data )
-			updateprogress( data )
+			updatestatus( data );
+			updateprogress( data );
 		},
 		failure: function(errMsg) {console.log('failed');}
 	});
 }
 
 function updatestatus( data ) {
+	console.log( 'update status')
 	var sel = document.getElementById('svg_list');
 	for (i = sel.length - 1; i >= 0; i--) {
 		sel.remove(i);
@@ -71,7 +72,7 @@ function updatestatus( data ) {
 }
 
 function updateprogress( data ) {
-	console.log( data['progress'] )
+	console.log( 'update progress', data['progress'] )
 	var sel = document.getElementById('progress_bar');
 	sel.innerHTML = data['progress'][0].toString() + 'of' + data['progress'][1].toString()
 }
