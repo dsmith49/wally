@@ -43,7 +43,10 @@ function getupdate() {
 	$.ajax({
   		dataType: "json",
   		url: "/svgfiles",
-  		success: function( data ) { updatestatus( data ) }
+  		success: function( data ) {
+			updatestatus( data )
+			updateprogress( data )
+		}
 	});
 }
 

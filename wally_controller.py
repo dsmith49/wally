@@ -78,7 +78,8 @@ class Wally(object):
 		self.drawing = True
 		for num,path in enumerate(data.paths):
 			print(path, num,'of',len(data.paths))
-			self.draw_status = [num,len(data.paths)]	
+			self.draw_status = [num,len(data.paths)]
+			if (not self.drawing): return None
 			x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - position[0]
 			y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size - position[1]
 			self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
