@@ -55,34 +55,34 @@ def svgbox( pixelid, crosshatch, value, numlines ):
 		vertical_lines   = lines - horizontal_lines
 	paths         = []
 	move          = []
-	origin        = [pixelid[0]*config.boxsize[0], pixelid[1]*config.boxsize[1] ]
+	origin        = [pixelid[0]*(config.boxsize[0]/config.meters_per_step), pixelid[1]*(config.boxsize[1]/config.meters_per_step) ]
 	current_loc   = origin.copy()
 	for y in range(0,horizontal_lines):
 		if (y == 0):
-			move = [0,(config.boxsize[1]/horizontal_lines)/2]
+			move = [0,((config.boxsize[1]/config.meters_per_step)/horizontal_lines)/2]
 			current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 		else:
-			move = [0,(config.boxsize[1]/horizontal_lines)]
+			move = [0,((config.boxsize[1]/config.meters_per_step)/horizontal_lines)]
 			current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 		if (y % 2 == 0):
-			move = [config.boxsize[0],0]
+			move = [config.boxsize[0]/config.meters_per_step,0]
 		else:
-			move = [-config.boxsize[0],0]
+			move = [-config.boxsize[0]/config.meters_per_step,0]
 		paths.append( Path( Line( complex(current_loc[0], current_loc[1]), complex(current_loc[0] + move[0], current_loc[1] + move[1] ) ) ) )
 		current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 	current_loc = origin.copy()
 	if (crosshatch):
 		for y in range(0,vertical_lines):
 			if (y == 0):
-				move = [(config.boxsize[0]/vertical_lines)/2,0]
+				move = [((config.boxsize[0]/config.meters_per_step)/vertical_lines)/2,0]
 				current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 			else:
-				move = [config.boxsize[0]/vertical_lines,0]
+				move = [(config.boxsize[0]/config.meters_per_step)/vertical_lines,0]
 				current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 			if (y % 2 == 0):
-				move = [0,config.boxsize[1]]
+				move = [0,config.boxsize[1]/config.meters_per_step]
 			else:
-				move = [0,-config.boxsize[1]]
+				move = [0,-config.boxsize[1]/config.meters_per_step]
 			paths.append( Path( Line( complex(current_loc[0], current_loc[1]), complex(current_loc[0] + move[0], current_loc[1] + move[1] ) ) ) )
 			current_loc = [ current_loc[0] + move[0], current_loc[1] + move[1] ]
 		current_loc = origin.copy()			
