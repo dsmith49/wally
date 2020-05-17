@@ -1,4 +1,4 @@
-from wally_json_control import Wally
+from wally_control import Wally
 import sys, termios, tty, os, time
 from subprocess import call
 
