@@ -36,32 +36,6 @@ def close(pwm, final=False):
 	off()
 	if (final): GPIO.cleanup()
 
-def move_naive2( speed, command, motors_position ):
-	MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
-	MOTOR.enablestepSTOPint(0,'B') 
-	if (command[0] == 0 and command[1] == 0): return motors_position
-	motor1_direction = 'ccw'
-	motor2_direction = 'cw'
-	if (command[0] < 0): motor1_direction = 'cw'
-	if (command[1] < 0): motor2_direction = 'ccw'
-	MOTOR.stepperCONFIG(0,'A', motor1_direction,'H',speed,0)
-	MOTOR.stepperCONFIG(0,'B', motor2_direction,'H',speed,0)
-	if (command[0] != 0): MOTOR.stepperMOVE(0,'A', abs(command[0]))
-	if (command[1] != 0): MOTOR.stepperMOVE(0,'B', abs(command[1]))
-
-	flag_a=1                                      #Initialize flag to true
-	flag_b=1
-	if (command[0] == 0): flag_a = 0
-	if (command[1] == 0): flag_b = 0
-	while(flag_a or flag_b):                      #start loop
-		time.sleep(0.05)                           #check every 100msec
-		stat=MOTOR.getINTflag0(0)                 #read interrupt flags
-		if (stat & (2 ** 4) ): 
-			flag_b=0
-		if (stat & (2 ** 5)) :
-			flag_a=0
-	return [motors_position[0] + command[0], motors_position[1] + command[1]]
-
 def hypoteni_to_euclid( motors_position ):
 	#herons formula
 	#s = (motors_position[0]*config.meters_per_step + motors_position[1]*config.meters_per_step + config.x_total) / 2
@@ -94,50 +68,7 @@ def motor_velocity_at_time( current_pos, end_pos, time, total_time):
 	dhdt_denomenator = ( (x_diff * time + current_pos[0] - config.x_gondola)**2 + (y_diff * time + current_pos[1] - config.y_gondola)**2 )**0.5
 	return round( (dhdt_numerator/dhdt_denomenator) / (config.meters_per_step * total_time)) #returns velocity in steps per second
 
-def move_smart( speed, command, motors_position ):
-	
-	current_position = hypoteni_to_euclid( motors_position )
-	x_diff     		 = command[0]
-	y_diff      	 = command[1]
-	end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
-	distance    	 = ( x_diff**2 + y_diff**2 )**0.5
-	total_time  	 = distance / (speed * config.meters_per_step)
-	current_time 	 = 0
-
-	current_position_mirror = [ config.x_total - current_position[0], current_position[1] ]
-	end_position_mirror     = [ config.x_total - end_position[0], end_position[1] ]
-	timestamp_1 = 0
-	timestamp_2 = 0
-	steps = [0,0]
-	total_steps = [euclid_to_hypoteni( end_position )[0] - euclid_to_hypoteni( current_position )[0],euclid_to_hypoteni( end_position )[1] - euclid_to_hypoteni( current_position )[1]]
-
-	while (abs(round(steps[0])) < abs(total_steps[0])) or (abs(round(steps[1])) < abs(total_steps[1])):
-		motor1_velocity = motor_velocity_at_time( current_position, end_position, (current_time/total_time), total_time )
-		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, (current_time/total_time), total_time )
-		if (current_time == 0):
-			motor1_direction = 'ccw'
-			motor2_direction = 'cw'
-			if (motor1_velocity < 0): motor1_direction = 'cw'
-			if (motor2_velocity < 0): motor2_direction = 'ccw'
-			MOTOR.stepperCONFIG(0,'A', motor1_direction,'H', abs(motor1_velocity), 0 )
-			MOTOR.stepperCONFIG(0,'B', motor2_direction,'H', abs(motor2_velocity), 0 )
-			MOTOR.stepperJOG(0,'A')
-			MOTOR.stepperJOG(0,'B')
-			timestamp_1 = time.perf_counter()
-		else:
-			MOTOR.stepperRATE(0,'A', motor1_velocity)
-			MOTOR.stepperRATE(0,'B', motor2_velocity)
-		#time.sleep( 0.05 )
-		timestamp_2  = time.perf_counter()
-		current_time += (timestamp_2 - timestamp_1)
-		steps[0] += ((timestamp_2 - timestamp_1) * motor1_velocity)
-		steps[1] += ((timestamp_2 - timestamp_1) * motor2_velocity)
-		timestamp_1  = timestamp_2
-	MOTOR.stepperSTOP(0,'A')
-	MOTOR.stepperSTOP(0,'B')
-	return [motors_position[0] + round(steps[0]), motors_position[1] + round(steps[1])]
-
-def move_smart2(speed, command, motors_position):
+def move(speed, command, motors_position):
 	start_position   = hypoteni_to_euclid( motors_position )
 	x_diff     		 = command[0]
 	y_diff      	 = command[1]
@@ -197,12 +128,6 @@ def move_smart_step( speed, command, motors_position ):
 		if (stat & (2 ** 5)) :
 			flag_a=0
 	return [motors_position[0] + steps[0], motors_position[1] + steps[1] ]
-
-def move( speed, command, motors_position ):
-	if config.smartmove:
-		return move_smart2( speed, command, motors_position )
-	else:
-		return move_smart2( speed, command, motors_position )
 
 def update_motors(motors_last_velocity, motors_velocity, timestamp_1, motors_position):
 	if (motors_last_velocity[0]==0):
