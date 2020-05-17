@@ -25,6 +25,8 @@ class Wally(object):
 		self.increment = 500
 		self.pwm = None #motorlib.configmotors( 0 )
 		self.pendown = False
+		self.drawing = False
+		self.drawstatus = [0,0]
 
 	def status(self):
 		statusdict = {
@@ -73,8 +75,10 @@ class Wally(object):
 
 	def drawSVG( self, data ):
 		position = [0.0,0.0]
+		self.drawing = True
 		for num,path in enumerate(data.paths):
 			print(path, num,'of',len(data.paths))
+			self.draw_status = [num,len(data.paths]	
 			x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - position[0]
 			y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size - position[1]
 			self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
@@ -82,12 +86,14 @@ class Wally(object):
 			position[1] += y
 			self.pen_move()
 			for num2,line in enumerate(path):
+				if (not self.drawing): return None
 				x = line[1].real*config.meters_per_step*config.svg_pixel_size - position[0]
 				y = line[1].imag*config.meters_per_step*config.svg_pixel_size - position[1]
 				self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
 				position[0] += x
 				position[1] += y
 			self.pen_move()
+		self.drawing = False
 
 	def loadfile(self, filename ):
 		drawobject = None

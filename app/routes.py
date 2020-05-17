@@ -55,6 +55,6 @@ def draw_svg():
 
 @app.route('/stop_draw_svg', methods = ['GET','POST'])
 def stop_draw_svg():
-	app.config['wally'].power(on=False,final=True)
+	app.config['wally'].drawing = False
 	return ('', 204)
 
