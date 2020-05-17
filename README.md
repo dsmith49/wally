@@ -55,6 +55,9 @@ IMPORTANT FILES:
                           if mode is CONTOUR, hatching in [0,32], contour in [0,4]
                           if mode is PIXEL, hatching > 0 sets crosshatch to True, else False, contour is numlines per pixel, in [0,32]
 
+IMPORTANT DIRECTORIES:
+    wally/app/static/images     wally looks for SVG files here now.
+
 HELPFUL LINKS:
     https://pi-plates.com/motorplate-users-guide/
     https://rpi.science.uoit.ca/lab/servo/
