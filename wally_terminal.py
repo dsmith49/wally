@@ -13,6 +13,7 @@ def getch():
 	return ch
 
 def display( status ):
+	call('clear')
 	print('DIRECTIONS: qwe        STOP: s')
 	print('            a d        PENDOWN:[      PENUP:]   COMMAND:-')
 	print('            zxc        POWER: `       EXIT_AND_RELEASE_MOTORS:~')
