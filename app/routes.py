@@ -42,7 +42,7 @@ def svgfiles():
 	data['progress'] = app.config['wally'].drawstatus
 	for filename in listdir(path):
 		if (filename.split('.')[1] == 'svg'):
-			list_of_files.append( filename )
+			data['filenames'].append( filename )
 	return jsonify( data )
 
 @app.route('/draw_svg', methods = ['GET','POST'])
