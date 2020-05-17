@@ -18,8 +18,8 @@ function call_draw() {
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: function(data){
-			console.log('success');
-			setInterval(getupdate(), 5000);
+			console.log('success setting interbal');
+			setInterval(function() {getupdate()}, 5000);
 		},
 		failure: function(errMsg) {console.log('failed');}
 	});
