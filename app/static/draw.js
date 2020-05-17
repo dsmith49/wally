@@ -17,9 +17,12 @@ function call_draw() {
 		data: JSON.stringify( filename ),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
-		success: function(data){ console.log('success');},
+		success: function(data){
+			console.log('success');
+			setInterval(function() {getupdate()}, 5000)
+		},
 		failure: function(errMsg) {console.log('failed');}
-	});	
+	});
 }
 
 function call_stop() {
