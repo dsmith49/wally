@@ -2,6 +2,7 @@
 //var canv = document.createElement('canvas');
 //canv.id = 'someId';
 //document.body.appendChild(canv);
+var interval = null
 
 getupdate(false)
 document.getElementById("svg_list").onchange = function(){loadsvg()}
@@ -18,8 +19,7 @@ function call_draw() {
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		success: function(data){
-			console.log('success setting interbal');
-			setInterval(function() {getupdate(true)}, 5000);
+			interval = setInterval(function() {getupdate(true)}, 5000);
 		},
 		failure: function(errMsg) {console.log('failed');}
 	});
@@ -30,7 +30,7 @@ function call_stop() {
 		type: "POST",
 		url: "/stop_draw_svg",
 		contentType: "application/json; charset=utf-8",
-		success: function(data){ console.log('success');},
+		success: function(data){ console.log('success'); clearInterval(interval)},
 		failure: function(errMsg) {console.log('failed');}
 	});	
 }
@@ -43,13 +43,13 @@ function loadsvg() {
 }
 
 function getupdate( bar ) {
-	console.log('getting update')
+	console.log('getting update',bar)
 	$.ajax({
   		dataType: "json",
   		url: "/svgfiles",
   		success: function( data ) {
 			if (!bar) {updatestatus( data );};
-			updateprogress( data );
+			if (bar) {updateprogress( data );};
 		},
 		failure: function(errMsg) {console.log('failed');}
 	});
