@@ -19,7 +19,7 @@ function call_draw() {
 		dataType: "json",
 		success: function(data){
 			console.log('success');
-			setInterval(function() {getupdate()}, 5000)
+			setInterval(getupdate(), 5000);
 		},
 		failure: function(errMsg) {console.log('failed');}
 	});
