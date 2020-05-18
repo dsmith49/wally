@@ -28,7 +28,7 @@ def settings_json():
 		return settings
 	else:
 		print('in save settings')
-		app.config['wally'].settings( settings = data)
+		app.config['wally'].settings( settings = content )
 		return ('', 204)
 		
 
