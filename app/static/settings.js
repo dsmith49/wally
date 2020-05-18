@@ -17,6 +17,7 @@ function sendsettings() {
 	datakeys.map( key => {
 		dict[key] = document.getElementById(key).value
 	})
+	console.log('in send settings and dict is', dict)
 	$.ajax({
   		dataType: "json",
   		url: "/get_json_settings",
