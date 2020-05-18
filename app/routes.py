@@ -18,6 +18,12 @@ def control():
 def settings():
 	return render_template('settings.html', title='Settings')
 
+@app.route('/get_json_settings', methods = ['GET','POST'])
+def command():
+app.config['wally']
+	settings = app.config['wally'].isettings()
+	return jsonify( settings )
+
 @app.route('/command', methods = ['POST'])
 def command():
 	content = request.json

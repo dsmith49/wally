@@ -23,11 +23,11 @@
   </tr>
   <tr>
     <td>distance between pivots</td>
-    <td><input type="number"></td>
+    <td><input id='x_total' type="number"></td>
     <td>speed</td>
-    <td><input type="number"></td>
+    <td><input id='speed' type="number"></td>
     <td>pen up angle</td>
-    <td><input type="number"></td>
+    <td><input id='pen_up_angle' type="number"></td>
   </tr>
   <tr>
     <td>length left motor wire</td>
@@ -95,7 +95,8 @@
   </tr>
 </tbody>
 </table>
-<button id="save_button" type="button">Save</button> 
+<button id="save_button" type="button">Save</button>
+<script src="{{url_for('static', filename='settings.js')}}"></script>
     </body>
 </html>
 {% endblock %}

@@ -16,6 +16,8 @@ class DrawObject(object):
 
 class Wally(object):
 	def __init__(self):
+		self.config = config.Config()
+		self.config.loadJSON()
 		self.motors_on = False
 		self.ever_on   = False
 		self.motors_velocity = [0,0]
@@ -28,6 +30,8 @@ class Wally(object):
 		self.drawing = False
 		self.drawstatus = [0,0]
 
+	def settings():
+		return self.config.getJSON()	
 	def status(self):
 		statusdict = {
 			'power'    : self.motors_on,
