@@ -23,11 +23,9 @@ def settings_json():
 	content = request.json
 	print( content )
 	if (content is None):
-		print('in fetch settings')
 		settings = app.config['wally'].settings()
 		return settings
 	else:
-		print('in save settings')
 		app.config['wally'].settings( settings = content )
 		return ('', 204)
 		

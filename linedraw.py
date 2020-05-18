@@ -11,8 +11,8 @@ from PIL import Image, ImageDraw, ImageOps
 
 # file settings
 export_path = "out.svg"
-svg_folder  = "/"
-json_folder = "/"
+svg_folder  = ""
+json_folder = ""
 
 # CV
 no_cv = False
@@ -94,10 +94,8 @@ def vectorise(
     image = None
     possible = [
         image_filename,
-        "images/"+image_filename,
-        "images/"+image_filename+".jpg",
-        "images/"+image_filename+".png",
-        "images/"+image_filename+".tif"
+		image_filename+'.jpg',
+		image_filename+'.png'
     ]
 
     for p in possible:

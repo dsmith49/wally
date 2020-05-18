@@ -9,6 +9,7 @@ class Config(object):
 		self.crosshatch      = True             # not used yet
 		self.boxsize_x       = 0.005
 		self.boxsize_y       = 0.005      # pixel size width by height, in meters, used by smartmove
+		self.boxsize = [self.boxsize_x, self.boxsize_y ]
 		self.boxsize_naive   = [100,100]      # pixel size width by height, in steps, used by naivemove
 		self.x_total         = 1.915                # distance between two motor wire mounts, in meters
 		self.motor1_length   = 1.45		   # length of motor1 wire, in meters
@@ -39,6 +40,7 @@ class Config(object):
 			data = json.load(fp)
 			for key,value in data.items():
 				setattr(self, key, value)
+		self.boxsize = [self.boxsize_x, self.boxsize_y ]
 
 	def getJSON(self):
 		return json.dumps( vars(self) )
@@ -46,6 +48,7 @@ class Config(object):
 	def putJSON(self, data ):
 		for key,value in data.items():
 			setattr(self, key, value)
+		self.boxsize = [self.boxsize_x, self.boxsize_y ]
 
 
 speed = 350

@@ -16,19 +16,20 @@ class DrawObject(object):
 
 class Wally(object):
 	def __init__(self):
-		self.config = config.Config()
+		self.config          = config.Config()
 		self.config.loadJSON()
-		self.motors_on = False
-		self.ever_on   = False
+		self.motorlib        = motorlib.Motorlib( self.config )
+		self.motors_on       = False
+		self.ever_on         = False
 		self.motors_velocity = [0,0]
-		self.motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
+		self.motors_position = [int(self.config.motor1_length / self.config.meters_per_step), int( self.config.motor2_length / self.config.meters_per_step) ]
 		self.motors_last_velocity = [0,0]
-		self.timestamp_1 = time.perf_counter()
-		self.increment = 500
-		self.pwm = None #motorlib.configmotors( 0 )
-		self.pendown = False
-		self.drawing = False
-		self.drawstatus = [0,0]
+		self.timestamp_1     = time.perf_counter()
+		self.increment       = 500
+		self.pwm             = None
+		self.pendown         = False
+		self.drawing         = False
+		self.drawstatus      = [0,0]
 
 	def settings(self, settings=None):
 		if (settings is None):
@@ -44,24 +45,24 @@ class Wally(object):
 			'pendown'  : self.pendown,
 			'velocity' : self.motors_velocity,
 			'position_steps'    : self.motors_position,
-			'position_meters'   : [self.motors_position[0] * config.meters_per_step, self.motors_position[1] * config.meters_per_step],
-			'position_euclid'   : motorlib.hypoteni_to_euclid( self.motors_position )
+			'position_meters'   : [self.motors_position[0] * self.config.meters_per_step, self.motors_position[1] * self.config.meters_per_step],
+			'position_euclid'   : self.motorlib.hypoteni_to_euclid( self.motors_position )
 		}
 		return statusdict #json.dumps( statusdict )
 
 	def power(self, on=True, final=False):
 		if (on and not self.motors_on):
-			self.pwm = motorlib.configmotors( 0, first = not self.ever_on )
+			self.pwm = self.motorlib.configmotors( 0, first = not self.ever_on )
 			self.motors_on = True
 			self.ever_on   = True
 		if (not on and self.motors_on):
-			motorlib.close( self.pwm )
+			self.motorlib.close( self.pwm )
 			self.motors_on = False
 		if (final):
-			motorlib.close( self.pwm, final=True)
+			self.motorlib.close( self.pwm, final=True)
 
 	def pause(self):
-		motorlib.stop()
+		self.motorlib.stop()
 
 	def pen_move(self, down=None):
 		if (down is None):
@@ -69,19 +70,19 @@ class Wally(object):
 		else:
 			self.pendown = down
 		if (not self.pendown):
-			motorlib.setangle(self.pwm,0,config.pen_up_angle)
+			self.motorlib.setangle(self.pwm,0,self.config.pen_up_angle)
 		else:
-			motorlib.setangle(self.pwm,0,config.pen_down_angle)
+			self.motorlib.setangle(self.pwm,0,self.config.pen_down_angle)
 
 	def pen_rotate(self, position):
 		self.pen_move( down=False )
-		if (position==0): motorlib.setangle(self.pwm,1,config.pen_1_angle)
-		if (position==1): motorlib.setangle(self.pwm,1,config.pen_2_angle)
-		if (position==2): motorlib.setangle(self.pwm,1,config.pen_3_angle)
+		if (position==0): self.motorlib.setangle(self.pwm,1,self.config.pen_1_angle)
+		if (position==1): self.motorlib.setangle(self.pwm,1,self.config.pen_2_angle)
+		if (position==2): self.motorlib.setangle(self.pwm,1,self.config.pen_3_angle)
 
 	def calibrate(self):
 		self.motors_velocity = [0,0]
-		self.motors_position = [int(config.motor1_length / config.meters_per_step), int(config.motor2_length / config.meters_per_step) ]
+		self.motors_position = [int( self.config.motor1_length / self.config.meters_per_step), int(self.config.motor2_length / self.config.meters_per_step) ]
 
 	def drawSVG( self, data ):
 		position = [0.0,0.0]
@@ -90,17 +91,17 @@ class Wally(object):
 			print(path, num,'of',len(data.paths))
 			self.drawstatus = [num,len(data.paths)]
 			if (not self.drawing): return None
-			x = path[0][0].real*config.meters_per_step*config.svg_pixel_size - position[0]
-			y = path[0][0].imag*config.meters_per_step*config.svg_pixel_size - position[1]
-			self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
+			x = path[0][0].real*self.config.meters_per_step * self.config.svg_pixel_size - position[0]
+			y = path[0][0].imag*self.config.meters_per_step * self.config.svg_pixel_size - position[1]
+			self.motors_position = self.motorlib.move( self.config.speed, [x,y], self.motors_position )
 			position[0] += x
 			position[1] += y
 			self.pen_move()
 			for num2,line in enumerate(path):
 				if (not self.drawing): return None
-				x = line[1].real*config.meters_per_step*config.svg_pixel_size - position[0]
-				y = line[1].imag*config.meters_per_step*config.svg_pixel_size - position[1]
-				self.motors_position = motorlib.move( config.speed, [x,y], self.motors_position )
+				x = line[1].real * self.config.meters_per_step*self.config.svg_pixel_size - position[0]
+				y = line[1].imag * self.config.meters_per_step*self.config.svg_pixel_size - position[1]
+				self.motors_position = self.motorlib.move( self.config.speed, [x,y], self.motors_position )
 				position[0] += x
 				position[1] += y
 			self.pen_move()
@@ -109,7 +110,7 @@ class Wally(object):
 	def loadfile(self, filename ):
 		drawobject = None
 		if (filename == 'test'):
-			if ( len( sys.argv ) > 2): config.numlines = int( sys.argv[2] )
+			if ( len( sys.argv ) > 2): self.config.numlines = int( sys.argv[2] )
 			width  = math.ceil( numlines**0.5 )
 			height = math.ceil( numlines**0.5 )
 			pixels = [[-1*(x*(256/numlines) - 255),255] for x in range(0, int( math.ceil( numlines**0.5 )**2) )]
@@ -167,13 +168,13 @@ class Wally(object):
 		elif (command in ["MOVE","DRAW"]):
 			self.motors_velocity = [0,0]
 		if (self.motors_on):
-			self.motors_position = motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
+			self.motors_position = self.motorlib.update_motors( self.motors_last_velocity, self.motors_velocity, self.timestamp_1, self.motors_position)
 			self.timestamp_1 = time.perf_counter()
 		if (command == "MOVE"):
-			self.motors_position = motorlib.move_smart2( command_json['speed'], command_json['relative_coords'], self.motors_position )
+			self.motors_position = self.motorlib.move( command_json['speed'], command_json['relative_coords'], self.motors_position )
 		if (command == "DRAW"):
 			print('loading', command_json['filename'] )
 			data = self.loadfile( command_json['filename'] )
 			self.drawSVG( data )
-		time.sleep(config.button_delay)
+		time.sleep(self.config.button_delay)
 

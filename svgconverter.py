@@ -1,40 +1,9 @@
-import linedraw
-import sys
 from svgpathtools import svg2paths, wsvg, Path, Line
-
-import sys
-import os
+import linedraw
+import sys, os
 from PIL import Image
 from math import ceil
 import config
-
-#xmin=0
-#xmax=0
-#ymin=0
-#ymax=0
-#paths, attributes = svg2paths(sys.argv[1])
-#for path in paths:
-#	for line in path:
-#		print(line)
-#		xmin = min(line[0].real,line[1].real,xmin)
-#		ymin = min(line[0].imag,line[1].imag,ymin)
-#		xmax = max(line[0].real,line[1].real,xmax)
-#		ymax = max(line[0].imag,line[1].imag,ymax)
-
-#print('x max and min', xmax, xmin)
-#print('y max and min',ymax,ymin)
-#print('width =',xmax + abs(xmin))
-#print('height = ',ymax + abs(ymin))
-
-#newpaths = []
-#for path in paths:
-#	newpath = Path()
-#	for line in path:
-#		newline = Line(complex(line[0].real + abs(xmin), line[0].imag + abs(ymin)), complex(line[1].real + abs(xmin), line[1].imag + abs(ymin)))
-#		newpath.append(newline)
-#	newpaths.append(newpath)
-
-#wsvg(newpaths, filename='output.svg')
 
 class DrawObject(object):
 	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
@@ -134,4 +103,5 @@ def main():
 		data  = loadfile( filename )
 		pngtosvg( data, filename, hatching, contour)
 
+config = config.Config()
 main()
