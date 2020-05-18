@@ -21,10 +21,11 @@ function sendsettings() {
 	})
 	console.log('in send settings', dict)
 	$.ajax({
-  		dataType: "json",
+    	type: "POST",
   		url: "/get_json_settings",
 		data : JSON.stringify( dict ),
-    	type: "POST",
+    	contentType: "application/json; charset=utf-8",
+    	dataType: "json",
   		success: function( data ) {console.log('success')},
 		failure: function(errMsg) {console.log('failed');}
 	});

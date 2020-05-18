@@ -21,6 +21,7 @@ def settings():
 @app.route('/get_json_settings', methods = ['GET','POST'])
 def settings_json():
 	content = request.json
+	print( content )
 	if (content is None):
 		print('in fetch settings')
 		settings = app.config['wally'].settings()
@@ -34,7 +35,6 @@ def settings_json():
 @app.route('/command', methods = ['POST'])
 def command():
 	content = request.json
-	print(content['command'])
 	app.config['wally'].command( content )
 	status = app.config['wally'].status()
 	return jsonify( status )
