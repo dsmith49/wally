@@ -1,7 +1,3 @@
-
-//var canv = document.createElement('canvas');
-//canv.id = 'someId';
-//document.body.appendChild(canv);
 var interval = null
 
 getupdate(false)

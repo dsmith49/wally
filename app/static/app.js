@@ -1,3 +1,20 @@
+document.getElementById("reboot_button").onclick = function(){powerpi('REBOOT')}
+document.getElementById("shutdown_button").onclick = function(){powerpi('SHUTDOWN')}
+
+function powerpi(command) {
+	command_dict = new Object();
+	command_dict['command'] = command
+	$.ajax({
+		type: "POST",
+		url: "/command",
+		data: JSON.stringify( command_dict ),
+		contentType: "application/json; charset=utf-8",
+		dataType: "json",
+		success: function(data){console.log('success');},
+		failure: function(errMsg) {console.log('failed');}
+	});
+}
+
 function getupdate() {
 	$.ajax({
   		dataType: "json",

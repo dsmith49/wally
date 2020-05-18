@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, jsonify
-from os import getcwd, listdir
+from os import getcwd, listdir, system
 import threading
 
 path = '/home/pi/wally/'
@@ -14,6 +14,27 @@ def index():
 @app.route('/control')
 def control():
 	return render_template('control.html', title='Control')
+
+@app.route('/command', methods = ['POST'])
+def command():
+	content = request.json
+	app.config['wally'].command( content )
+	status = app.config['wally'].status()
+	return jsonify( status )
+
+@app.route('/status', methods = ['GET','POST'])
+def status():
+	status = app.config['wally'].status()
+	return jsonify( status )
+
+@app.route('/commandpi', methods = ['POST'])
+def commandpi():
+	content = request.json
+	if (content['COMMAND'] == 'SHUTDOWN'):
+		system('sudo shutdown -h now')
+	if (content['COMMAND'] == 'REBOOT'):
+		system('sudo shutdown -r now')
+	return ('', 204)
 
 @app.route('/settings')
 def settings():
@@ -29,19 +50,6 @@ def settings_json():
 	else:
 		app.config['wally'].settings( settings = content )
 		return ('', 204)
-		
-
-@app.route('/command', methods = ['POST'])
-def command():
-	content = request.json
-	app.config['wally'].command( content )
-	status = app.config['wally'].status()
-	return jsonify( status )
-
-@app.route('/status', methods = ['GET','POST'])
-def status():
-	status = app.config['wally'].status()
-	return jsonify( status )
 
 @app.route('/draw')
 def draw():

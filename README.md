@@ -83,3 +83,12 @@ TO FIND WALLY's IP ADDRESS FROM COMPUTER ON LOCAL NETWORK:
 
 TO ACCESS WALLY FROM BROWSER ON LOCAL NETWORK:
                    point browser to: http://<wally's ip address>:5000
+
+TO CONFIGURE WALLY TO AUTOSTART ON BOOT:
+                   https://tecadmin.net/setup-autorun-python-script-using-systemd/
+   to stop daemon:
+      sudo systemctl stop dummy.service          #To stop running service 
+   to start daemon:     
+      sudo systemctl start dummy.service         #To start running service 
+   to check status of daemon:
+      sudo systemctl restart dummy.service 
