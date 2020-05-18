@@ -30,9 +30,10 @@ def status():
 @app.route('/commandpi', methods = ['POST'])
 def commandpi():
 	content = request.json
-	if (content['COMMAND'] == 'SHUTDOWN'):
+	print(content)
+	if (content['command'] == 'SHUTDOWN'):
 		system('sudo shutdown -h now')
-	if (content['COMMAND'] == 'REBOOT'):
+	if (content['command'] == 'REBOOT'):
 		system('sudo shutdown -r now')
 	return ('', 204)
 
