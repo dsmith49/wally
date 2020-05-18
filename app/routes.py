@@ -21,7 +21,7 @@ def settings():
 @app.route('/get_json_settings', methods = ['GET','POST'])
 def settings_json():
 	settings = app.config['wally'].settings()
-	return jsonify( settings )
+	return settings
 
 @app.route('/command', methods = ['POST'])
 def command():
