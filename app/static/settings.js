@@ -1,5 +1,3 @@
-#'/get_json_settings'
-
 getsettings()
 
 function getsettings() {
