@@ -19,7 +19,7 @@ def settings():
 	return render_template('settings.html', title='Settings')
 
 @app.route('/get_json_settings', methods = ['GET','POST'])
-def command():
+def settings_json():
 	settings = app.config['wally'].isettings()
 	return jsonify( settings )
 
