@@ -3,7 +3,7 @@ import json
 class Config(object):
 
 	def __init__(self):
-		self.path            = 'home/pi/wally/'
+		self.path            = '/home/pi/wally/'
 		self.speed           = 350
 		self.numlines        = 16                   # maximum number of horizontal lines per pixel
 		self.smartmove       = 0
