@@ -64,6 +64,7 @@ HELPFUL LINKS:
     https://www.sparkfun.com/datasheets/Robotics/SM-42BYG011-25.pdf
     http://cdn.sparkfun.com/datasheets/Robotics/S05NF%20STD.pdf
 	https://github.com/mathandy/svgpathtools.git
+    https://tecadmin.net/setup-autorun-python-script-using-systemd/
 
 SETUP:
    run:

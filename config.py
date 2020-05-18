@@ -3,6 +3,7 @@ import json
 class Config(object):
 
 	def __init__(self):
+		self.path            = 'home/pi/wally/'
 		self.speed           = 350
 		self.numlines        = 16                   # maximum number of horizontal lines per pixel
 		self.smartmove       = 0
@@ -32,11 +33,11 @@ class Config(object):
 		self.svg_pixel_size  = 12 #steps per pixel
 
 	def writeJSON(self):
-		with open('config.json', 'w') as fp:
+		with open(self.path + 'config.json', 'w') as fp:
 			json.dump( vars(self), fp)
 
 	def loadJSON(self):
-		with open('config.json') as fp:
+		with open(self.path + 'config.json') as fp:
 			data = json.load(fp)
 			for key,value in data.items():
 				setattr(self, key, type(getattr(self,key))(value))
