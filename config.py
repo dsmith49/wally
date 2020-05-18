@@ -39,7 +39,7 @@ class Config(object):
 		with open('config.json') as fp:
 			data = json.load(fp)
 			for key,value in data.items():
-				setattr(self, key, value)
+				setattr(self, key, type(self[key])(value))
 		self.boxsize = [self.boxsize_x, self.boxsize_y ]
 
 	def getJSON(self):
@@ -47,7 +47,7 @@ class Config(object):
 
 	def putJSON(self, data ):
 		for key,value in data.items():
-			setattr(self, key, value)
+			setattr(self, key, type(self[key])(value) )
 		self.boxsize = [self.boxsize_x, self.boxsize_y ]
 
 
