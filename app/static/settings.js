@@ -19,6 +19,7 @@ function sendsettings() {
 			dict[key] = document.getElementById(key).value
 		}
 	})
+	console.log('in send settings', dict)
 	$.ajax({
   		dataType: "json",
   		url: "/get_json_settings",
