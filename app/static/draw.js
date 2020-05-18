@@ -56,7 +56,6 @@ function getupdate( bar ) {
 }
 
 function updatestatus( data ) {
-	console.log( 'update status')
 	var sel = document.getElementById('svg_list');
 	for (i = sel.length - 1; i >= 0; i--) {
 		sel.remove(i);

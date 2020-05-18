@@ -1,3 +1,6 @@
+document.getElementById("save_button").onclick = function(){sendsettings()}
+
+var datakeys = null
 getsettings()
 
 function getsettings() {
@@ -9,11 +12,25 @@ function getsettings() {
 	});
 }
 
+function sendsettings() {
+	var dict = {}
+	datakeys.map( key => {
+		dict[key] = document.getElementById(key).value
+	})
+	$.ajax({
+  		dataType: "json",
+  		url: "/get_json_settings",
+		data : JSON.stringify( dict ),
+    	type: "POST",
+  		success: function( data ) {console.log('success')},
+		failure: function(errMsg) {console.log('failed');}
+	});
+}
+
 function updatestatus( data ) {
+	if (datakeys == null) {datakeys = Object.keys(data)}
 	Object.keys(data).map( key => {
-		console.log('checking for', key)
 		if (document.getElementById(key) != null) {
-			console.log('setting',key,data[key])
 			document.getElementById(key).value = data[key]
 		}
 	})
