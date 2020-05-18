@@ -3,10 +3,11 @@ from flask import render_template, request, jsonify
 from os import getcwd, listdir
 import threading
 
+path = '/home/pi/wally/'
 @app.route('/')
 @app.route('/index')
 def index():
-	with open("README.md","r") as file:
+	with open(path + "README.md","r") as file:
 		content = file.read()
 		return render_template('index.html', title='Home', readme=content)
 
@@ -40,7 +41,6 @@ def command():
 @app.route('/status', methods = ['GET','POST'])
 def status():
 	status = app.config['wally'].status()
-	print('in status and returning', status)
 	return jsonify( status )
 
 @app.route('/draw')
@@ -49,7 +49,7 @@ def draw():
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
-	path = getcwd()+"/app/static/images/"
+	path = path+"/app/static/images/"
 	data = {}
 	data['filenames'] = []
 	data['progress'] = app.config['wally'].drawstatus
@@ -61,8 +61,7 @@ def svgfiles():
 @app.route('/draw_svg', methods = ['GET','POST'])
 def draw_svg():
 	filename = request.json
-	print('filename is', filename)
-	data = app.config['wally'].loadfile( getcwd() + '/app/static/images/' + filename )
+	data = app.config['wally'].loadfile( path + '/app/static/images/' + filename )
 	x = threading.Thread( target=app.config['wally'].drawSVG, args=(data,), daemon=True)
 	x.start()
 	#x.join()

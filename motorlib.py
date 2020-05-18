@@ -37,8 +37,8 @@ class Motorlib(object):
 	def close(self, pwm, final=False):
 		pwm[0].stop()
 		pwm[1].stop()
-		stop()
-		off()
+		self.stop()
+		self.off()
 		if (final): GPIO.cleanup()
 
 	def hypoteni_to_euclid(self, motors_position ):
