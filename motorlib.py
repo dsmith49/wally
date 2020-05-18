@@ -89,7 +89,7 @@ class Motorlib(object):
 				current_command = [x_diff / steps, y_diff / steps]
 			else:
 				current_command = [x_diff - (x_diff/steps)*(steps-1), y_diff - (y_diff/steps)*(steps-1)]
-			motors_position = move_smart_step( speed, current_command, motors_position )
+			motors_position = self.move_smart_step( speed, current_command, motors_position )
 		return motors_position
 
 	def move_smart_step(self, speed, command, motors_position ):
