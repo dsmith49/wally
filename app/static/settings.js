@@ -1,7 +1,6 @@
 getsettings()
 
 function getsettings() {
-	console.log('getting seetings')
 	$.ajax({
   		dataType: "json",
   		url: "/get_json_settings",
@@ -11,8 +10,9 @@ function getsettings() {
 }
 
 function updatestatus( data ) {
-	console.log('updating seetings')
 	Object.keys(data).map( key => {
-		document.getElementById(key).value = data[key]
+		if (document.getElementById(key) != null) {
+			document.getElementById(key).value = data[key]
+		}
 	})
 }
