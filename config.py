@@ -43,6 +43,10 @@ class Config(object):
 	def getJSON(self):
 		return json.dumps( vars(self) )
 
+	def putJSON(self, data ):
+		for key,value in data.items():
+			setattr(self, key, value)
+
 
 speed = 350
 numlines = 16                   # maximum number of horizontal lines per pixel

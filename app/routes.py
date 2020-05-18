@@ -21,9 +21,11 @@ def settings():
 @app.route('/get_json_settings', methods = ['GET','POST'])
 def settings_json():
 	content = request.json
-	print('settings content',content)
-	settings = app.config['wally'].settings()
-	return settings
+	if (content is None):
+		settings = app.config['wally'].settings()
+		return settings
+	else:
+		
 
 @app.route('/command', methods = ['POST'])
 def command():
