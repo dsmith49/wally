@@ -38,7 +38,7 @@ class Config(object):
 				setattr(self, key, value)
 
 	def getJSON(self):
-		return json.dump( vars(self) )
+		return json.dumps( vars(self) )
 
 
 speed = 350
