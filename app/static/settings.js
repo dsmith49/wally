@@ -14,6 +14,7 @@ function getsettings() {
 
 function sendsettings() {
 	var dict = {}
+	console.log('in send settings and keys are', datakeys)
 	datakeys.map( key => {
 		dict[key] = document.getElementById(key).value
 	})
