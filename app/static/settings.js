@@ -14,12 +14,11 @@ function getsettings() {
 
 function sendsettings() {
 	var dict = {}
-	console.log('in send settings and keys are', datakeys)
 	datakeys.map( key => {
-		console.log('checking key', key)
-		dict[key] = document.getElementById(key).value
+		if (document.getElementById(key) != null) {
+			dict[key] = document.getElementById(key).value
+		}
 	})
-	console.log('in send settings and dict is', dict)
 	$.ajax({
   		dataType: "json",
   		url: "/get_json_settings",
