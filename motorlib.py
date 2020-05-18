@@ -74,7 +74,7 @@ class Motorlib(object):
 		return round( (dhdt_numerator/dhdt_denomenator) / (self.config.meters_per_step * total_time)) #returns velocity in steps per second
 
 	def move(self, speed, command, motors_position):
-		start_position   = hypoteni_to_euclid( motors_position )
+		start_position   = self.hypoteni_to_euclid( motors_position )
 		x_diff     		 = command[0]
 		y_diff      	 = command[1]
 		end_position     = [ start_position[0] + x_diff, start_position[1] + y_diff]
@@ -94,19 +94,19 @@ class Motorlib(object):
 
 	def move_smart_step(self, speed, command, motors_position ):
 
-		current_position = hypoteni_to_euclid( motors_position )
+		current_position = self.hypoteni_to_euclid( motors_position )
 		x_diff     		 = command[0]
 		y_diff      	 = command[1]
 		end_position     = [ current_position[0] + x_diff, current_position[1] + y_diff]
-		motors_position_end = euclid_to_hypoteni( end_position )
+		motors_position_end = self.euclid_to_hypoteni( end_position )
 		steps            = [motors_position_end[0] - motors_position[0], motors_position_end[1] - motors_position[1]]
 		distance    	 = ( x_diff**2 + y_diff**2 )**0.5
 		total_time  	 = distance / (speed * self.config.meters_per_step)
 
 		current_position_mirror = [ self.config.x_total - current_position[0], current_position[1] ]
 		end_position_mirror     = [ self.config.x_total - end_position[0], end_position[1] ]	
-		motor1_velocity = motor_velocity_at_time( current_position, end_position, total_time/2, total_time )
-		motor2_velocity = motor_velocity_at_time( current_position_mirror, end_position_mirror, total_time/2, total_time )
+		motor1_velocity = self.motor_velocity_at_time( current_position, end_position, total_time/2, total_time )
+		motor2_velocity = self.motor_velocity_at_time( current_position_mirror, end_position_mirror, total_time/2, total_time )
 
 		#print('in smart step with command', command, 'steps', steps,'and velocities', motor1_velocity, motor2_velocity)
 		MOTOR.enablestepSTOPint(0,'A')          #set up to interrupt when motor a stops
