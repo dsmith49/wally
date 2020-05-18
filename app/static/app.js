@@ -6,7 +6,7 @@ function powerpi(command) {
 	command_dict['command'] = command
 	$.ajax({
 		type: "POST",
-		url: "/command",
+		url: "/commandpi",
 		data: JSON.stringify( command_dict ),
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
