@@ -28,41 +28,77 @@
     it is assumed they are the same height.
 	</td>
     <td><input id='x_total' type="number"></td>
-    <td>speed</td>
+    <td><b>speed</b><br>
+	average speed of motors while drawing, in steps per second.
+	</td>
     <td><input id='speed' type="number"></td>
-    <td>pen up angle</td>
+    <td><b>pen up angle</b><br>
+	angle at which the servo turns the pen to, when off the paper.
+	</td>
     <td><input id='pen_up_angle' type="number"></td>
   </tr>
   <tr>
-    <td>length left motor wire</td>
+    <td><b>length left motor wire</b><br>
+	the calibration length of the wire from the left pivot to the left motor eyelet, in meters.
+	this is the length wally uses to compute location when the user 
+	calibrates on the control panel.
+	</td>
     <td><input id="motor1_length" type="number"></td>
-    <td>numlines</td>
+    <td><b>numlines</b><br>
+	the maximum number of lines drawn per pixel when running svgconverter in PIXEL mode.
+	this setting does not effect wally's operation.
+	</td>
     <td><input id="numlines" type="number"></td>
-    <td>pen down angle</td>
+    <td><b>pen down angle</b><br>
+	angle at which the servo turns the pen to, when on the paper.
+	</td>
     <td><input id='pen_down_angle' type="number"></td>
   </tr>
   <tr>
-    <td>length right motor wire</td>
+    <td><b>length right motor wire</b><br>
+	the calibration length of the wire from the left pivot to the left motor eyelet, in meters.
+	this is the length wally uses to compute location when the user 
+	calibrates on the control panel.
+	</td>
     <td><input id='motor2_length' type="number"></td>
-    <td>smartmove</td>
+    <td><b>smartmove</b><br>
+	boolean flag which, if on, allows wally to account for position when computing
+	velocity of motors. reduces image render disortion. 0 for False, 1 for True.
+	</td>
     <td><input id='smartmove' type="number"></td>
-    <td> pen 1 angle</td>
+    <td><b>pen 1 angle</b><br>
+	angle at which the servo rotates the pen carousel to for pen 1
+	</td>
     <td><input id='pen_1_angle' type="number"></td>
   </tr>
   <tr>
-    <td>gondola width</td>
+    <td><b>gondola width</b><br>
+	the horiztonal distance in meters between wally's eyelets.
+	</td>
     <td><input id='x_gondola' type="number"></td>
-    <td>meters per step</td>
+    <td><b>meters per step</b><br>
+	the distance, in meters, that one motor step lengthens or shrinks its wire
+	length.
+	</td>
     <td><input id='meters_per_step' type="number"></td>
-    <td>pen 2 angle</td>
+    <td><b>pen 2 angle</b><br>
+	angle at which the servo rotates the pen carousel to for pen 2
+	</td>
     <td><input id='pen_2_angle' type="number"></td>
   </tr>
   <tr>
-    <td>gondola height</td>
+    <td><b>gondola height</b><br>
+	the vertical distance in meters between wally's eyelets and his pen tip.
+	</td>
     <td><input id='y_gondola' type="number"></td>
-    <td>smart step size</td>
+    <td><b>smart step size</b><br>
+	when drawing, the distance (in meters) that wally moves between
+	calculations of his position.
+	</td>
     <td><input id='smart_step' type="number"></td>
-    <td>pen 3 angle</td>
+    <td><b>pen 3 angle</b><br>
+	angle at which the servo rotates the pen carousel to for pen 2
+	</td>
     <td><input id='pen_3_angle' type="number"></td>
   </tr>
   <tr>
