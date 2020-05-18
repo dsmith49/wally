@@ -12,7 +12,7 @@ function getsettings() {
 
 function updatestatus( data ) {
 	console.log('updating seetings')
-	data.keys().map( key => {
+	Object.keys(data).map( key => {
 		document.getElementById(key).value = data[key]
 	})
 }
