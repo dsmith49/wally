@@ -30,8 +30,14 @@ class Wally(object):
 		self.drawing = False
 		self.drawstatus = [0,0]
 
-	def settings(self):
-		return self.config.getJSON()	
+	def settings(self, settings=None):
+		if (settings is None):
+			return self.config.getJSON()	
+		else:
+			self.config.putJSON( settings )
+			self.config.writeJSON()
+			return None
+
 	def status(self):
 		statusdict = {
 			'power'    : self.motors_on,

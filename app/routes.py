@@ -25,6 +25,8 @@ def settings_json():
 		settings = app.config['wally'].settings()
 		return settings
 	else:
+		app.config['wally'].settings( settings = data)
+		return ('', 204)
 		
 
 @app.route('/command', methods = ['POST'])
