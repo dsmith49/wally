@@ -30,7 +30,7 @@ class Wally(object):
 		self.drawing = False
 		self.drawstatus = [0,0]
 
-	def settings():
+	def settings(self):
 		return self.config.getJSON()	
 	def status(self):
 		statusdict = {
