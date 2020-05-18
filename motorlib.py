@@ -4,7 +4,7 @@ import time
 #import config
 import math
 
-class Motorlib(Object):
+class Motorlib(object):
 
 	def __init__(self, config):
 		self.config = config
