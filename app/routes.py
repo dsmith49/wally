@@ -86,7 +86,7 @@ def stop_draw_svg():
 
 @app.route('/upload_svg', methods = ['GET','POST'])
 def upload_svg():
-	if ('file' in request.files) and request.files['file'].filename != ''):
+	if (('file' in request.files) and (request.files['file'].filename != '')):
 		thefile = request.files['file']
 		filename = thefile.filename
 		thefile.save( os.path.join(app.config['UPLOAD_FOLDER'], filename) )
