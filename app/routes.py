@@ -12,7 +12,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def index():
 	with open(WALLY_HOME_FOLDER + "README.md","r") as file:
 		content = file.read()
-		return render_template('index.html', title='Home', readme=content)
+		return render_template('index.html', title='README', readme=content)
 
 @app.route('/control')
 def control():
@@ -57,7 +57,7 @@ def settings_json():
 
 @app.route('/draw')
 def draw():
-	return render_template('draw.html', title='Settings')
+	return render_template('draw.html', title='Draw')
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
@@ -90,4 +90,4 @@ def upload_svg():
 		thefile = request.files['file']
 		filename = thefile.filename
 		thefile.save( path.join(app.config['UPLOAD_FOLDER'], filename) )
-	return ('', 204)
+	return render_template('draw.html', title='Draw')
