@@ -1,16 +1,16 @@
 from app import app
 from flask import render_template, request, jsonify
-from os import getcwd, listdir, system
+from os import getcwd, listdir, system, path
 import threading
 
-path = '/home/pi/wally/'
+WALLY_HOME_FOLDER = '/home/pi/wally/'
 UPLOAD_FOLDER = '/home/pi/wally/app/static/images'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 @app.route('/index')
 def index():
-	with open(path + "README.md","r") as file:
+	with open(WALLY_HOME_FOLDER + "README.md","r") as file:
 		content = file.read()
 		return render_template('index.html', title='Home', readme=content)
 
@@ -61,7 +61,7 @@ def draw():
 
 @app.route('/svgfiles', methods = ['GET','POST'])
 def svgfiles():
-	svgpath = path+"/app/static/images/"
+	svgpath = WALLY_HOME_FOLDER+"/app/static/images/"
 	data = {}
 	data['filenames'] = []
 	data['progress'] = app.config['wally'].drawstatus
@@ -73,7 +73,7 @@ def svgfiles():
 @app.route('/draw_svg', methods = ['GET','POST'])
 def draw_svg():
 	filename = request.json
-	data = app.config['wally'].loadfile( path + '/app/static/images/' + filename )
+	data = app.config['wally'].loadfile( WALLY_HOME_FOLDER + '/app/static/images/' + filename )
 	x = threading.Thread( target=app.config['wally'].drawSVG, args=(data,), daemon=True)
 	x.start()
 	#x.join()
@@ -89,5 +89,5 @@ def upload_svg():
 	if (('file' in request.files) and (request.files['file'].filename != '')):
 		thefile = request.files['file']
 		filename = thefile.filename
-		thefile.save( os.path.join(app.config['UPLOAD_FOLDER'], filename) )
+		thefile.save( path.join(app.config['UPLOAD_FOLDER'], filename) )
 	return ('', 204)
