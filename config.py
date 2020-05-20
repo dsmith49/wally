@@ -20,7 +20,7 @@ class Config(object):
 		self.y_usable_start   = 0.30
 		self.y_usable_stop    = 1.00         # not used yet
 		self.button_delay     = 0.05
-		self.x_gondola        = 0.10
+		self.x_gondola        = 0.20
 		self.y_gondola        = 0.04
 		#self.meters_per_step = (2 * 0.025 * 3.14159) / 400 # = 0.00039269875 # meters per step # theoretical
 		self.meters_per_step = (0.55 / 13300) # = 0.00004135338  in practice
