@@ -10,7 +10,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/')
 @app.route('/index')
 def index():
-	with open(WALLY_HOME_FOLDER + "README.md","r") as file:
+	with open(WALLY_HOME_FOLDER + "README.txt","r") as file:
 		content = file.read()
 		return render_template('index.html', title='README', readme=content)
 
