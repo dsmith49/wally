@@ -45,7 +45,7 @@ class Motorlib(object):
 		#height of trapezoid where a is long base, c is short base
 		a = self.config.x_total
 		b = motors_position[0] * self.config.meters_per_step
-		c = config.x_gondola
+		c = self.config.x_gondola
 		d = motors_position[1] * self.config.meters_per_step
 		y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
 		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
