@@ -52,7 +52,7 @@ class Motorlib(object):
 		return [x_from_left, y_from_top]
 	
 	def euclid_to_hypoteni(self, coordinate ):
-		m1 = ( (coordinate[0] - (self.config.x_gondola/2)**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
+		m1 = ( (coordinate[0] - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		m2 = ( ((self.config.x_total - coordinate[0]) - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		return [round(m1),round(m2)]
 
