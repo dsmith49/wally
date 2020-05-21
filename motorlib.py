@@ -42,35 +42,38 @@ class Motorlib(object):
 		if (final): GPIO.cleanup()
 
 	def hypoteni_to_euclid(self, motors_position ):
-		#herons formula
-		#s = (motors_position[0]*self.config.meters_per_step + motors_position[1]*self.config.meters_per_step + self.config.x_total) / 2
-		#a = (s * (s - motors_position[0]*self.config.meters_per_step) * ( s- motors_position[1]*self.config.meters_per_step ) * (s-self.config.x_total) )**0.5
-		#y_from_top  = a / (0.5 * self.config.x_total)
-		#x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - y_from_top**2)**0.5
-		
+		#height of trapezoid where a is long base, c is short base
+		a = self.config.x_total
+		b = motors_position[0] * self.config.meters_per_step
+		c = self.config.x_gondola
+		d = motors_position[1] * self.config.meters_per_step
+		y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
+		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
+
+		return [x_from_left, y_from_top]
+
+	def hypoteni_to_euclid2(self, motors_position ):
 		#height of trapezoid where a is long base, c is short base
 		a = self.config.x_total
 		b = motors_position[0] * self.config.meters_per_step
 		c = 0.20
 		d = motors_position[1] * self.config.meters_per_step
 		y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
-		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + self.config.x_gondola
+		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
 
 		return [x_from_left, y_from_top]
-		
+	
 	def euclid_to_hypoteni(self, coordinate ):
-		m1 = ( (coordinate[0] - self.config.x_gondola)**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
-		m2 = ( ((self.config.x_total - coordinate[0]) - self.config.x_gondola)**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
+		m1 = ( (coordinate[0] - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
+		m2 = ( ((self.config.x_total - coordinate[0]) - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		return [round(m1),round(m2)]
 
 	def motor_velocity_at_time(self,  current_pos, end_pos, time, total_time):
 		x_diff   = end_pos[0] - current_pos[0]
 		y_diff   = end_pos[1] - current_pos[1]
-		#dhdt_numerator   = x_diff * (x_diff * time + current_pos[0]) + y_diff * (y_diff * time + current_pos[1] )
-		#dhdt_denomenator = ( (x_diff * time + current_pos[0])**2 + (y_diff * time + current_pos[1])**2 )**0.5
 		if (not self.config.smartmove): current_pos = [self.config.x_total/2,self.config.x_total/2] 
-		dhdt_numerator   = x_diff * (time * x_diff +current_pos[0] - self.config.x_gondola) + y_diff * (time * y_diff + current_pos[1] - self.config.y_gondola)
-		dhdt_denomenator = ( (x_diff * time + current_pos[0] - self.config.x_gondola)**2 + (y_diff * time + current_pos[1] - self.config.y_gondola)**2 )**0.5
+		dhdt_numerator   = x_diff * (time * x_diff +current_pos[0] - (self.config.x_gondola/2)) + y_diff * (time * y_diff + current_pos[1] - self.config.y_gondola)
+		dhdt_denomenator = ( (x_diff * time + current_pos[0] - (self.config.x_gondola/2))**2 + (y_diff * time + current_pos[1] - self.config.y_gondola)**2 )**0.5
 		return round( (dhdt_numerator/dhdt_denomenator) / (self.config.meters_per_step * total_time)) #returns velocity in steps per second
 
 	def move(self, speed, command, motors_position):
