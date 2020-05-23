@@ -23,11 +23,11 @@ class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
 		self.madgwick        = MadgwickAHRS()
-	def update():
+	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = imu.read_accelerometer_gyro_data()
 		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
-	def get():
+	def get(self):
 		return [self.madgwick.quaternion.to_euler123()]
 
 class Wally(object):
