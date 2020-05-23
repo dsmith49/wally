@@ -3,7 +3,10 @@ import time
 import motorlib
 import config
 from svgpathtools import svg2paths, Path, Line
+import sys
+sys.path.append('/home/pi/wally/madgewick_py')
 
+from madgwickahrs import MadgwickAHRS
 class DrawObject(object):
 	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
 		self.filename   = filename
@@ -30,6 +33,7 @@ class Wally(object):
 		self.pendown         = False
 		self.drawing         = False
 		self.drawstatus      = [0,0]
+		self.madgwick        = MadgwickAHRS()
 
 	def settings(self, settings=None):
 		if (settings is None):

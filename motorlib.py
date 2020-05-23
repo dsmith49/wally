@@ -49,21 +49,33 @@ class Motorlib(object):
 		d = motors_position[1] * self.config.meters_per_step
 		y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
 		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
-
-		return [x_from_left, y_from_top]
-
-	def hypoteni_to_euclid2(self, motors_position ):
-		#height of trapezoid where a is long base, c is short base
-		a = self.config.x_total
-		b = motors_position[0] * self.config.meters_per_step
-		c = 0.20
-		d = motors_position[1] * self.config.meters_per_step
-		y_from_top  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
-		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
-
 		return [x_from_left, y_from_top]
 	
 	def euclid_to_hypoteni(self, coordinate ):
+		m1 = ( (coordinate[0] - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
+		m2 = ( ((self.config.x_total - coordinate[0]) - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
+		return [round(m1),round(m2)]
+
+	def hypoteni_to_euclid2(self, motors_position, theta ):
+		#height of trapezoid where a is long base, c is short base
+		a = self.config.x_total
+		b = motors_position[0] * self.config.meters_per_step
+		c = self.config.x_gondola
+		d = motors_position[1] * self.config.meters_per_step
+		y_from_top_trapezoid  = ((a+b-c+d) * (-a+b+c+d) * (a-b-c+d) * (a+b-c-d) / (4 * (a-c)**2))**0.5 + self.config.y_gondola
+		#theta needs to be in radians
+		#z is length of gondola top to the left of vertical line through pen head
+		#f is length of vertical line from pen head to gondola top
+		#g is length of gondola top to the right of vertical line through pen head
+		z = self.config.y_gondola * sin( theta ) / sin( math.radians(90) - theta)
+		f = (self.config.y_gondola**2 + z**2)**0.5
+		g = (self.config.x_gondola/2 - z) * sin( theta )
+
+		y_from_top  = f + g + y_from_top_trapezoid
+		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
+		return [x_from_left, y_from_top]
+
+	def euclid_to_hypoteni2(self, coordinate, theta ): #gotta do this
 		m1 = ( (coordinate[0] - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		m2 = ( ((self.config.x_total - coordinate[0]) - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		return [round(m1),round(m2)]
