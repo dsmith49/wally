@@ -39,7 +39,7 @@ class IMU():
 			time.sleep(0.01)
 			self.update()
 	def get(self):
-		return [self.madgwick.quaternion.to_euler123()]
+		return [self.madgwick.quaternion.to_euler_angles()]
 
 class Wally(object):
 	def __init__(self):
