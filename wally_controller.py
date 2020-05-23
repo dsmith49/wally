@@ -58,7 +58,7 @@ class Wally(object):
 
 	def status(self):
 		statusdict = {
-			'orientation' : self.imu.get,
+			'orientation' : self.imu.get(),
 			'power'    : self.motors_on,
 			'pendown'  : self.pendown,
 			'velocity' : self.motors_velocity,
