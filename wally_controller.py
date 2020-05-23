@@ -5,7 +5,7 @@ import config
 from svgpathtools import svg2paths, Path, Line
 from icm20948 import ICM20948
 import sys
-sys.path.append('/home/pi/wally/madgewick_py')
+sys.path.append('/home/pi/wally/madgewick_py/madgwickahrs')
 from madgwickahrs import MadgwickAHRS
 import numpy as np
 
