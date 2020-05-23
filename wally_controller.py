@@ -26,6 +26,7 @@ class IMU():
 		self.madgwick        = MadgwickAHRS()
 		self.updatethread    = threading.Thread( target=self.updater(), args=(), daemon=True)
 		self.updatethread.start()
+		self.updatethread.join()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
