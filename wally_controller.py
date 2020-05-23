@@ -7,6 +7,7 @@ from icm20948 import ICM20948
 import sys
 sys.path.append('/home/pi/wally/madgewick_py/')
 from madgwickahrs import MadgwickAHRS
+from quaternion import Quaternion
 import numpy as np
 import threading
 
@@ -23,7 +24,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS()
+		self.madgwick        = MadgwickAHRS(sampleperiod=1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater(), args=(), daemon=True)
 		self.updatethread.start()
 		#self.updatethread.join()
