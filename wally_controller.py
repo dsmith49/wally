@@ -28,13 +28,14 @@ class IMU():
 		self.updatethread.start()
 		#self.updatethread.join()
 	def update(self):
+		print('updating', self.get() )
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
 		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
 	def updater(self):
 		while True:
-			self.update()
 			time.sleep(1)
+			self.update()
 	def get(self):
 		return [self.madgwick.quaternion.to_euler123()]
 
