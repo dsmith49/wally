@@ -8,6 +8,7 @@ import sys
 sys.path.append('/home/pi/wally/madgewick_py/')
 from madgwickahrs import MadgwickAHRS
 import numpy as np
+import threading
 
 class DrawObject(object):
 	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
@@ -23,10 +24,16 @@ class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
 		self.madgwick        = MadgwickAHRS()
+		self.updatethread    = threading.Thread( target=self.updater(), args=(), daemon=True)
+		self.updatethread.start()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = imu.read_accelerometer_gyro_data()
 		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
+	def updater():
+		while True:
+			self.update()
+			time.sleep(1)
 	def get(self):
 		return [self.madgwick.quaternion.to_euler123()]
 
