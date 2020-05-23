@@ -66,6 +66,7 @@ class Wally(object):
 			'position_meters'   : [self.motors_position[0] * self.config.meters_per_step, self.motors_position[1] * self.config.meters_per_step],
 			'position_euclid'   : self.motorlib.hypoteni_to_euclid( self.motors_position )
 		}
+		print(self.imu.get())
 		return statusdict #json.dumps( statusdict )
 
 	def power(self, on=True, final=False):
