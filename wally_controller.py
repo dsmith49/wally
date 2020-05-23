@@ -3,10 +3,12 @@ import time
 import motorlib
 import config
 from svgpathtools import svg2paths, Path, Line
+from icm20948 import ICM20948
 import sys
 sys.path.append('/home/pi/wally/madgewick_py')
-
 from madgwickahrs import MadgwickAHRS
+import numpy as np
+
 class DrawObject(object):
 	def __init__(self, filename='test', imagetype='PNG', width=0,height=0,pixels=[], paths=[], attributes={}):
 		self.filename   = filename
@@ -16,6 +18,17 @@ class DrawObject(object):
 		self.pixels     = pixels
 		self.paths      = paths
 		self.attributes = attributes
+
+class IMU():
+	def __init__(self):
+		self.imu             = ICM20948()
+		self.madgwick        = MadgwickAHRS()
+	def update():
+		x, y, z = self.imu.read_magnetometer_data()
+		ax, ay, az, gx, gy, gz = imu.read_accelerometer_gyro_data()
+		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
+	def get():
+		return self.madgwick.quaternion
 
 class Wally(object):
 	def __init__(self):
@@ -33,7 +46,7 @@ class Wally(object):
 		self.pendown         = False
 		self.drawing         = False
 		self.drawstatus      = [0,0]
-		self.madgwick        = MadgwickAHRS()
+		self.imu             = IMU()
 
 	def settings(self, settings=None):
 		if (settings is None):
@@ -45,6 +58,7 @@ class Wally(object):
 
 	def status(self):
 		statusdict = {
+			'orientation' : self.imu.get,
 			'power'    : self.motors_on,
 			'pendown'  : self.pendown,
 			'velocity' : self.motors_velocity,
