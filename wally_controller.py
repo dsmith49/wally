@@ -5,7 +5,7 @@ import config
 from svgpathtools import svg2paths, Path, Line
 from icm20948 import ICM20948
 import sys
-sys.path.append('/home/pi/wally/madgewick_py/madgwickahrs')
+sys.path.append('/home/pi/wally/madgewick_py/')
 from madgwickahrs import MadgwickAHRS
 import numpy as np
 
@@ -28,7 +28,7 @@ class IMU():
 		ax, ay, az, gx, gy, gz = imu.read_accelerometer_gyro_data()
 		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
 	def get():
-		return self.madgwick.quaternion
+		return [self.madgwick.quaternion.to_euler123()]
 
 class Wally(object):
 	def __init__(self):

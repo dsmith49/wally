@@ -67,15 +67,29 @@ class Motorlib(object):
 		#z is length of gondola top to the left of vertical line through pen head
 		#f is length of vertical line from pen head to gondola top
 		#g is length of gondola top to the right of vertical line through pen head
+		#i is top of trapezoid left of vertical line through pen head
+
 		z = self.config.y_gondola * sin( theta ) / sin( math.radians(90) - theta)
 		f = (self.config.y_gondola**2 + z**2)**0.5
 		g = (self.config.x_gondola/2 - z) * sin( theta )
+		y_from_pen_to_trapezoid      = f + g
+		x_from_pen_to_trapezoid_left = self.config.x_gondola - 
 
-		y_from_top  = f + g + y_from_top_trapezoid
+		y_from_top  = y_from_pen_to_trapezoid + y_from_top_trapezoid
 		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
 		return [x_from_left, y_from_top]
 
-	def euclid_to_hypoteni2(self, coordinate, theta ): #gotta do this
+	def euclid_to_hypoteni2(self, coordinate, theta ):
+
+		#z is length of gondola top to the left of vertical line through pen head
+		#f is length of vertical line from pen head to gondola top
+		#g is length of gondola top to the right of vertical line through pen head
+		z = self.config.y_gondola * sin( theta ) / sin( math.radians(90) - theta)
+		f = (self.config.y_gondola**2 + z**2)**0.5
+		g = (self.config.x_gondola/2 - z) * sin( theta )
+		y_from_pen_to_trapezoid = f + g
+		x_from_
+
 		m1 = ( (coordinate[0] - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		m2 = ( ((self.config.x_total - coordinate[0]) - (self.config.x_gondola/2))**2 + (coordinate[1] - self.config.y_gondola)**2)**0.5 / self.config.meters_per_step
 		return [round(m1),round(m2)]
