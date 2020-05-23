@@ -73,7 +73,7 @@ class Motorlib(object):
 		f = (self.config.y_gondola**2 + z**2)**0.5
 		g = (self.config.x_gondola/2 - z) * sin( theta )
 		y_from_pen_to_trapezoid      = f + g
-		x_from_pen_to_trapezoid_left = self.config.x_gondola - 
+		#x_from_pen_to_trapezoid_left = self.config.x_gondola - 
 
 		y_from_top  = y_from_pen_to_trapezoid + y_from_top_trapezoid
 		x_from_left = ((motors_position[0]*self.config.meters_per_step)**2 - (y_from_top - self.config.y_gondola)**2 )**0.5 + (self.config.x_gondola/2)
