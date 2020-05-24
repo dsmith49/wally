@@ -24,7 +24,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS(sampleperiod=0.01,quaternion=None,beta=10)
+		self.madgwick        = MadgwickAHRS(sampleperiod=None,quaternion=None,beta=None)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.updatethread.start()
 	def update(self):
