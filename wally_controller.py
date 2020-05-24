@@ -27,7 +27,7 @@ class IMU():
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.01,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater(), daemon=True)
 		#self.updatethread.start()
-		print('started thread')
+		#print('started thread')
 	def update(self):
 		print('updating', self.get() )
 		x, y, z = self.imu.read_magnetometer_data()
