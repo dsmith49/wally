@@ -26,9 +26,9 @@ class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
-		#self.updatethread    = threading.Thread( target=self.updater, daemon=True)
+		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
-		self.updatethread.start()
+		#self.updatethread.start()
 		self.showthread.start()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
