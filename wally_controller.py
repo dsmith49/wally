@@ -40,9 +40,10 @@ class IMU():
 			time.sleep(0.1)
 			self.update()
 	def get(self):
-		return [self.madgwick.quaternion.to_euler_angles()]
+		return [elf.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		rads = self.get()
+		print(rads)
 		print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 		
 
