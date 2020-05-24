@@ -44,7 +44,8 @@ class IMU():
 	def show(self):
 		while True:
 			rads = self.get()
-			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			print(self.imu.read_accelerometer_gyro_data())
+			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 			time.sleep(1)
 
 class Wally(object):
