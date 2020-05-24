@@ -28,10 +28,9 @@ class IMU():
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.updatethread.start()
 	def update(self):
-		print('updating', self.get() )
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
-		self.madgwick.update( np.array([x,y,z]), np.array([ax, ay, az]), np.array([gx, gy, gz]) )
+		self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
 	def updater(self):
 		while True:
 			time.sleep(0.1)
