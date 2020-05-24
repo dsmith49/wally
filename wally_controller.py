@@ -26,7 +26,7 @@ class IMU():
 		self.imu             = ICM20948()
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.01,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater(), daemon=True)
-		self.updatethread.start()
+		#self.updatethread.start()
 		print('started thread')
 	def update(self):
 		print('updating', self.get() )
