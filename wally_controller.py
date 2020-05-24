@@ -31,6 +31,7 @@ class IMU():
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
 		self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
+		print('updated'm self.get() )
 	def updater(self):
 		while True:
 			time.sleep(0.1)
