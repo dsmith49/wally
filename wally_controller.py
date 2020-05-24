@@ -27,8 +27,8 @@ class IMU():
 		self.imu             = ICM20948()
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=None)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
+		self.showthread      = threading.Thread( target=self.show, daemon=True)
 		self.updatethread.start()
-		self.showthread    = threading.Thread( target=self.show, daemon=True)
 		self.showthread.start()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
@@ -42,10 +42,10 @@ class IMU():
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
-		rads = self.get()
-		print(rads)
-		print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
-		
+		while True:
+			rads = self.get()
+			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			time.sleep(1)
 
 class Wally(object):
 	def __init__(self):
