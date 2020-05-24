@@ -24,10 +24,9 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
+		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=10)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.updatethread.start()
-		#print('started thread')
 	def update(self):
 		print('updating', self.get() )
 		x, y, z = self.imu.read_magnetometer_data()
