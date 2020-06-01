@@ -25,7 +25,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.rolls           = np.full(100, 1.0)
+		self.rolls           = np.full(25, 1.0)
 		self.inc             = 0
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
@@ -41,7 +41,7 @@ class IMU():
 		#pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi
 		self.rolls[self.inc] = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 		self.inc += 1
-		if (self.inc > 99): self.inc = 0
+		if (self.inc >= self.rolls.size): self.inc = 0
 	def updater(self):
 		while True:
 			self.update()
