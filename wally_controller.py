@@ -33,12 +33,12 @@ class IMU():
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
-		#self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
-		self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
+		self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
+		#self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
 	def updater(self):
 		while True:
 			self.update()
-			time.sleep(1.0)
+			time.sleep(0.1)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
@@ -50,7 +50,7 @@ class IMU():
 			pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi;
 			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 			print('pitch:',pitch,'roll:', roll)
-			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 			time.sleep(1)
 
 class Wally(object):
