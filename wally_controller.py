@@ -38,7 +38,7 @@ class IMU():
 	def updater(self):
 		while True:
 			self.update()
-			time.sleep(0.1)
+			time.sleep(1.0)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
