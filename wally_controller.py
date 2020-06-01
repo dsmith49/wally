@@ -45,7 +45,7 @@ class IMU():
 		while True:
 			#rads = self.get()
 			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
-			accel = self.imu.read_accelerometer_gyro_data())
+			accel = self.imu.read_accelerometer_gyro_data()
 			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 			print('roll:', roll)
 			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
