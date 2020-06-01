@@ -33,7 +33,6 @@ class IMU():
 		self.updatethread.start()
 		self.showthread.start()
 	def update(self):
-		
 		#x, y, z = self.imu.read_magnetometer_data()
 		#ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
 		#self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
@@ -46,7 +45,7 @@ class IMU():
 	def updater(self):
 		while True:
 			self.update()
-			time.sleep(0.1)
+			time.sleep(0.01)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
