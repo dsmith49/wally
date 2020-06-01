@@ -25,7 +25,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS(sampleperiod=0.01,quaternion=None,beta=1)
+		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
 		self.updatethread.start()
@@ -37,14 +37,14 @@ class IMU():
 		self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
 	def updater(self):
 		while True:
-			time.sleep(0.1)
+			time.sleep(1.0)
 			self.update()
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		while True:
 			rads = self.get()
-			#print(self.imu.read_accelerometer_gyro_data())
+			print(self.imu.read_accelerometer_gyro_data())
 			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 			time.sleep(1)
 
