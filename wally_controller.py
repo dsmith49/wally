@@ -37,8 +37,8 @@ class IMU():
 		self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
 	def updater(self):
 		while True:
-			time.sleep(1.0)
 			self.update()
+			time.sleep(1.0)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
