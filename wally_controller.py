@@ -25,6 +25,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
+		self.rolls           = np.full((2, 1.0)
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
@@ -48,7 +49,7 @@ class IMU():
 			#pitch = 180 * atan2(accelX, sqrt(accelY*accelY + accelZ*accelZ))/PI;
 			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
 			accel = self.imu.read_accelerometer_gyro_data()
-			pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi;
+			pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi
 			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 			print('pitch:',pitch,'roll:', roll)
 			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
