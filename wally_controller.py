@@ -43,9 +43,9 @@ class IMU():
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		while True:
-			rads = self.get()
+			#rads = self.get()
 			print(self.imu.read_accelerometer_gyro_data())
-			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 			time.sleep(1)
 
 class Wally(object):
