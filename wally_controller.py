@@ -28,8 +28,8 @@ class IMU():
 		self.rolls           = np.full(25, 1.0)
 		self.inc             = 0
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
-		self.updatethread    = threading.Thread( target=self.updater, daemon=False)
-		self.showthread      = threading.Thread( target=self.show, daemon=False)
+		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
+		self.showthread      = threading.Thread( target=self.show, daemon=True)
 		self.updatethread.start()
 		self.showthread.start()
 	def update(self):
