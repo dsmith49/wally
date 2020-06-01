@@ -43,7 +43,7 @@ class IMU():
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		while True:
-			#rads = self.get()
+			rads = self.get()
 			#pitch = 180 * atan2(accelX, sqrt(accelY*accelY + accelZ*accelZ))/PI;
 			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
 			accel = self.imu.read_accelerometer_gyro_data()
