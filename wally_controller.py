@@ -28,7 +28,7 @@ class IMU():
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
-		#self.updatethread.start()
+		self.updatethread.start()
 		self.showthread.start()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
@@ -44,8 +44,8 @@ class IMU():
 	def show(self):
 		while True:
 			rads = self.get()
-			print(self.imu.read_accelerometer_gyro_data())
-			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			#print(self.imu.read_accelerometer_gyro_data())
+			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 			time.sleep(1)
 
 class Wally(object):
