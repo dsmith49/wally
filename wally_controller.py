@@ -25,7 +25,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
+		self.madgwick        = MadgwickAHRS(sampleperiod=0.01,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
 		self.updatethread.start()
@@ -33,8 +33,8 @@ class IMU():
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
 		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
-		self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
-		#self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
+		#self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
+		self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
 	def updater(self):
 		while True:
 			time.sleep(0.1)
