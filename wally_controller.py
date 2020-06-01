@@ -25,7 +25,7 @@ class DrawObject(object):
 class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
-		self.madgwick        = MadgwickAHRS(sampleperiod=1.0,quaternion=None,beta=1)
+		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
 		self.updatethread.start()
@@ -38,7 +38,7 @@ class IMU():
 	def updater(self):
 		while True:
 			self.update()
-			#time.sleep(1.0)
+			time.sleep(0.1)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
