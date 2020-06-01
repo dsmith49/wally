@@ -43,6 +43,7 @@ class IMU():
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		while True:
+			time.sleep(1)
 			rads = self.get()
 			#pitch = 180 * atan2(accelX, sqrt(accelY*accelY + accelZ*accelZ))/PI;
 			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
@@ -51,7 +52,6 @@ class IMU():
 			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 			print('pitch:',pitch,'roll:', roll)
 			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
-			time.sleep(1)
 
 class Wally(object):
 	def __init__(self):
