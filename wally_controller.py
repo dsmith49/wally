@@ -28,7 +28,7 @@ class IMU():
 		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
-		self.updatethread.start()
+		#self.updatethread.start()
 		self.showthread.start()
 	def update(self):
 		x, y, z = self.imu.read_magnetometer_data()
@@ -38,20 +38,20 @@ class IMU():
 	def updater(self):
 		while True:
 			self.update()
-			time.sleep(0.5)
+			time.sleep(0.1)
 	def get(self):
 		return self.madgwick.quaternion.to_euler_angles()
 	def show(self):
 		while True:
 			time.sleep(1)
-			rads = self.get()
+			#rads = self.get()
 			#pitch = 180 * atan2(accelX, sqrt(accelY*accelY + accelZ*accelZ))/PI;
 			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
 			accel = self.imu.read_accelerometer_gyro_data()
 			pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi;
 			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
 			print('pitch:',pitch,'roll:', roll)
-			print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
 
 class Wally(object):
 	def __init__(self):
