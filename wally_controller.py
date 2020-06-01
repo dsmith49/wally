@@ -26,16 +26,22 @@ class IMU():
 	def __init__(self):
 		self.imu             = ICM20948()
 		self.rolls           = np.full(100, 1.0)
-		self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
+		self.inc             = 0
+		#self.madgwick        = MadgwickAHRS(sampleperiod=0.1,quaternion=None,beta=1)
 		self.updatethread    = threading.Thread( target=self.updater, daemon=True)
 		self.showthread      = threading.Thread( target=self.show, daemon=True)
-		#self.updatethread.start()
+		self.updatethread.start()
 		self.showthread.start()
 	def update(self):
-		x, y, z = self.imu.read_magnetometer_data()
-		ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
-		self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
+		#x, y, z = self.imu.read_magnetometer_data()
+		#ax, ay, az, gx, gy, gz = self.imu.read_accelerometer_gyro_data()
+		#self.madgwick.update( np.array([gx, gy, gz]), np.array([ax, ay, az]), np.array([x,y,z]) )
 		#self.madgwick.update_imu( np.array([gx, gy, gz]), np.array([ax, ay, az]) )
+		accel = self.imu.read_accelerometer_gyro_data()
+		#pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi
+		self.rolls[self.inc] = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
+		self.inc += 1
+		if (self.inc > 99): self.inc = 0
 	def updater(self):
 		while True:
 			self.update()
@@ -45,14 +51,7 @@ class IMU():
 	def show(self):
 		while True:
 			time.sleep(1)
-			#rads = self.get()
-			#pitch = 180 * atan2(accelX, sqrt(accelY*accelY + accelZ*accelZ))/PI;
-			#roll = 180 * atan2(accelY, sqrt(accelX*accelX + accelZ*accelZ))/PI;
-			accel = self.imu.read_accelerometer_gyro_data()
-			pitch = 180 * math.atan2(accel[0], (accel[1]*accel[1] + accel[2]*accel[2])**0.5)/math.pi
-			roll  = 180 * math.atan2(accel[1], (accel[0]*accel[0] + accel[2]*accel[2])**0.5)/math.pi
-			print('pitch:',pitch,'roll:', roll)
-			#print('roll',math.degrees(rads[0]),'pitch',math.degrees(rads[1]),'yaw',math.degrees(rads[2])  )
+			print('roll:', np.average(self.rolls))
 
 class Wally(object):
 	def __init__(self):
